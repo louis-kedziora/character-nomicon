@@ -1,18 +1,22 @@
 import React from "react";
 
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./partials/Header";
+import Footer from "./partials/Footer";
+
+
 import AttributeBox from "./AttributeBox";
 import InfoBox from "./InfoBox";
 import Gaston from "../testCharacter"
 import scoreMod, { proficiencyBonus } from "./Modifiers";
+import HPBox from "./HPBox";
 
 
 function AttributeSheet() {
 
   return (
     <div>
-      <Header />
+      <Header/>
+      <HPBox title="HP" info={Gaston.hpMax}/>
       <InfoBox title="AC" info={Gaston.ac}/>
       <InfoBox title="Proficiency" info={proficiencyBonus(Gaston.level)}/>
       <InfoBox title="Speed" info={Gaston.speed}/>

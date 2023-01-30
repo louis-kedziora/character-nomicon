@@ -9,6 +9,7 @@ const Gaston = {
     speed: 30,
     level: 7,
     hitDice: "d8",
+    hpMax: 62,
     trainedSkills: {
         perception: true,
         investigation: false
