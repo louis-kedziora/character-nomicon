@@ -8,9 +8,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-function HPBox(props) {
-  const hpMax = props.info;
-  const [hp, setHP] = useState(props.info);
+export const HPBox = (characterInfo) => {
+  const {title, hpMax} = characterInfo;
+  const [hp, setHP] = useState(hpMax);
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("");
 
@@ -52,7 +52,7 @@ function HPBox(props) {
 
   return (
     <div className="attributeBox">
-      <h1>{props.title}</h1>
+      <h1>{title}</h1>
       <p>{hp}</p>
       {!changeHP && (
         <Grid container spacing={2}>

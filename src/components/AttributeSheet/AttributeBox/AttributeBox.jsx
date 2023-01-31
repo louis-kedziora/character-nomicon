@@ -1,14 +1,13 @@
 import React from "react";
-import Grid from '@mui/material/Unstable_Grid2'; 
-import scoreMod from "./Modifiers"
+import Grid from "@mui/material/Unstable_Grid2";
+import { scoreMod } from "../Modifiers";
 
-
-function AttributeBox(props) {
-  
+export const AttributeBox = ({ attributes }) => {
+  const { attributeName, attributeScore } = attributes;
 
   return (
     <div className="attributeBox">
-      <h1>{props.attributeName}</h1>
+      <h1>{attributeName}</h1>
       <Grid container spacing={2}>
         <Grid xs={4}>
           <p>Score</p>
@@ -19,20 +18,18 @@ function AttributeBox(props) {
         <Grid xs={4}>
           <p>Save</p>
         </Grid>
-      </Grid>    
+      </Grid>
       <Grid container spacing={2}>
         <Grid xs={4}>
-          <p>{props.attributeScore}</p>
+          <p>{attributeScore}</p>
         </Grid>
         <Grid xs={4}>
-          <p>{scoreMod(props.attributeScore)}</p>
+          <p>{scoreMod(attributeScore)}</p>
         </Grid>
         <Grid xs={4}>
-          <p>{scoreMod(props.attributeScore)}</p>
+          <p>{scoreMod(attributeScore)}</p>
         </Grid>
-      </Grid>      
+      </Grid>
     </div>
   );
-}
-
-export default AttributeBox;
+};
