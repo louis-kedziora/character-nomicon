@@ -1,10 +1,11 @@
 import React from "react";
 import { AttributeSheet } from "./components/AttributeSheet";
+import Gaston from "./testCharacter"
 
 function App() {
   return (
     <div>
-      <AttributeSheet />
+      <AttributeSheet gaston={Gaston}/>
     </div>
   );
 }

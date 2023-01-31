@@ -1,0 +1,4 @@
+// To start the mongodb server locally run these commands
+sudo systemctl start mongod
+sudo systemctl status mongod
+mongosh

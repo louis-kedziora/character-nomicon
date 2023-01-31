@@ -4,28 +4,28 @@ import { Header, Footer } from "../partials";
 
 import { AttributeBox } from "./AttributeBox";
 import { InfoBox } from "./InfoBox";
-import { scoreMod, proficiencyBonus } from "./Modifiers";
+import { proficiencyBonus } from "./Modifiers";
 import { HPBox } from "./HPBox";
 
-import Gaston from "../../testCharacter";
+export const AttributeSheet = ({ gaston }) => {
+  const { hpMax, ac, level, speed, hitDice, str, int, dex, wis, con, char } =
+    gaston;
 
-export const AttributeSheet = () => {
   return (
     <div>
       <Header />
-      <HPBox title="HP" info={Gaston.hpMax} />
-      <InfoBox title="AC" info={Gaston.ac} />
-      <InfoBox title="Proficiency" info={proficiencyBonus(Gaston.level)} />
-      <InfoBox title="Speed" info={Gaston.speed} />
-      <InfoBox title="Initiative" info={scoreMod(Gaston.dex)} />
-      <InfoBox title="Speed" info={Gaston.speed} />
-      <InfoBox title="Hit Dice" info={Gaston.level + Gaston.hitDice} />
-      <AttributeBox attributeName="Str" attributeScore={Gaston.str} />
-      <AttributeBox attributeName="Int" attributeScore={Gaston.int} />
-      <AttributeBox attributeName="Dex" attributeScore={Gaston.dex} />
-      <AttributeBox attributeName="Wis" attributeScore={Gaston.wis} />
-      <AttributeBox attributeName="Con" attributeScore={Gaston.con} />
-      <AttributeBox attributeName="Char" attributeScore={Gaston.char} />
+      <HPBox characterInfo={{ title: "HP", hpMax }} />
+      <InfoBox info={{title:"AC", content: ac}}/>
+      <InfoBox info={{title:"Proficiency", content: proficiencyBonus(level)}}/>
+      <InfoBox info={{title:"Speed", content: speed}}/>
+      <InfoBox info={{title:"Initiative", content: dex}}/>
+      <InfoBox info={{title:"Hit Dice", content: level + hitDice}}/>
+      <AttributeBox attribute={{ attributeName: "Str", attributeScore: str }} />
+      <AttributeBox attribute={{ attributeName: "Int", attributeScore: int }} />
+      <AttributeBox attribute={{ attributeName: "Dex", attributeScore: dex }} />
+      <AttributeBox attribute={{ attributeName: "Wis", attributeScore: wis }} />
+      <AttributeBox attribute={{ attributeName: "Con", attributeScore: con }} />
+      <AttributeBox attribute={{ attributeName: "Char", attributeScore: char }} />
 
       <Footer />
     </div>

@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import TuneIcon from "@mui/icons-material/Tune";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import axios from "axios";
+import { ChangeHPBox } from "./ChangeHPBox";
 
-export const HPBox = (characterInfo) => {
-  const {title, hpMax} = characterInfo;
+export const HPBox = ({ characterInfo }) => {
+  const { title, hpMax } = characterInfo;
   const [hp, setHP] = useState(hpMax);
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("");
@@ -31,7 +28,7 @@ export const HPBox = (characterInfo) => {
       } else if (hp < 0) {
         setHP(changeValue);
       } else {
-        setHP(hp + changeValue)
+        setHP(hp + changeValue);
       }
     } else if (changeType === "damage") {
       if (hp - changeValue <= 0) {
@@ -43,6 +40,22 @@ export const HPBox = (characterInfo) => {
     } else if (changeType === "stabilize") {
       setHP(0);
     }
+
+    // make this a function call
+    axios({
+      method: "patch",
+      url: "http://localhost:4000/",
+      data: {
+        name: "Gaston",
+        newHP: hp + 10,
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     setChangeHP(false);
   }
 
@@ -63,69 +76,16 @@ export const HPBox = (characterInfo) => {
           </Grid>
         </Grid>
       )}
-
-      {/* Should be own compoenent */}
       {changeHP && (
-        <form onSubmit={closeChangeState}>
-          <Grid container spacing={2}>
-            <RadioGroup name="typeHPChange">
-              <Grid container spacing={2}>
-                <Grid xs={6}>
-                  <FormControlLabel
-                    value="damage"
-                    control={<Radio onChange={handleRadio} />}
-                    label="Damage"
-                  />
-                </Grid>
-                <Grid xs={6}>
-                  <FormControlLabel
-                    value="heal"
-                    control={<Radio onChange={handleRadio} />}
-                    label="Heal"
-                  />
-                </Grid>
-                <Grid xs={12}>
-                  <FormControlLabel
-                    value="stabilize"
-                    control={<Radio onChange={handleRadio} />}
-                    label="Stabilize"
-                  />
-                </Grid>
-              </Grid>
-            </RadioGroup>
-
-            <Grid xs={12}>
-              <TextField
-                name="changeValue"
-                id="outlined-number"
-                type="number"
-              />
-            </Grid>
-            <Grid xs={6}>
-              <Button
-                variant="contained"
-                color="error"
-                type="submit"
-                value={false}
-              >
-                Cancel
-              </Button>
-            </Grid>
-            <Grid xs={6}>
-              <Button
-                variant="contained"
-                color="success"
-                type="submit"
-                value={true}
-              >
-                Ok
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
+        <ChangeHPBox
+          methods={{
+            closeChangeState: closeChangeState,
+            handleRadio: handleRadio,
+          }}
+        />
       )}
     </div>
   );
-}
+};
 
 export default HPBox;

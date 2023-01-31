@@ -2,8 +2,13 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import { scoreMod } from "../Modifiers";
 
-export const AttributeBox = ({ attributes }) => {
-  const { attributeName, attributeScore } = attributes;
+export const AttributeBox = ({ attribute }) => {
+
+  if (attribute === undefined) {
+    // console.log("Character attributes are not being defined");
+    return <div>Character attributes are not being defined</div>
+  }
+  const { attributeName, attributeScore } = attribute;
 
   return (
     <div className="attributeBox">
