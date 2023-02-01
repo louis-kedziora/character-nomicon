@@ -2,7 +2,6 @@ const db = require("../models");
 const Character = db.characters;
 
 exports.getCharacter = (req, res) => {
-      // Validate request
   if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
@@ -66,7 +65,7 @@ exports.createCharacter = (req, res) => {
 
 exports.updateHP = (req, res) => {
   // Validate request
-  if (!req.body.name || !req.body.newHP) {
+  if (!req.body.name || typeof(req.body.newHP) !== "number") {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }

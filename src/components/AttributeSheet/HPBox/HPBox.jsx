@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import TuneIcon from "@mui/icons-material/Tune";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
-import axios from "axios";
 import { ChangeHPBox } from "./ChangeHPBox";
+import { updateHP } from "../../DBHandler/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
   const { title, hpMax } = characterInfo;
@@ -22,40 +22,8 @@ export const HPBox = ({ characterInfo }) => {
     // If the user cancels the action do nothing
     event.preventDefault();
     const changeValue = event.target.elements.changeValue.value;
-    if (changeType === "heal") {
-      if (hp + changeValue >= hpMax) {
-        setHP(hpMax);
-      } else if (hp < 0) {
-        setHP(changeValue);
-      } else {
-        setHP(hp + changeValue);
-      }
-    } else if (changeType === "damage") {
-      if (hp - changeValue <= 0) {
-        //Unconcious
-        setHP(hp - changeValue);
-      } else {
-        setHP(hp - changeValue);
-      }
-    } else if (changeType === "stabilize") {
-      setHP(0);
-    }
-
-    // make this a function call
-    axios({
-      method: "patch",
-      url: "http://localhost:4000/",
-      data: {
-        name: "Gaston",
-        newHP: hp + 10,
-      },
-    })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const newHP = updateHP(changeType, changeValue, hp, hpMax);
+    setHP(newHP);
     setChangeHP(false);
   }
 
