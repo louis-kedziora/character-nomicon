@@ -66,7 +66,8 @@ exports.createCharacter = (req, res) => {
 
 exports.updateHP = (req, res) => {
   // Validate request
-  if (!req.body.name || !req.body.newHP) {
+  console.log(req.body);
+  if (!req.body.name || typeof(req.body.newHP) !== "number") {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }

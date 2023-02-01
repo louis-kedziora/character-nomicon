@@ -3,12 +3,16 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Create a new Tutorial
-    router.post("/", characters.createCharacter);
+    // Create a new Character
+    router.post("/create", characters.createCharacter);
 
-    router.patch("/", characters.updateHP);
+    // For whatever reason axios get requests ignore the body so post is used instead
+    // see here: https://stackoverflow.com/questions/46404051/send-object-with-axios-get-request
+    router.post("/get", characters.getCharacter);
 
-    router.get("/", characters.getCharacter);
+    router.patch("/updatehp", characters.updateHP);
+
+    
 
     app.use('/api/characters', router);
   };
