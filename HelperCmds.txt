@@ -2,3 +2,8 @@
 sudo systemctl start mongod
 sudo systemctl status mongod
 mongosh
+
+// If running the database server locally
+nodemon server.js
+// If nodemon command is not found
+sudo npm install -g nodemon
