@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -7,7 +7,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 export const ChangeHPBox = ({ methods }) => {
-  const { closeChangeState, handleRadio } = methods;
+  const { closeChangeState, handleRadio, cancelHandler } = methods;
+  
   return (
     <form onSubmit={closeChangeState}>
       <Grid container spacing={2}>
@@ -38,10 +39,15 @@ export const ChangeHPBox = ({ methods }) => {
         </RadioGroup>
 
         <Grid xs={12}>
-          <TextField name="changeValue" id="outlined-number" type="number" />
+          <TextField
+            name="changeValue"
+            id="outlined-number"
+            type="number"
+           
+          />
         </Grid>
         <Grid xs={6}>
-          <Button variant="contained" color="error" type="submit" value={false}>
+          <Button onClick={cancelHandler} name="cancelButton" variant="contained" color="error" type="submit">
             Cancel
           </Button>
         </Grid>
@@ -50,7 +56,6 @@ export const ChangeHPBox = ({ methods }) => {
             variant="contained"
             color="success"
             type="submit"
-            value={true}
           >
             Ok
           </Button>

@@ -2,18 +2,22 @@ import React, { useState } from "react";
 import TuneIcon from "@mui/icons-material/Tune";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
-import axios from "axios";
 import { ChangeHPBox } from "./ChangeHPBox";
+import { updateHP } from "../../DBHandler/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
   const { title, hpMax } = characterInfo;
   const [hp, setHP] = useState(hpMax);
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("");
+  const [cancelClicked, setCancelClicked] = useState(false);
 
   function openChangeState(event) {
     // Open the form
     setChangeHP(true);
+  }
+  function cancelHandler() {
+    setCancelClicked(true);
   }
 
   function closeChangeState(event) {
@@ -21,42 +25,27 @@ export const HPBox = ({ characterInfo }) => {
     // Then hide the form
     // If the user cancels the action do nothing
     event.preventDefault();
-    const changeValue = event.target.elements.changeValue.value;
-    if (changeType === "heal") {
-      if (hp + changeValue >= hpMax) {
-        setHP(hpMax);
-      } else if (hp < 0) {
-        setHP(changeValue);
-      } else {
-        setHP(hp + changeValue);
-      }
-    } else if (changeType === "damage") {
-      if (hp - changeValue <= 0) {
-        //Unconcious
-        setHP(hp - changeValue);
-      } else {
-        setHP(hp - changeValue);
-      }
-    } else if (changeType === "stabilize") {
-      setHP(0);
-    }
 
-    // make this a function call
-    axios({
-      method: "patch",
-      url: "http://localhost:4000/",
-      data: {
-        name: "Gaston",
-        newHP: hp + 10,
-      },
-    })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    let changeValue = parseInt(event.target.elements.changeValue.value);
+    if (!cancelClicked) {
+      // This is to set 0 for the changeValue as np value is given when that is clicked
+      if (changeType === "stabilize") changeValue = 0;
+      
+      // Cases where the resulting change would make the updateHP call where
+      //  newHP === currentHP
+      // 0. Until character data is pulled from the db on startup we will run into this issue aswell
+      // 1. Healing an already full character
+      // 2. stabilizing and alreading stable character
+      if (
+        !(changeType === "heal" && hp === hpMax) &&
+        !(changeType === "stabilize" && hp === 0)
+      ) {
+        const newHP = updateHP(changeType, parseInt(changeValue), hp, hpMax);
+        setHP(newHP);
+      }
+    }
     setChangeHP(false);
+    setCancelClicked(false);
   }
 
   function handleRadio(event) {
@@ -81,6 +70,7 @@ export const HPBox = ({ characterInfo }) => {
           methods={{
             closeChangeState: closeChangeState,
             handleRadio: handleRadio,
+            cancelHandler: cancelHandler,
           }}
         />
       )}
