@@ -1,1 +1,1 @@
-export { getCharacter } from "./DBHandler";
+export { updateResource } from "./DBHandler";

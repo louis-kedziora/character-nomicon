@@ -6,14 +6,11 @@ import { ChangeHPBox } from "./ChangeHPBox";
 import { updateHP } from "../../DBHandler/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
-  const { title, hpMax, currentHP} = characterInfo;
+  const { title, hpMax, currentHP } = characterInfo;
   const [hp, setHP] = useState(currentHP);
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("");
   const [cancelClicked, setCancelClicked] = useState(false);
-
-
-
 
   function openChangeState(event) {
     // Open the form
@@ -33,7 +30,7 @@ export const HPBox = ({ characterInfo }) => {
     if (!cancelClicked) {
       // This is to set 0 for the changeValue as np value is given when that is clicked
       if (changeType === "stabilize") changeValue = 0;
-      
+
       // Cases where the resulting change would make the updateHP call where
       //  newHP === currentHP
       // 0. Until character data is pulled from the db on startup we will run into this issue aswell
@@ -54,7 +51,6 @@ export const HPBox = ({ characterInfo }) => {
   function handleRadio(event) {
     setChangeType(event.target.value);
   }
-
 
   return (
     <div className="attributeBox">

@@ -2,31 +2,44 @@
 
 import axios from "axios";
 
-export async function getCharacter(characterName) {
+export const updateResource = (
+  resourceName,
+  changeAmount,
+  currentValue,
+  maxValue
+) => {
+  let newValue;
+  if (currentValue + changeAmount < 0) {
+    newValue = 0;
+  } else if (currentValue + changeAmount >= maxValue) {
+    newValue = maxValue;
+  } else {
+    newValue = currentValue + changeAmount;
+  }
   axios({
-    method: "post",
-    url: "http://localhost:4000/api/characters/get",
+    method: "patch",
+    url: "http://localhost:4000/api/characters/updateResource",
     data: {
-      name: characterName,
+      name: "Gaston",
+      [resourceName]: newValue,
     },
   })
     .then(function (response) {
-      // console.log("Then Response:");
-      // console.log(response);
-      return response;
+      console.log(response);
     })
     .catch(function (error) {
       console.log(error);
-    })
-    .finally(function (response) {
-      // console.log("Finally Payload: ")
-      // console.log(payload);
-      return response;
     });
-}
+  return newValue;
+};
 
 export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
-  if (updateType === undefined || changeAmount === undefined) {
+  if (
+    updateType === undefined ||
+    changeAmount === undefined ||
+    currentHP === undefined ||
+    hpMax === undefined
+  ) {
     console.log("Missing updateType and/or changeAmount parameters");
   }
   let newHP = currentHP;

@@ -2,7 +2,7 @@ const db = require("../models");
 const Character = db.characters;
 
 exports.getCharacter = (req, res) => {
-      // Validate request
+  // Validate request
   if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
@@ -19,7 +19,7 @@ exports.getCharacter = (req, res) => {
       }
     }
   });
-}
+};
 
 exports.createCharacter = (req, res) => {
   // Validate request
@@ -45,6 +45,8 @@ exports.createCharacter = (req, res) => {
     speed: req.body.speed,
     level: req.body.level,
     hitDice: req.body.hitDice,
+    maxHitDice: req.body.maxHitDice,
+    currentHitDice: req.body.currentHitDice,
     trainedSkills: {
       perception: trainedSkills.perception,
       investigation: trainedSkills.investigation,
@@ -64,10 +66,43 @@ exports.createCharacter = (req, res) => {
     });
 };
 
+exports.updateResource = (req, res) => {
+  console.log(req.body);
+  if (!req.body || !req.body.name) {
+    res.status(400).send({ message: "Body can not be empty!" });
+    return;
+  }
+  const updateName = req.body.name;
+  let updateData = req.body;
+  delete updateData.name;
+  console.log(updateData);
+  Character.findOne({ name: updateName }, function (err, foundCharacter) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundCharacter) {
+        console.log("Character Not Found!");
+      } else {
+        Character.updateOne({ name: req.body.name }, updateData)
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message ||
+                "Some error occurred while updating character HP",
+            });
+          });
+      }
+    }
+  });
+};
+
 exports.updateHP = (req, res) => {
   // Validate request
   console.log(req.body);
-  if (!req.body.name || typeof(req.body.newHP) !== "number") {
+  if (!req.body.name || typeof req.body.newHP !== "number") {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }

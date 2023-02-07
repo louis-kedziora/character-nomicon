@@ -13,6 +13,8 @@ const characterSchema = {
   speed: Number,
   level: Number,
   hitDice: String,
+  maxHitDice: Number,
+  currentHitDice: Number,
   trainedSkills: {
       perception: Boolean,
       investigation: Boolean
