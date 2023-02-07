@@ -6,11 +6,14 @@ import { ChangeHPBox } from "./ChangeHPBox";
 import { updateHP } from "../../DBHandler/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
-  const { title, hpMax } = characterInfo;
-  const [hp, setHP] = useState(hpMax);
+  const { title, hpMax, currentHP} = characterInfo;
+  const [hp, setHP] = useState(currentHP);
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("");
   const [cancelClicked, setCancelClicked] = useState(false);
+
+
+
 
   function openChangeState(event) {
     // Open the form
@@ -51,6 +54,7 @@ export const HPBox = ({ characterInfo }) => {
   function handleRadio(event) {
     setChangeType(event.target.value);
   }
+
 
   return (
     <div className="attributeBox">

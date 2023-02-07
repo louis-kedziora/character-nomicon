@@ -1,35 +1,29 @@
+// This is all fucked use "axios.js" and see app.js for example
+
 import axios from "axios";
 
-export const getCharacter = (characterName) => {
-  if (characterName === undefined) {
-    console.log("Missing name for getCharacter request");
-    return undefined;
-  }
-  // try {
-  //   const res = await axios.get("/api/updatecart", {
-  //     data: { product: this.product },
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  // }
-
-  //   axios({
-  //     method: "post",
-  //     url: "http://localhost:4000/api/characters/get",
-  //     data: {
-  //       name: characterName,
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // .finally(() => {
-  //   return response;
-  // });
-};
+export async function getCharacter(characterName) {
+  axios({
+    method: "post",
+    url: "http://localhost:4000/api/characters/get",
+    data: {
+      name: characterName,
+    },
+  })
+    .then(function (response) {
+      // console.log("Then Response:");
+      // console.log(response);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .finally(function (response) {
+      // console.log("Finally Payload: ")
+      // console.log(payload);
+      return response;
+    });
+}
 
 export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
   if (updateType === undefined || changeAmount === undefined) {
