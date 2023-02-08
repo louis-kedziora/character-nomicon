@@ -44,6 +44,7 @@ export const AttributeSheet = ({ gaston }) => {
   return (
     <div>
       <Header />
+
       <Grid container spacing={1}>
         <Grid xs={12}>
           <AttributeBox
@@ -73,7 +74,7 @@ export const AttributeSheet = ({ gaston }) => {
           <InfoBox info={{ title: "Speed", content: speed }} />
           <InfoBox info={{ title: "Initiative", content: scoreMod(dex) }} />
         </Grid>
-      </Grid>
+
         <Grid xs={12}>
           <HPBox
             characterInfo={{ title: "HP", hpMax: hpMax, currentHP: currentHP }}
@@ -138,10 +139,9 @@ export const AttributeSheet = ({ gaston }) => {
             }}
           />
         </Grid>
-        
-
+      </Grid>
       {/* This Footer is rendering in the middle of the screen for some reason */}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
