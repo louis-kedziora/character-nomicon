@@ -11,28 +11,22 @@ export const AttributeBox = ({ attribute }) => {
   const { attributeName, attributeScore } = attribute;
 
   return (
-    <div className="attributeBox">
+    <div className="attributeBox statBox">
       <h1>{attributeName}</h1>
       <Grid container spacing={2}>
         <Grid xs={4}>
           <p>Score</p>
+          <h2>{attributeScore}</h2>
         </Grid>
         <Grid xs={4}>
           <p>Mod</p>
+          <h2>{scoreMod(attributeScore)}</h2>
+
         </Grid>
         <Grid xs={4}>
           <p>Save</p>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        <Grid xs={4}>
-          <p>{attributeScore}</p>
-        </Grid>
-        <Grid xs={4}>
-          <p>{scoreMod(attributeScore)}</p>
-        </Grid>
-        <Grid xs={4}>
-          <p>{scoreMod(attributeScore)}</p>
+          <h2>{scoreMod(attributeScore)}</h2>
+
         </Grid>
       </Grid>
     </div>

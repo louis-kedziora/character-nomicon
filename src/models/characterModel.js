@@ -13,10 +13,24 @@ const characterSchema = {
   speed: Number,
   level: Number,
   hitDice: String,
+  maxHitDice: Number,
+  currentHitDice: Number,
+  maxOneSpellSlots: Number,
+  currentOneSpellSlots: Number,
+  maxTwoSpellSlots: Number,
+  currentTwoSpellSlots: Number,
+  maxThreeSpellSlots: Number,
+  currentThreeSpellSlots: Number,
   trainedSkills: {
       perception: Boolean,
       investigation: Boolean
-  }
+  },
+  maxWildShapes: Number,
+  currentWildShapes: Number,
+  maxGuidingBolts: Number,
+  currentGuidingBolts: Number,
+  maxCosmicOmens: Number,
+  currentCosmicOmens: Number
 };
 
 module.exports = (mongoose) => {

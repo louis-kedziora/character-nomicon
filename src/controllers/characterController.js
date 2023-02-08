@@ -2,7 +2,7 @@ const db = require("../models");
 const Character = db.characters;
 
 exports.getCharacter = (req, res) => {
-      // Validate request
+  // Validate request
   if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
@@ -19,7 +19,7 @@ exports.getCharacter = (req, res) => {
       }
     }
   });
-}
+};
 
 exports.createCharacter = (req, res) => {
   // Validate request
@@ -28,28 +28,10 @@ exports.createCharacter = (req, res) => {
     return;
   }
 
-  const trainedSkills = JSON.parse(req.body.trainedSkills);
-
-  // Create a character
-  const character = new Character({
-    name: req.body.name,
-    hpMax: req.body.hpMax,
-    currentHP: req.body.hpMax,
-    str: req.body.str,
-    int: req.body.int,
-    dex: req.body.dex,
-    wis: req.body.wis,
-    con: req.body.con,
-    char: req.body.char,
-    ac: req.body.ac,
-    speed: req.body.speed,
-    level: req.body.level,
-    hitDice: req.body.hitDice,
-    trainedSkills: {
-      perception: trainedSkills.perception,
-      investigation: trainedSkills.investigation,
-    },
-  });
+  //  Trained skills will be sent as a stringified JSON object so this
+  //    parses it and inserts it back into the new character object 'req.body'
+  req.body["trainedSkills"] = JSON.parse(req.body.trainedSkills);
+  const character = new Character(req.body);
   // Save Character in the database
   character
     .save(character)
@@ -64,10 +46,46 @@ exports.createCharacter = (req, res) => {
     });
 };
 
+exports.updateResource = (req, res) => {
+  // console.log(req.body);
+  if (!req.body || !req.body.name) {
+    res.status(400).send({ message: "Body can not be empty!" });
+    return;
+  }
+  const updateName = req.body.name;
+  let updateData = req.body;
+  delete updateData.name;
+  const updateField = Object.keys(updateData)[0];
+  const updateValue = Object.values(updateData)[0];
+
+  Character.findOne({ name: updateName }, function (err, foundCharacter) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundCharacter) {
+        console.log("Character Not Found!");
+      } else {
+        foundCharacter[updateField] = updateValue;
+        foundCharacter
+          .save(foundCharacter)
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while updating resource",
+            });
+          });
+      }
+    }
+  });
+};
+
 exports.updateHP = (req, res) => {
   // Validate request
   console.log(req.body);
-  if (!req.body.name || typeof(req.body.newHP) !== "number") {
+  if (!req.body.name || typeof req.body.newHP !== "number") {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }

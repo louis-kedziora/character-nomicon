@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import TuneIcon from "@mui/icons-material/Tune";
+import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ChangeHPBox } from "./ChangeHPBox";
 import { updateHP } from "../../DBHandler/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
-  const { title, hpMax, currentHP} = characterInfo;
+  const { title, hpMax, currentHP } = characterInfo;
   const [hp, setHP] = useState(currentHP);
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("");
   const [cancelClicked, setCancelClicked] = useState(false);
-
-
-
 
   function openChangeState(event) {
     // Open the form
@@ -33,7 +30,7 @@ export const HPBox = ({ characterInfo }) => {
     if (!cancelClicked) {
       // This is to set 0 for the changeValue as np value is given when that is clicked
       if (changeType === "stabilize") changeValue = 0;
-      
+
       // Cases where the resulting change would make the updateHP call where
       //  newHP === currentHP
       // 0. Until character data is pulled from the db on startup we will run into this issue aswell
@@ -55,16 +52,17 @@ export const HPBox = ({ characterInfo }) => {
     setChangeType(event.target.value);
   }
 
-
   return (
-    <div className="attributeBox">
+    <div className="attributeBox resourceBox">
       <h1>{title}</h1>
-      <p>{hp}</p>
+      <div className="resourceCount">
+        <h2>{hp}</h2>
+      </div>
       {!changeHP && (
         <Grid container spacing={2}>
           <Grid xs={12}>
-            <Fab onClick={openChangeState}>
-              <TuneIcon />
+            <Fab size="small" color="error" onClick={openChangeState}>
+              <BloodtypeIcon fontSize="medium" />
             </Fab>
           </Grid>
         </Grid>
