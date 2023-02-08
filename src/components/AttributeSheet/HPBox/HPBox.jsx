@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TuneIcon from "@mui/icons-material/Tune";
+import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ChangeHPBox } from "./ChangeHPBox";
@@ -53,14 +53,16 @@ export const HPBox = ({ characterInfo }) => {
   }
 
   return (
-    <div className="attributeBox">
+    <div className="attributeBox resourceBox">
       <h1>{title}</h1>
-      <p>{hp}</p>
+      <div className="resourceCount">
+        <h2>{hp}</h2>
+      </div>
       {!changeHP && (
         <Grid container spacing={2}>
           <Grid xs={12}>
-            <Fab onClick={openChangeState}>
-              <TuneIcon />
+            <Fab size="small" color="error" onClick={openChangeState}>
+              <BloodtypeIcon fontSize="medium" />
             </Fab>
           </Grid>
         </Grid>

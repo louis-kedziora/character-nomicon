@@ -28,30 +28,10 @@ exports.createCharacter = (req, res) => {
     return;
   }
 
-  const trainedSkills = JSON.parse(req.body.trainedSkills);
-
-  // Create a character
-  const character = new Character({
-    name: req.body.name,
-    hpMax: req.body.hpMax,
-    currentHP: req.body.hpMax,
-    str: req.body.str,
-    int: req.body.int,
-    dex: req.body.dex,
-    wis: req.body.wis,
-    con: req.body.con,
-    char: req.body.char,
-    ac: req.body.ac,
-    speed: req.body.speed,
-    level: req.body.level,
-    hitDice: req.body.hitDice,
-    maxHitDice: req.body.maxHitDice,
-    currentHitDice: req.body.currentHitDice,
-    trainedSkills: {
-      perception: trainedSkills.perception,
-      investigation: trainedSkills.investigation,
-    },
-  });
+  //  Trained skills will be sent as a stringified JSON object so this
+  //    parses it and inserts it back into the new character object 'req.body'
+  req.body["trainedSkills"] = JSON.parse(req.body.trainedSkills);
+  const character = new Character(req.body);
   // Save Character in the database
   character
     .save(character)
@@ -67,7 +47,7 @@ exports.createCharacter = (req, res) => {
 };
 
 exports.updateResource = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   if (!req.body || !req.body.name) {
     res.status(400).send({ message: "Body can not be empty!" });
     return;
@@ -75,7 +55,9 @@ exports.updateResource = (req, res) => {
   const updateName = req.body.name;
   let updateData = req.body;
   delete updateData.name;
-  console.log(updateData);
+  const updateField = Object.keys(updateData)[0];
+  const updateValue = Object.values(updateData)[0];
+
   Character.findOne({ name: updateName }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
@@ -83,15 +65,16 @@ exports.updateResource = (req, res) => {
       if (!foundCharacter) {
         console.log("Character Not Found!");
       } else {
-        Character.updateOne({ name: req.body.name }, updateData)
+        foundCharacter[updateField] = updateValue;
+        foundCharacter
+          .save(foundCharacter)
           .then((data) => {
             res.send(data);
           })
           .catch((err) => {
             res.status(500).send({
               message:
-                err.message ||
-                "Some error occurred while updating character HP",
+                err.message || "Some error occurred while updating resource",
             });
           });
       }

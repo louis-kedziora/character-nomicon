@@ -8,14 +8,8 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { updateResource } from "../../DBHandler";
 
 export const ResourceBox = ({ characterInfo }) => {
-  const {
-    title,
-    currentValue,
-    maxValue,
-    extraInfo,
-    characterName,
-    resourceName,
-  } = characterInfo;
+  const { title, currentValue, maxValue, extraInfo, resourceName } =
+    characterInfo;
   const [resourceValue, setResourceValue] = useState(currentValue);
 
   function onClickHandler(event) {
@@ -35,19 +29,24 @@ export const ResourceBox = ({ characterInfo }) => {
   // extraInfo is seemingly only needed for hitDice resource but because of Variance probably
   //  need its own component ie. multiclassing can result in hitDice = 3/3d8s and 2/2d10s
   return (
-    <div className="attributeBox">
+    <div className="attributeBox resourceBox">
       <h1>{title}</h1>
-      <p>{resourceValue + " / " + maxValue + extraInfo}</p>
-
+      <div className="resourceCount">
+        <h2>
+          {extraInfo
+            ? resourceValue + " / " + maxValue + extraInfo
+            : resourceValue + " / " + maxValue}
+        </h2>
+      </div>
       <Grid container spacing={2}>
         <Grid xs={6}>
-          <Fab name="Remove" onClick={onClickHandler}>
-            <RemoveIcon name="Remove" />
+          <Fab size="small" name="Remove" color="error" onClick={onClickHandler}>
+            <RemoveIcon fontSize="large" name="Remove" />
           </Fab>
         </Grid>
         <Grid xs={6}>
-          <Fab name="Add" onClick={onClickHandler}>
-            <AddIcon name="Add" />
+          <Fab size="small" name="Add" color="success" onClick={onClickHandler}>
+            <AddIcon fontSize="large" name="Add" />
           </Fab>
         </Grid>
       </Grid>

@@ -4,9 +4,9 @@ export const InfoBox = ({ info }) => {
   const { title, content } = info;
 
   return (
-    <div className="attributeBox">
+    <div className="attributeBox statBox">
       <h1>{title}</h1>
-      <p>{content}</p>
+      <h2>{content}</h2>
     </div>
   );
 };
