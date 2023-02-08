@@ -22,6 +22,10 @@ body {
   padding: 0 16px;
 }
 
+.navLinks {
+  text-decoration: none;
+}
+
 header {
   background-color: #464b4c;
   margin: auto -16px;
@@ -72,6 +76,11 @@ footer p {
   height: 36px;
   cursor: pointer;
   outline: none;
+}
+
+.skillSheet h1 {
+  margin: 10px;
+  color:#fff;
 }
 
 .statBox h1 {

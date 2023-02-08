@@ -1,7 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 
-import { Header, Footer } from "../partials";
 import { AttributeBox } from "./AttributeBox";
 import { InfoBox } from "./InfoBox";
 import { proficiencyBonus, scoreMod } from "./Modifiers";
@@ -11,7 +10,6 @@ import { ResourceBox } from "./ResourceBox";
 export const AttributeSheet = ({ gaston }) => {
   //Helper Function could put it in utils.js
   const variableToString = (varObj) => Object.keys(varObj)[0];
-  console.log(gaston);
   const {
     ac,
     level,
@@ -43,7 +41,6 @@ export const AttributeSheet = ({ gaston }) => {
 
   return (
     <div>
-      <Header />
 
       <Grid container spacing={1}>
         <Grid xs={12}>
@@ -140,8 +137,6 @@ export const AttributeSheet = ({ gaston }) => {
           />
         </Grid>
       </Grid>
-      {/* This Footer is rendering in the middle of the screen for some reason */}
-      <Footer />
     </div>
   );
 };

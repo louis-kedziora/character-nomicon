@@ -9,3 +9,8 @@ export const proficiencyBonus = (level) => {
     return "+" + (Math.floor((level / 4) - 0.1) + 2)
 }
 
+export const modifierAndProficency = (level, score) => {
+    let result = Math.floor((score - 10) / 2) + (Math.floor((level / 4) - 0.1) + 2)
+    if(result > 0) result = "+" + result;
+    return result;
+}

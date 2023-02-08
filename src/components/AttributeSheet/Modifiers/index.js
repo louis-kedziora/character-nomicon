@@ -1,1 +1,1 @@
-export {scoreMod, proficiencyBonus} from "./Modifiers";
+export {scoreMod, proficiencyBonus, modifierAndProficency} from "./Modifiers";
