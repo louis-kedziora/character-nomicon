@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import { scoreMod } from "../Modifiers";
+import { scoreMod, modifierAndProficency } from "../Modifiers";
 
 export const AttributeBox = ({ attribute }) => {
 
@@ -8,7 +8,12 @@ export const AttributeBox = ({ attribute }) => {
     // console.log("Character attributes are not being defined");
     return <div>Character attributes are not being defined</div>
   }
-  const { attributeName, attributeScore } = attribute;
+  
+  const { attributeName, attributeScore, level } = attribute;
+  let save = scoreMod(attributeScore);
+  if (attributeName === "Dexterity" || attributeName === "Constitution") {
+    save = modifierAndProficency(level, attributeScore)
+  }
 
   return (
     <div className="attributeBox statBox">
@@ -25,7 +30,7 @@ export const AttributeBox = ({ attribute }) => {
         </Grid>
         <Grid xs={4}>
           <p>Save</p>
-          <h2>{scoreMod(attributeScore)}</h2>
+          <h2>{save}</h2>
 
         </Grid>
       </Grid>

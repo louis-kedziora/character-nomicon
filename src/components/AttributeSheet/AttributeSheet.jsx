@@ -41,26 +41,49 @@ export const AttributeSheet = ({ gaston }) => {
 
   return (
     <div>
-
       <Grid container spacing={1}>
         <Grid xs={12}>
           <AttributeBox
-            attribute={{ attributeName: "Strength", attributeScore: str }}
+            attribute={{
+              attributeName: "Strength",
+              attributeScore: str,
+              level: level,
+            }}
           />
           <AttributeBox
-            attribute={{ attributeName: "Intelligence", attributeScore: int }}
+            attribute={{
+              attributeName: "Intelligence",
+              attributeScore: int,
+              level: level,
+            }}
           />
           <AttributeBox
-            attribute={{ attributeName: "Dexterity", attributeScore: dex }}
+            attribute={{
+              attributeName: "Dexterity",
+              attributeScore: dex,
+              level: level,
+            }}
           />
           <AttributeBox
-            attribute={{ attributeName: "Wisdom", attributeScore: wis }}
+            attribute={{
+              attributeName: "Wisdom",
+              attributeScore: wis,
+              level: level,
+            }}
           />
           <AttributeBox
-            attribute={{ attributeName: "Constitution", attributeScore: con }}
+            attribute={{
+              attributeName: "Constitution",
+              attributeScore: con,
+              level: level,
+            }}
           />
           <AttributeBox
-            attribute={{ attributeName: "Charisma", attributeScore: char }}
+            attribute={{
+              attributeName: "Charisma",
+              attributeScore: char,
+              level: level,
+            }}
           />
         </Grid>
         <Grid xs={12}>
