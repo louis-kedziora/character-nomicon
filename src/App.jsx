@@ -7,6 +7,7 @@ import {FeaturesSheet} from "./components/FeaturesSheet";
 import {NotesSheet} from "./components/NotesSheet";
 import { SkillsSheet } from "./components/SkillsSheet";
 import { SpellsSheet } from "./components/SpellsSheet";
+import {LootSheet} from "./components/LootSheet";
 import { Footer, Header } from "./components/partials";
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
             <Route
               path="/features"
               element={<FeaturesSheet gaston={character} />}
+            />
+            <Route
+              path="/loot"
+              element={<LootSheet gaston={character} />}
             />
             <Route
               path="/notes"

@@ -1,6 +1,25 @@
-// This is all fucked use "axios.js" and see app.js for example
+// TODO Need to implenment id for characters at this point 'gaston is hardcoded into all the methods'
 
 import axios from "axios";
+const HARDCODEDCHARACTERNAME = "Gaston";
+
+export const updateInfo = (infoName, newInfoString) => {
+  axios({
+    method: "patch",
+    url: "http://localhost:4000/api/characters/updateInfo",
+    data: {
+      name: HARDCODEDCHARACTERNAME,
+      [infoName]: newInfoString,
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return newInfoString;
+};
 
 export const updateResource = (
   resourceName,
@@ -20,7 +39,7 @@ export const updateResource = (
     method: "patch",
     url: "http://localhost:4000/api/characters/updateResource",
     data: {
-      name: "Gaston",
+      name: HARDCODEDCHARACTERNAME,
       [resourceName]: newValue,
     },
   })
@@ -66,7 +85,7 @@ export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
     method: "patch",
     url: "http://localhost:4000/api/characters/updatehp",
     data: {
-      name: "Gaston",
+      name: HARDCODEDCHARACTERNAME,
       newHP: newHP,
     },
   })

@@ -12,6 +12,8 @@ module.exports = app => {
 
     router.patch("/updatehp", characters.updateHP);
     router.patch("/updateresource", characters.updateResource);
+    router.patch("/updateinfo", characters.updateInfo);
+
 
     
 

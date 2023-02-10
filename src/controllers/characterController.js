@@ -82,6 +82,41 @@ exports.updateResource = (req, res) => {
   });
 };
 
+exports.updateInfo = (req, res) => {
+  if (!req.body || !req.body.name) {
+    res.status(400).send({ message: "Body can not be empty!" });
+    return;
+  }
+  const updateName = req.body.name;
+  let updateData = req.body;
+  delete updateData.name;
+  const updateField = Object.keys(updateData)[0];
+  const updateValue = Object.values(updateData)[0];
+
+  Character.findOne({ name: updateName }, function (err, foundCharacter) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundCharacter) {
+        console.log("Character Not Found!");
+      } else {
+        foundCharacter[updateField] = updateValue;
+        foundCharacter
+          .save(foundCharacter)
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while updating resource",
+            });
+          });
+      }
+    }
+  });
+};
+
 exports.updateHP = (req, res) => {
   // Validate request
   console.log(req.body);

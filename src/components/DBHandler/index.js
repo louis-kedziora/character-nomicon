@@ -1,1 +1,1 @@
-export { updateResource } from "./DBHandler";
+export { updateResource, updateInfo } from "./DBHandler";

@@ -43,6 +43,18 @@ const Header = () => {
             color="secondary"
             variant="extended"
             component={Link}
+            to="/loot"
+          >
+            <Link className="navLinks" to="/loot">
+              <h1>Loot</h1>
+            </Link>
+          </Fab>
+        </Grid>
+        <Grid xs={3}>
+          <Fab
+            color="secondary"
+            variant="extended"
+            component={Link}
             to="/notes"
           >
             <Link className="navLinks" to="/notes">

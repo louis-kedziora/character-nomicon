@@ -1,6 +1,14 @@
 
 const characterSchema = {
   name: String,
+  characterClass: String,
+  race: String,
+  background: String,
+  alignment: String,
+  languagesKnown: String,
+  armorProficiences: String,
+  weaponProficiences: String,
+  toolProficiences: String,
   hpMax: Number,
   currentHP: Number,
   str: Number,
@@ -41,6 +49,10 @@ const characterSchema = {
       performance: Boolean,
       persuasion: Boolean
   },
+  notes: String,
+  features: String,
+  loot: String,
+  partyLoot: String,
   maxWildShapes: Number,
   currentWildShapes: Number,
   maxGuidingBolts: Number,
