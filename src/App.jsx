@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { AttributeSheet } from "./components/AttributeSheet";
 import axios from "./axios";
 import { Routes, Route } from "react-router-dom";
-import { SkillsSheet } from "./components/SkillsSheet/SkillsSheet";
+import {AttacksSheet} from "./components/AttacksSheet"
+import { AttributeSheet } from "./components/AttributeSheet";
+import {FeaturesSheet} from "./components/FeaturesSheet";
+import {NotesSheet} from "./components/NotesSheet";
+import { SkillsSheet } from "./components/SkillsSheet";
+import { SpellsSheet } from "./components/SpellsSheet";
 import { Footer, Header } from "./components/partials";
 
 function App() {
@@ -22,18 +26,46 @@ function App() {
   // NOTE: If there are dependancies they must be put in this array at the bottom
   return (
     <div>
-      <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={isFetched && <AttributeSheet gaston={character} />}
-        />
-        <Route
-          path="/skills-sheet"
-          element={isFetched && <SkillsSheet gaston={character} />}
-        />
-      </Routes>
-      <Footer />
+      {isFetched && (
+        <div>
+          <Header />
+          <Routes>
+            <Route
+              path="/"
+              element={<AttributeSheet gaston={character} />}
+            />
+            <Route
+              path="/attacks"
+              element={<AttacksSheet gaston={character} />}
+            />
+                        <Route
+              path="/attributes"
+              element={<AttributeSheet gaston={character} />}
+            />
+            <Route
+              path="/features"
+              element={<FeaturesSheet gaston={character} />}
+            />
+            <Route
+              path="/notes"
+              element={<NotesSheet gaston={character} />}
+            />
+            <Route
+              path="/skills"
+              element={<SkillsSheet gaston={character} />}
+            />
+            <Route
+              path="/skills"
+              element={<SkillsSheet gaston={character} />}
+            />
+            <Route
+              path="/spells"
+              element={<SpellsSheet gaston={character} />}
+            />
+          </Routes>
+          <Footer />
+        </div>
+      )}
     </div>
   );
 }
