@@ -1,4 +1,3 @@
-
 const characterSchema = {
   name: String,
   characterClass: String,
@@ -30,24 +29,24 @@ const characterSchema = {
   maxThreeSpellSlots: Number,
   currentThreeSpellSlots: Number,
   trainedSkills: {
-      athletics: Boolean,
-      acrobatics: Boolean,
-      sleightOfHand: Boolean,
-      stealth: Boolean,
-      arcana: Boolean,
-      history: Boolean,
-      investigation: Boolean,
-      nature: Boolean,
-      religion: Boolean,
-      animalHandling: Boolean,
-      insight: Boolean,
-      medicine: Boolean,
-      perception: Boolean,
-      survival: Boolean,
-      deception: Boolean,
-      intimidation: Boolean,
-      performance: Boolean,
-      persuasion: Boolean
+    athletics: Boolean,
+    acrobatics: Boolean,
+    sleightOfHand: Boolean,
+    stealth: Boolean,
+    arcana: Boolean,
+    history: Boolean,
+    investigation: Boolean,
+    nature: Boolean,
+    religion: Boolean,
+    animalHandling: Boolean,
+    insight: Boolean,
+    medicine: Boolean,
+    perception: Boolean,
+    survival: Boolean,
+    deception: Boolean,
+    intimidation: Boolean,
+    performance: Boolean,
+    persuasion: Boolean,
   },
   notes: String,
   features: String,
@@ -58,10 +57,20 @@ const characterSchema = {
   maxGuidingBolts: Number,
   currentGuidingBolts: Number,
   maxCosmicOmens: Number,
-  currentCosmicOmens: Number
+  currentCosmicOmens: Number,
+  attacks: [
+    {
+      attackName: String,
+      attackRange: String,
+      attackModifier: Number,
+      attackDamage: String,
+      attackType: String,
+    },
+  ],
 };
 
 module.exports = (mongoose) => {
   const Character = mongoose.model("Character", characterSchema);
   return Character;
 };
+

@@ -6,14 +6,6 @@ const cors = require("cors");
 
 // Inter-project Imports
 const db = require("./src/models");
-// const dbConfig = require("./src/config/db.config");
-// const Character = db.characters;
-
-//Not Sure if this is needed
-// const corsOptions = {
-//   origin: "http://localhost:3000/",
-//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
 
 // App Setup
 const app = express();

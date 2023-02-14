@@ -28,9 +28,12 @@ exports.createCharacter = (req, res) => {
     return;
   }
 
-  //  Trained skills will be sent as a stringified JSON object so this
+  //  Trained skills and attacks will be sent as a stringified JSON object so this
   //    parses it and inserts it back into the new character object 'req.body'
   req.body["trainedSkills"] = JSON.parse(req.body.trainedSkills);
+  req.body["attacks"] = JSON.parse(req.body.attacks);
+
+
   const character = new Character(req.body);
   // Save Character in the database
   character
