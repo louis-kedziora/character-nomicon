@@ -3,13 +3,13 @@
 import axios from "axios";
 const HARDCODEDCHARACTERNAME = "Gaston";
 
-export const updateInfo = (infoName, newInfoString) => {
+export const updateInfo = (infoName, newInfo) => {
   axios({
     method: "patch",
     url: "http://localhost:4000/api/characters/updateInfo",
     data: {
       name: HARDCODEDCHARACTERNAME,
-      [infoName]: newInfoString,
+      [infoName]: newInfo,
     },
   })
     .then(function (response) {
@@ -18,7 +18,7 @@ export const updateInfo = (infoName, newInfoString) => {
     .catch(function (error) {
       console.log(error);
     });
-  return newInfoString;
+  return newInfo;
 };
 
 export const updateResource = (

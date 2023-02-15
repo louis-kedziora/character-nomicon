@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import { DataGrid } from '@mui/x-data-grid';
+import Fab from "@mui/material/Fab";
+import { DataGrid } from "@mui/x-data-grid";
+
+import { updateInfo } from "../DBHandler";
+import { NewAttackBox } from "./NewAttackBox";
 
 const columns = [
   {
     field: "attackName",
     headerName: "Name",
     editable: true,
-    flex: 1,
-    minWidth: 200,
+    flex: 0.5,
+    minWidth: 100,
   },
   {
     field: "attackRange",
@@ -43,25 +47,59 @@ const columns = [
 export const AttacksSheet = ({ gaston }) => {
   const { attacks } = gaston;
   const [currentAttacks, setCurrentAttacks] = useState(attacks);
-  const [cellChange, setCellChange] = useState();
+  const [addNewAttack, setAddNewAttack] = useState(false);
+  const [cancelClicked, setCancelClicked] = useState(false);
 
-  const handleCellEditStart = (params, event) => {
-    console.log("START");
-    console.log(params);
-    console.log(event.target);
-
-  }
   const handleCellEditStop = (params, event) => {
-    console.log("EditStop");
+    let foundRow = currentAttacks.find((element) => element._id === params.id);
+    foundRow[params.field] = event.target.value;
+    setCurrentAttacks(currentAttacks);
+    updateInfo("attacks", currentAttacks);
+  };
 
-    setCellChange(event.target.value);
-    console.log(cellChange);
+  const openNewAttackForm = () => {
+    setAddNewAttack(true);
+  };
+
+  const closeAddState = (event) => {
+    event.preventDefault();
+    // Only save the new attack if cancel was not clicked
+
+    if(!cancelClicked) {
+      // console.log(event.target.elements);
+      console.log(event.target.elements.attackName.value);
+
+    }
+    setAddNewAttack(false);
+  };
+  function cancelHandler() {
+    setCancelClicked(true);
   }
-
 
   return (
-    <div>
+    <div className="attributeBox">
       <Grid container spacing={2}>
+        <Grid xs={12}>
+          {!addNewAttack && (
+            <Fab
+              size="large"
+              color="primary"
+              variant="extended"
+              onClick={openNewAttackForm}
+            >
+              <h1>New Attack</h1>
+            </Fab>
+          )}
+          {addNewAttack && (
+            <NewAttackBox
+              methods={{
+                closeAddState: closeAddState,
+                // handleRadio: handleRadio,
+                cancelHandler: cancelHandler,
+              }}
+            />
+          )}
+        </Grid>
         <Grid xs={12}></Grid>
         <div style={{ height: 400, width: "100%", backgroundColor: "white" }}>
           <DataGrid
@@ -72,7 +110,6 @@ export const AttacksSheet = ({ gaston }) => {
             rows={currentAttacks}
             columns={columns}
             getRowId={(row) => row._id}
-            onCellEditStart={handleCellEditStart}
             onCellEditStop={handleCellEditStop}
           />
         </div>
