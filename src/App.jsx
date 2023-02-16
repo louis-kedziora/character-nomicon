@@ -13,7 +13,7 @@ import { Footer, Header } from "./components/partials";
 function App() {
   const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
-  const characterName = "Gaston";
+  const characterName = "Sevro";
 
   useEffect(() => {
     async function fetchData() {
