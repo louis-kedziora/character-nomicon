@@ -77,6 +77,26 @@ footer {
 footer p {
   color: #ccc;
 }
+
+.attackBox {
+  background: #0f111a;
+  box-shadow: 0 2px 5px #464b4c;
+  border-radius: 7px;
+  padding: 10px;
+  width: 100%;
+  margin: 16px;
+  float: center;
+  text-align: center;
+}
+
+.newAttackBox {
+  background-color: white;
+}
+
+.newAttackBox Button {
+  margin-right: 40px;
+}
+
 .attributeBox {
   background: #0f111a;
   box-shadow: 0 2px 5px #464b4c;
