@@ -89,11 +89,11 @@ footer p {
   text-align: center;
 }
 
-.newAttackBox {
+.inputForm {
   background-color: white;
 }
 
-.newAttackBox Button {
+.inputForm Button {
   margin-right: 40px;
 }
 

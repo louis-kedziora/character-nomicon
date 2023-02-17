@@ -67,6 +67,17 @@ const characterSchema = {
       attackType: String,
     },
   ],
+  spells: [
+    {
+      spellPrepared: Boolean,
+      spellName: String,
+      spellTime: String,
+      spellRange: String,
+      spellHitOrDC: String,
+      spellEffect: String,
+      spellNotes: String,
+    },
+  ],
 };
 
 module.exports = (mongoose) => {

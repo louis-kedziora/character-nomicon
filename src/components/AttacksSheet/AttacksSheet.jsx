@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import Button from "@mui/material/Button";
 
 import { updateInfo } from "../DBHandler";
-import { NewAttackBox } from "./NewAttackBox";
+import { InputForm } from "../InputForm";
 
 export const AttacksSheet = ({ gaston }) => {
   const { attacks } = gaston;
@@ -93,7 +93,7 @@ export const AttacksSheet = ({ gaston }) => {
       headerName: "Type",
       editable: true,
       flex: 1,
-      minWidth: 200,
+      minWidth: 100,
     },
     {
       field: "attackModifier",
@@ -120,7 +120,7 @@ export const AttacksSheet = ({ gaston }) => {
             variant="outlined"
             color="error"
           >
-            <DeleteIcon/>
+            <DeleteIcon />
           </Button>
         );
       },
@@ -142,17 +142,19 @@ export const AttacksSheet = ({ gaston }) => {
             </Fab>
           )}
           {addNewAttack && (
-            <NewAttackBox
+            <InputForm
               methods={{
                 closeAddState: closeAddState,
                 cancelHandler: cancelHandler,
               }}
+              fields={columns}
             />
           )}
         </Grid>
         <Grid xs={12}></Grid>
         <div style={{ height: 400, width: "100%", backgroundColor: "white" }}>
           <DataGrid
+            hideFooter
             experimentalFeatures={{ newEditingApi: true }}
             columnVisibilityModel={{
               id: false,
