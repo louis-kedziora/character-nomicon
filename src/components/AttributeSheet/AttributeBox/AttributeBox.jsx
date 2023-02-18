@@ -11,7 +11,7 @@ export const AttributeBox = ({ attribute }) => {
   const { attributeName, attributeScore } = attribute;
 
   return (
-    <div className="attributeBox statBox">
+    <div className="basicBox statBox">
       <h1>{attributeName}</h1>
       <Grid container spacing={2}>
         <Grid xs={4}>

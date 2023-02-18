@@ -4,7 +4,9 @@ Background - #0f111a
 Text/Foreground - #5aa0ff
 Secondary Text - #c789c3
 Third Text - #d97326
-Comment Color - #464b4c */
+Comment Color - #464b4c 
+Nice Green - #03C988*/
+
 
 
 * {
@@ -50,6 +52,21 @@ footer {
   /* margin: auto -16px; */
 }
 
+footer p {
+  color: #ccc;
+}
+
+.basicBox {
+  background: #0f111a;
+  box-shadow: 0 2px 5px #464b4c;
+  border-radius: 7px;
+  padding: 10px;
+  width: 240px;
+  margin: 16px;
+  float: left;
+  text-align: center;
+}
+
 .noteBox textarea {
   width: 100%;
   border: none;
@@ -74,15 +91,22 @@ footer {
   text-align: center;
 }
 
-footer p {
-  color: #ccc;
+.spellBox {
+  background: #0f111a;
+  box-shadow: 0 2px 5px #464b4c;
+  border-radius: 7px;
+  padding: 15px;
+  width: 100%;
+  margin: 16px;
+  float: center;
+  text-align: center;
 }
 
 .attackBox {
   background: #0f111a;
   box-shadow: 0 2px 5px #464b4c;
   border-radius: 7px;
-  padding: 10px;
+  padding: 15px;
   width: 100%;
   margin: 16px;
   float: center;
@@ -90,24 +114,15 @@ footer p {
 }
 
 .inputForm {
-  background-color: white;
+  background-color: #0f111a;
+}
+
+.inputForm TextField {
+  color:#03C988;
 }
 
 .inputForm Button {
   margin-right: 40px;
-}
-
-.attributeBox {
-  background: #0f111a;
-  box-shadow: 0 2px 5px #464b4c;
-  
-  border-radius: 7px;
-  
-  padding: 10px;
-  width: 240px;
-  margin: 16px;
-  float: left;
-  text-align: center;
 }
 
 .attribute button {

@@ -33,7 +33,7 @@ export const ResourceBox = ({ characterInfo }) => {
     {/* If the maxValue <= 0 do not render or in other words
           if the Character does not have the resource do not render the box */}
       {maxValue > 0 && (
-        <div className="attributeBox resourceBox">
+        <div className="basicBox resourceBox">
           <h1>{title}</h1>
           <div className="resourceCount">
             <h2>

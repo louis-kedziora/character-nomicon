@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Fab from "@mui/material/Fab";
-import { DataGrid } from "@mui/x-data-grid";
+import { styled } from '@mui/material/styles';
+import { DataGrid } from '@mui/x-data-grid';
 import mongoose from "mongoose";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "../DBHandler";
 import { InputForm } from "../InputForm";
@@ -115,22 +116,52 @@ export const AttacksSheet = ({ gaston }) => {
       width: 400,
       renderCell: (params) => {
         return (
-          <Button
+          <IconButton
             onClick={(event) => onDeleteClick(event, params.row)}
             variant="outlined"
             color="error"
           >
             <DeleteIcon />
-          </Button>
+          </IconButton>
         );
       },
     },
   ];
-
+  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+    border: 0,
+    WebkitFontSmoothing: 'auto',
+    letterSpacing: 'normal',
+    '& .MuiDataGrid-columnsContainer': {
+      backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
+    },
+    '& .MuiDataGrid-iconSeparator': {
+      display: 'none',
+    },
+    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+      borderRight: "none",
+    },
+    '& .MuiDataGrid-columnHeader': {
+      color: "#d97326"
+    },
+    '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
+      borderBottom: "none"
+    },
+    '& .MuiDataGrid-cell': {
+      color: "#5aa0ff",
+    },
+    '& .MuiPaginationItem-root': {
+      borderRadius: 0,
+    },
+  }));
   return (
     <div className="attackBox">
       <Grid container spacing={2}>
-        <Grid xs={12}>
+        <Grid
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          xs={12}
+        >
           {!addNewAttack && (
             <Fab
               size="large"
@@ -152,8 +183,8 @@ export const AttacksSheet = ({ gaston }) => {
           )}
         </Grid>
         <Grid xs={12}></Grid>
-        <div style={{ height: 400, width: "100%", backgroundColor: "white" }}>
-          <DataGrid
+        <div style={{ height: 400, width: "100%"}}>
+          <StyledDataGrid
             hideFooter
             experimentalFeatures={{ newEditingApi: true }}
             columnVisibilityModel={{

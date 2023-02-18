@@ -53,7 +53,7 @@ export const HPBox = ({ characterInfo }) => {
   }
 
   return (
-    <div className="attributeBox resourceBox">
+    <div className="basicBox resourceBox">
       <h1>{title}</h1>
       <div className="resourceCount">
         <h2>{hp}</h2>

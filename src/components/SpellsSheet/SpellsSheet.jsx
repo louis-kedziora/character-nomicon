@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Fab from "@mui/material/Fab";
-import { DataGrid } from "@mui/x-data-grid";
+import { styled } from '@mui/material/styles';
+import { DataGrid } from '@mui/x-data-grid';
 import mongoose from "mongoose";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import Button from "@mui/material/Button";
+
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+
+
 
 import { updateInfo } from "../DBHandler";
 import { InputForm } from "../InputForm";
 
-
 export const SpellsSheet = ({ gaston }) => {
-
   const { spells } = gaston;
   const [currentSpells, setCurrentSpells] = useState(spells);
   const [addNewSpell, setAddNewSpell] = useState(false);
@@ -32,9 +36,7 @@ export const SpellsSheet = ({ gaston }) => {
 
   const handleCellEditStop = (params, event) => {
     if (String(oldValue) !== String(event.target.value)) {
-      let foundRow = currentSpells.find(
-        (element) => element._id === params.id
-      );
+      let foundRow = currentSpells.find((element) => element._id === params.id);
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
       updateInfo("spells", currentSpells);
@@ -74,28 +76,90 @@ export const SpellsSheet = ({ gaston }) => {
     }
     setAddNewSpell(false);
   };
-  function cancelHandler() {
+  const cancelHandler = () => {
     setCancelClicked(true);
-  }
+  };
+
+  const onPreparedClick = (event, row) => {
+    let foundRow = currentSpells.find((element) => element._id === row._id);
+
+    foundRow["spellPrepared"] = !foundRow["spellPrepared"];
+    setCurrentSpells(currentSpells);
+    updateInfo("spells", currentSpells);
+  };
+
+  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+    border: 0,
+    WebkitFontSmoothing: 'auto',
+    letterSpacing: 'normal',
+    '& .MuiDataGrid-columnsContainer': {
+      backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
+    },
+    '& .MuiDataGrid-iconSeparator': {
+      display: 'none',
+    },
+    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+      borderRight: "none",
+    },
+    '& .MuiDataGrid-columnHeader': {
+      color: "#d97326"
+    },
+    '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
+      borderBottom: "none"
+    },
+    '& .MuiDataGrid-cell': {
+      color: "#5aa0ff",
+    },
+    '& .MuiPaginationItem-root': {
+      borderRadius: 0,
+    },
+  }));
 
   const columns = [
     {
       field: "spellPrepared",
-      headerName: "Spell Prepared",
+      headerName: "Prepared",
+      headerClassName: "dataGrid--header",
       editable: true,
-      flex: 0.75,
-      minWidth: 125,
+      flex: 0.25,
+      minWidth: 100,
+      renderCell: (params) => {
+        const isPrepared = params.value;
+        return (
+          <div>
+            {isPrepared ? (
+              <IconButton
+                onClick={(event) => onPreparedClick(event, params.row)}
+                variant="outlined"
+                color="success"
+              >
+                <CheckIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={(event) => onPreparedClick(event, params.row)}
+                variant="contained"
+                color="error"
+              >
+                <CloseIcon />
+              </IconButton>
+            )}
+          </div>
+        );
+      },
     },
     {
       field: "spellName",
       headerName: "Name",
+      headerClassName: "dataGrid--header",
       editable: true,
-      flex: 0.5,
+      flex: 0.75,
       minWidth: 100,
     },
     {
       field: "spellTime",
       headerName: "Time",
+      headerClassName: "dataGrid--header",
       editable: true,
       flex: 0.25,
       minWidth: 50,
@@ -103,6 +167,7 @@ export const SpellsSheet = ({ gaston }) => {
     {
       field: "spellRange",
       headerName: "Range",
+      headerClassName: "dataGrid--header",
       editable: true,
       flex: 0.5,
       minWidth: 50,
@@ -110,6 +175,7 @@ export const SpellsSheet = ({ gaston }) => {
     {
       field: "spellHitOrDC",
       headerName: "Hit / DC",
+      headerClassName: "dataGrid--header",
       editable: true,
       flex: 0.5,
       minWidth: 100,
@@ -117,6 +183,7 @@ export const SpellsSheet = ({ gaston }) => {
     {
       field: "spellEffect",
       headerName: "Effect",
+      headerClassName: "dataGrid--header",
       editable: true,
       flex: 1,
       minWidth: 200,
@@ -124,6 +191,7 @@ export const SpellsSheet = ({ gaston }) => {
     {
       field: "spellNotes",
       headerName: "Notes",
+      headerClassName: "dataGrid--header",
       editable: true,
       flex: 1,
       minWidth: 200,
@@ -131,16 +199,17 @@ export const SpellsSheet = ({ gaston }) => {
     {
       field: "actions",
       headerName: "Actions",
+      headerClassName: "dataGrid--header",
       width: 400,
       renderCell: (params) => {
         return (
-          <Button
+          <IconButton
             onClick={(event) => onDeleteClick(event, params.row)}
             variant="outlined"
             color="error"
           >
-            <DeleteIcon/>
-          </Button>
+            <DeleteIcon />
+          </IconButton>
         );
       },
     },
@@ -149,7 +218,12 @@ export const SpellsSheet = ({ gaston }) => {
   return (
     <div className="spellBox">
       <Grid container spacing={2}>
-        <Grid xs={12}>
+        <Grid
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          xs={12}
+        >
           {!addNewSpell && (
             <Fab
               size="large"
@@ -170,21 +244,28 @@ export const SpellsSheet = ({ gaston }) => {
             />
           )}
         </Grid>
-        <Grid xs={12}></Grid>
-        <div style={{ height: 400, width: "100%", backgroundColor: "white" }}>
-          <DataGrid
-            hideFooter
-            experimentalFeatures={{ newEditingApi: true }}
-            columnVisibilityModel={{
-              id: false,
-            }}
-            rows={currentSpells}
-            columns={columns}
-            getRowId={(row) => row._id.toString()}
-            onCellEditStop={handleCellEditStop}
-            onCellEditStart={handleCellEditStart}
-          />
-        </div>
+        <Grid xs={12}>
+          <div
+            style={{ height: 400, width: "100%", backgroundColor: "#0f111a" }}
+          >
+            <StyledDataGrid
+              className="customDataGrid"
+              hideFooter
+              experimentalFeatures={{ newEditingApi: true }}
+              columnVisibilityModel={{
+                id: false,
+              }}
+              rows={currentSpells}
+              columns={columns}
+              getRowId={(row) => row._id.toString()}
+              onCellEditStop={handleCellEditStop}
+              onCellEditStart={handleCellEditStart}
+              getRowClassName={(params) =>
+                `dataGrid--${params.row.spellPrepared}`
+              }
+            />
+          </div>
+        </Grid>
       </Grid>
     </div>
   );

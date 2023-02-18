@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 
 export const InputForm = ({ methods, fields }) => {
   const { closeAddState, cancelHandler } = methods;
@@ -9,6 +10,39 @@ export const InputForm = ({ methods, fields }) => {
     (element) =>
       element.field !== "actions" && element.field !== "spellPrepared"
   );
+
+  //   Background - #0f111a
+  // Text/Foreground - #5aa0ff
+  // Secondary Text - #c789c3
+  // Third Text - #d97326
+  // Comment Color - #464b4c
+  // Nice Green - #03C988
+  const StyledTextField = styled(TextField)({
+    "& .MuiInputBase-input": {
+      color: "#DBE2EF",
+    },
+    "& label": {
+      color: "#464b4c",
+    },
+    "& label.Mui-focused": {
+      color: "#03C988",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#03C988",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#03C988",
+      },
+      "&:hover fieldset": {
+        borderColor: "#d97326",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#03C988",
+      },
+    },
+  });
+
   return (
     <form className="inputForm" onSubmit={closeAddState}>
       <Grid container spacing={2}>
@@ -21,7 +55,7 @@ export const InputForm = ({ methods, fields }) => {
               alignItems="left"
               xs={12}
             >
-              <TextField
+              <StyledTextField
                 label={field.headerName}
                 name={field.field}
                 id="outlined-basic"
