@@ -6,6 +6,8 @@ mongoose.Promise = global.Promise;
 const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
-db.characters = require("./characterModel.js")(mongoose);
+db.users = require("./userModel.js");
+db.characters = require("./characterModel.js");
+
 
 module.exports = db;

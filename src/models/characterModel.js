@@ -1,3 +1,6 @@
+const mongoose = require("mongoose");
+
+
 const characterSchema = {
   name: String,
   characterClass: String,
@@ -80,8 +83,23 @@ const characterSchema = {
   ],
 };
 
-module.exports = (mongoose) => {
-  const Character = mongoose.model("Character", characterSchema);
-  return Character;
-};
+exports.getSchema = () => {
+  return characterSchema;
+}
 
+exports.getModel = () => {
+  const Character = mongoose.model("Character", characterSchema);
+    return Character;
+}
+
+// module.exports = {
+//   getSchema: () => {
+//     return characterSchema;
+//   },
+
+//   getModel: () => {
+//     const Character = mongoose.model("Character", characterSchema);
+//     return Character;
+//   },
+
+// };

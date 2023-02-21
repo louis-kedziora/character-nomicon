@@ -1,5 +1,5 @@
 const db = require("../models");
-const Character = db.characters;
+const Character = db.characters.getModel();
 
 exports.getCharacter = (req, res) => {
   // Validate request

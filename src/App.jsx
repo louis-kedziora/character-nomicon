@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
 import { Routes, Route } from "react-router-dom";
+import { SelectionSheet } from "./components/SelectionSheet";
 import { AttacksSheet } from "./components/AttacksSheet";
 import { AttributeSheet } from "./components/AttributeSheet";
 import { FeaturesSheet } from "./components/FeaturesSheet";
@@ -8,7 +9,7 @@ import { NotesSheet } from "./components/NotesSheet";
 import { SkillsSheet } from "./components/SkillsSheet";
 import { SpellsSheet } from "./components/SpellsSheet";
 import { LootSheet } from "./components/LootSheet";
-import { Footer, Header, CharacterAppBar } from "./components/partials";
+import { Footer, CharacterAppBar } from "./components/partials";
 
 function App() {
   const [character, setCharacter] = useState({});
@@ -29,10 +30,9 @@ function App() {
     <div>
       {isFetched && (
         <div>
-          {/* <Header /> */}
           <CharacterAppBar />
           <Routes>
-            <Route path="/" element={<AttributeSheet gaston={character} />} />
+            <Route path="/" element={<SelectionSheet user={character} />} />
             <Route
               path="/attacks"
               element={<AttacksSheet gaston={character} />}
