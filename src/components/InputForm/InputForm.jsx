@@ -11,12 +11,6 @@ export const InputForm = ({ methods, fields }) => {
       element.field !== "actions" && element.field !== "spellPrepared"
   );
 
-  //   Background - #0f111a
-  // Text/Foreground - #5aa0ff
-  // Secondary Text - #c789c3
-  // Third Text - #d97326
-  // Comment Color - #464b4c
-  // Nice Green - #03C988
   const StyledTextField = styled(TextField)({
     "& .MuiInputBase-input": {
       color: "#DBE2EF",

@@ -9,7 +9,7 @@ export const HPBox = ({ characterInfo }) => {
   const { title, hpMax, currentHP } = characterInfo;
   const [hp, setHP] = useState(currentHP);
   const [changeHP, setChangeHP] = useState(false);
-  const [changeType, setChangeType] = useState("");
+  const [changeType, setChangeType] = useState("damage");
   const [cancelClicked, setCancelClicked] = useState(false);
 
   function openChangeState(event) {
@@ -38,7 +38,9 @@ export const HPBox = ({ characterInfo }) => {
       // 2. stabilizing and alreading stable character
       if (
         !(changeType === "heal" && hp === hpMax) &&
-        !(changeType === "stabilize" && hp === 0)
+        !(changeType === "heal" && changeValue === 0) &&
+        !(changeType === "stabilize" && hp === 0) &&
+        !(changeType === "damage" && changeValue === 0)
       ) {
         const newHP = updateHP(changeType, parseInt(changeValue), hp, hpMax);
         setHP(newHP);
@@ -69,6 +71,7 @@ export const HPBox = ({ characterInfo }) => {
       )}
       {changeHP && (
         <ChangeHPBox
+          values={{ changeType: changeType, initialValue: 0 }}
           methods={{
             closeChangeState: closeChangeState,
             handleRadio: handleRadio,

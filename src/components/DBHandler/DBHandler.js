@@ -72,7 +72,6 @@ export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
     }
   } else if (updateType === "damage") {
     if (currentHP - changeAmount <= 0) {
-      //Unconcious
       newHP = currentHP - changeAmount;
     } else {
       newHP = currentHP - changeAmount;
