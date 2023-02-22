@@ -2,6 +2,8 @@ const db = require("../models");
 const Character = db.characters.getModel();
 
 exports.getCharacter = (req, res) => {
+  // console.log(req.body);
+
   // Validate request
   if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
@@ -86,6 +88,8 @@ exports.updateResource = (req, res) => {
 };
 
 exports.updateInfo = (req, res) => {
+  // console.log(req.body);
+
   if (!req.body || !req.body.name) {
     res.status(400).send({ message: "Body can not be empty!" });
     return;

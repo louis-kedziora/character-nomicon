@@ -79,8 +79,8 @@ export const AttacksSheet = ({ gaston }) => {
       field: "attackName",
       headerName: "Name",
       editable: true,
-      flex: 0.5,
-      minWidth: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "attackRange",
@@ -128,6 +128,7 @@ export const AttacksSheet = ({ gaston }) => {
     },
   ];
   const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+    fontFamily: "Montserrat",
     border: 0,
     WebkitFontSmoothing: 'auto',
     letterSpacing: 'normal',

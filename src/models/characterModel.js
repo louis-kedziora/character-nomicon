@@ -65,7 +65,7 @@ const characterSchema = {
     {
       attackName: String,
       attackRange: String,
-      attackModifier: Number,
+      attackModifier: String,
       attackDamage: String,
       attackType: String,
     },
