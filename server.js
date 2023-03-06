@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+// Live server component
+
 // Inter-project Imports
 const db = require("./src/models");
 
