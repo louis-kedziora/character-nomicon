@@ -2,11 +2,12 @@
 
 import axios from "axios";
 const HARDCODEDCHARACTERNAME = "Sevro";
+const serverURL = process.env.serverURL;
 
 export const updateInfo = (infoName, newInfo) => {
   axios({
     method: "patch",
-    url: "http://localhost:4000/api/characters/updateInfo",
+    url: serverURL + "/api/characters/updateInfo",
     data: {
       name: HARDCODEDCHARACTERNAME,
       [infoName]: newInfo,
@@ -37,7 +38,7 @@ export const updateResource = (
   }
   axios({
     method: "patch",
-    url: "http://localhost:4000/api/characters/updateResource",
+    url: serverURL + "/api/characters/updateResource",
     data: {
       name: HARDCODEDCHARACTERNAME,
       [resourceName]: newValue,
@@ -82,7 +83,7 @@ export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
 
   axios({
     method: "patch",
-    url: "http://localhost:4000/api/characters/updatehp",
+    url: serverURL + "/api/characters/updatehp",
     data: {
       name: HARDCODEDCHARACTERNAME,
       newHP: newHP,
