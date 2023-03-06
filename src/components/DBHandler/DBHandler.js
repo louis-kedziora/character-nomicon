@@ -2,7 +2,7 @@
 
 import axios from "axios";
 const HARDCODEDCHARACTERNAME = "Sevro";
-const serverURL = process.env.serverURL;
+const serverURL = process.env.serverURL || "http://localhost:4000";
 
 export const updateInfo = (infoName, newInfo) => {
   axios({
