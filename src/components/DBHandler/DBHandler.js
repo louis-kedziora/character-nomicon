@@ -1,7 +1,7 @@
 // TODO Need to implenment id for characters at this point 'gaston is hardcoded into all the methods'
 
 import axios from "axios";
-const HARDCODEDCHARACTERNAME = "Gaston";
+const HARDCODEDCHARACTERNAME = "Sevro";
 
 export const updateInfo = (infoName, newInfo) => {
   axios({
