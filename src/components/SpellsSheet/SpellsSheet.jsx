@@ -89,6 +89,7 @@ export const SpellsSheet = ({ gaston }) => {
   };
 
   const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+    fontFamily: "Montserrat",
     border: 0,
     WebkitFontSmoothing: 'auto',
     letterSpacing: 'normal',

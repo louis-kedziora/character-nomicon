@@ -1,4 +1,3 @@
-
 <div align="center">
   <h1>Player Sheet</h1>
 </div>
@@ -13,6 +12,7 @@
   - [Installation](#installation)
 - [Security](#security)
 - [License](#license)
+- [Contact](#contact)
 
 </details>
 
@@ -44,6 +44,8 @@
 >
 > Current deployed URL:
 >
+> The app will take time (1-2min) to load as it is all hosted on free/lowest cost web services.
+>
 > [cool-narwhal-445b2b.netlify.app/](https://cool-narwhal-445b2b.netlify.app/ "https://cool-narwhal-445b2b.netlify.app/")
 
 ## Security
@@ -54,3 +56,9 @@ Player Sheet is provided **"as is"** without any **warranty**. Use at your own r
 ## License
 
 This project is licensed under the **MIT license**.
+
+## Contact
+
+If you have any questions or concerns or wish to contact me here I can reached at:
+
+louis.kedziora@gmail.com

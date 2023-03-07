@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
 import { Routes, Route } from "react-router-dom";
-import { SelectionSheet } from "./components/SelectionSheet";
+// import { SelectionSheet } from "./components/SelectionSheet";
 import { AttacksSheet } from "./components/AttacksSheet";
 import { AttributeSheet } from "./components/AttributeSheet";
 import { FeaturesSheet } from "./components/FeaturesSheet";
@@ -30,9 +30,9 @@ function App() {
     <div>
       {isFetched && (
         <div>
-          <CharacterAppBar />
+          <CharacterAppBar characterName={character.name}/>
           <Routes>
-            <Route path="/" element={<SelectionSheet user={character} />} />
+            <Route path="/" element={<AttributeSheet gaston={character} />} />
             <Route
               path="/attacks"
               element={<AttacksSheet gaston={character} />}

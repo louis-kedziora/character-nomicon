@@ -8,10 +8,10 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
+// import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+// import Tooltip from "@mui/material/Tooltip";
+// import MenuItem from "@mui/material/MenuItem";
 import ShieldSharpIcon from "@mui/icons-material/ShieldSharp";
 
 const sheetLabels = [
@@ -32,26 +32,26 @@ const sheetLinks = {
   Skills: "/skills",
   Spells: "/spells",
 };
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-export const CharacterAppBar = () => {
+export const CharacterAppBar = ({characterName}) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  // const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(null);
+  // };
 
   return (
     <AppBar
@@ -68,6 +68,21 @@ export const CharacterAppBar = () => {
           <Typography
             variant="h6"
             noWrap
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "Montserrat",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Player Sheet
+          </Typography>
+          <Typography
+            variant="h5"
+            noWrap
             component="a"
             href="/"
             sx={{
@@ -80,7 +95,7 @@ export const CharacterAppBar = () => {
               textDecoration: "none",
             }}
           >
-            Player Sheet
+            ({characterName})
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -113,27 +128,6 @@ export const CharacterAppBar = () => {
               }}
             ></Menu>
           </Box>
-          <ShieldSharpIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "Montserrat",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Player Sheet
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {sheetLabels.map((sheet, index) => (
               <Button
@@ -153,7 +147,7 @@ export const CharacterAppBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/lem-profile.jpg" />
@@ -181,7 +175,7 @@ export const CharacterAppBar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>
