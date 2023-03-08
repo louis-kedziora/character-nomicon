@@ -1,7 +1,7 @@
 // TODO Need to implenment id for characters at this point 'gaston is hardcoded into all the methods'
 
 import axios from "axios";
-const HARDCODEDCHARACTERNAME = "Sevro";
+const HARDCODEDCHARACTERNAME = "Gaston";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
 export const updateInfo = (infoName, newInfo) => {

@@ -14,7 +14,7 @@ import { Footer, CharacterAppBar } from "./components/partials";
 function App() {
   const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
-  const characterName = "Sevro";
+  const characterName = "Gaston";
 
   useEffect(() => {
     async function fetchData() {
