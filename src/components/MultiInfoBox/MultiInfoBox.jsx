@@ -11,8 +11,6 @@ export const MultiInfoBox = ({ info }) => {
 
   function handleFocusLoss(event) {
     updateInfo(infoName, infoString);
-    const { value } = event.target;
-    setInfo(value);
   }
 
   return (
