@@ -46,6 +46,8 @@
 >
 > The app will take time (1-2min) to load as it is all hosted on free/lowest cost web services.
 >
+> For some reason if you refresh when you are on a route (ie /spells) it returns 404 but navigating around with the navbar works fine but it is only accessible by the root below.
+>
 > [cool-narwhal-445b2b.netlify.app/](https://cool-narwhal-445b2b.netlify.app/ "https://cool-narwhal-445b2b.netlify.app/")
 
 ## Security

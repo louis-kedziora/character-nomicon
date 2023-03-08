@@ -34,7 +34,7 @@ const sheetLinks = {
 };
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-export const CharacterAppBar = ({characterName}) => {
+export const CharacterAppBar = ({ characterName }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   // const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -65,7 +65,7 @@ export const CharacterAppBar = ({characterName}) => {
           <ShieldSharpIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
-          <Typography
+            <Typography
             variant="h6"
             noWrap
             sx={{
@@ -76,28 +76,11 @@ export const CharacterAppBar = ({characterName}) => {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              textAlign: "center"
             }}
           >
-            Player Sheet
+            {characterName}
           </Typography>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "Montserrat",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            ({characterName})
-          </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -146,7 +129,7 @@ export const CharacterAppBar = ({characterName}) => {
               </Button>
             ))}
           </Box>
-
+          {/* DO NOT DELETE */}
           {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
