@@ -7,10 +7,9 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { styled } from "@mui/material/styles";
 
-
 export const ChangeHPBox = ({ values, methods }) => {
   const { closeChangeState, handleRadio, cancelHandler } = methods;
-  const {changeType, initialValue} = values;
+  const { changeType, initialValue } = values;
 
   const StyledTextField = styled(TextField)({
     "& .MuiInputBase-input": {
@@ -38,47 +37,48 @@ export const ChangeHPBox = ({ values, methods }) => {
     },
   });
 
-//   Background - #0f111a
-// Text/Foreground - #5aa0ff
-// Secondary Text - #c789c3
-// Third Text - #d97326
-// Comment Color - #464b4c 
-// Nice Green - #03C988*/
+  //   Background - #0f111a
+  // Text/Foreground - #5aa0ff
+  // Secondary Text - #c789c3
+  // Third Text - #d97326
+  // Comment Color - #464b4c
+  // Nice Green - #03C988*/
 
-  const BpIcon = styled('span')(({ theme }) => ({
-    borderRadius: '50%',
+  const BpIcon = styled("span")(({ theme }) => ({
+    borderRadius: "50%",
     width: 16,
     height: 16,
     backgroundColor: "#464b4c",
     backgroundImage:
-      theme.palette.mode === 'dark'
-        ? 'linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))'
-        : 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
-    '.Mui-focusVisible &': {
-      outline: '2px auto #d97326',
+      theme.palette.mode === "dark"
+        ? "linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))"
+        : "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
+    ".Mui-focusVisible &": {
+      outline: "2px auto #d97326",
       outlineOffset: 2,
     },
-    'input:hover ~ &': {
-      backgroundColor: theme.palette.mode === 'dark' ? '#30404d' : '#ebf1f5',
+    "input:hover ~ &": {
+      backgroundColor: theme.palette.mode === "dark" ? "#30404d" : "#ebf1f5",
     },
   }));
-  
+
   const BpCheckedIcon = styled(BpIcon)({
-    backgroundColor: '#03C988',
+    backgroundColor: "#03C988",
     boxShadow: "0px 0px 5px #03C988",
-    backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
-    '&:before': {
-      display: 'block',
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+    "&:before": {
+      display: "block",
       width: 16,
       height: 16,
-      backgroundImage: 'radial-gradient(#DBE2EF,#DBE2EF 28%,transparent 32%)',
+      backgroundImage: "radial-gradient(#DBE2EF,#DBE2EF 28%,transparent 32%)",
       content: '""',
     },
-    'input:hover ~ &': {
-      backgroundColor: '#03C988',
+    "input:hover ~ &": {
+      backgroundColor: "#03C988",
     },
   });
-  
+
   // Inspired by blueprintjs
   function BpRadio(props) {
     return (
@@ -91,8 +91,8 @@ export const ChangeHPBox = ({ values, methods }) => {
       />
     );
   }
-  const StyledFormControlLabel= styled(FormControlLabel)({
-    color: "#DBE2EF"
+  const StyledFormControlLabel = styled(FormControlLabel)({
+    color: "#DBE2EF",
   });
 
   return (
@@ -134,16 +134,18 @@ export const ChangeHPBox = ({ values, methods }) => {
           />
         </Grid>
         <Grid xs={6}>
-          <Button onClick={cancelHandler} name="cancelButton" variant="contained" color="error" type="submit">
+          <Button
+            onClick={cancelHandler}
+            name="cancelButton"
+            variant="contained"
+            color="error"
+            type="submit"
+          >
             Cancel
           </Button>
         </Grid>
         <Grid xs={6}>
-          <Button
-            variant="contained"
-            color="success"
-            type="submit"
-          >
+          <Button variant="contained" color="success" type="submit">
             Ok
           </Button>
         </Grid>
