@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Fab from "@mui/material/Fab";
 import { styled } from '@mui/material/styles';
@@ -10,8 +10,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
-
-
 import { updateInfo } from "../DBHandler";
 import { InputForm } from "../InputForm";
 
@@ -22,12 +20,24 @@ export const SpellsSheet = ({ gaston }) => {
   const [cancelClicked, setCancelClicked] = useState(false);
   const [oldValue, setOldValue] = useState("");
 
+  useEffect(() => {
+    let sessionSpells = JSON.parse(sessionStorage.getItem("sessionSpells"));
+    if (sessionSpells === null) {
+      sessionStorage.setItem("sessionSpells", JSON.stringify(spells));
+      setCurrentSpells(spells);
+    } else {
+      setCurrentSpells(sessionSpells);
+    }
+
+  }, [spells]);
+
   const onDeleteClick = (event, row) => {
     event.stopPropagation();
     let newSpells = structuredClone(currentSpells);
     newSpells = newSpells.filter((element) => element._id !== row._id);
     setCurrentSpells(newSpells);
     updateInfo("spells", newSpells);
+    sessionStorage.setItem("sessionSpells", JSON.stringify(newSpells));
   };
 
   const handleCellEditStart = (params, event) => {
@@ -40,6 +50,7 @@ export const SpellsSheet = ({ gaston }) => {
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
       updateInfo("spells", currentSpells);
+      sessionStorage.setItem("sessionSpells", JSON.stringify(currentSpells));
     }
   };
 
@@ -73,6 +84,7 @@ export const SpellsSheet = ({ gaston }) => {
       newSpells.push(newSpell);
       setCurrentSpells(newSpells);
       updateInfo("spells", newSpells);
+      sessionStorage.setItem("sessionSpells", JSON.stringify(newSpells));
     }
     setAddNewSpell(false);
   };
@@ -86,6 +98,7 @@ export const SpellsSheet = ({ gaston }) => {
     foundRow["spellPrepared"] = !foundRow["spellPrepared"];
     setCurrentSpells(currentSpells);
     updateInfo("spells", currentSpells);
+    sessionStorage.setItem("sessionSpells", JSON.stringify(currentSpells));
   };
 
   const StyledDataGrid = styled(DataGrid)(({ theme }) => ({

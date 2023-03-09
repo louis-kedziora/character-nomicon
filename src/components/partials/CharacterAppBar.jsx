@@ -68,6 +68,8 @@ export const CharacterAppBar = ({ characterName }) => {
             <Typography
             variant="h6"
             noWrap
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },

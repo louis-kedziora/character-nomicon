@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { updateInfo } from "../DBHandler";
 
 export const MultiInfoBox = ({ info }) => {
   const { title, content, infoName } = info;
-  const [infoString, setInfo] = useState(content);
+  const [infoString, setInfo] = useState();
+
+  useEffect(() => {
+    let sessionContent = sessionStorage.getItem("sessionContent");
+    if (sessionContent === null) {
+      sessionContent = content;
+      sessionStorage.setItem("sessionContent", sessionContent);
+    }
+    setInfo(sessionContent);
+  }, [content]);
+
   function handleChange(event) {
     const { value } = event.target;
     setInfo(value);
@@ -11,6 +21,7 @@ export const MultiInfoBox = ({ info }) => {
 
   function handleFocusLoss(event) {
     updateInfo(infoName, infoString);
+    sessionStorage.setItem("sessionContent", infoString);
   }
 
   return (

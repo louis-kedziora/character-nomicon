@@ -2,15 +2,13 @@ const db = require("../models");
 const Character = db.characters.getModel();
 
 exports.getCharacter = (req, res) => {
-  // console.log(req.body);
-
   // Validate request
-  if (!req.body.name) {
-    res.status(400).send({ message: "Content can not be empty!" });
+  if (!req.body._id) {
+    res.status(400).send({ message: "Missing body contents!" });
     return;
   }
 
-  Character.findOne({ name: req.body.name }, function (err, foundCharacter) {
+  Character.findOne({ _id: req.body._id }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
     } else {
@@ -52,7 +50,6 @@ exports.createCharacter = (req, res) => {
 };
 
 exports.updateResource = (req, res) => {
-  // console.log(req.body);
   if (!req.body || !req.body.name) {
     res.status(400).send({ message: "Body can not be empty!" });
     return;
@@ -88,7 +85,6 @@ exports.updateResource = (req, res) => {
 };
 
 exports.updateInfo = (req, res) => {
-  // console.log(req.body);
 
   if (!req.body || !req.body.name) {
     res.status(400).send({ message: "Body can not be empty!" });
