@@ -8,10 +8,11 @@ import mongoose from "mongoose";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
-import { updateInfo } from "../DBHandler";
-import { InputForm } from "../InputForm";
+import { updateInfo } from "components/DBHandler";
+import { InputForm } from "components/InputForm";
 
 export const AttacksSheet = ({ characterID }) => {
+  console.log("attaka");
   const [currentAttacks, setCurrentAttacks] = useState();
   const [addNewAttack, setAddNewAttack] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);

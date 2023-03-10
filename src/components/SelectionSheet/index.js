@@ -1,1 +1,1 @@
-export { SelectionSheet } from "./SelectionSheet";
+export { SelectionSheet } from "components/SelectionSheet/SelectionSheet";

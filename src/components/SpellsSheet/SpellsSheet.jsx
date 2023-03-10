@@ -11,8 +11,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
-import { updateInfo } from "../DBHandler";
-import { InputForm } from "../InputForm";
+import { updateInfo } from "components/DBHandler";
+import { InputForm } from "components/InputForm";
 
 export const SpellsSheet = ({ characterID }) => {
   const [currentSpells, setCurrentSpells] = useState();

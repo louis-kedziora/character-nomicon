@@ -3,7 +3,7 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { updateResource } from "../../DBHandler";
+import { updateResource } from "components/DBHandler";
 
 export const ResourceBox = ({ characterInfo }) => {
   const { title, resourceName, characterID, extraInfo } = characterInfo;

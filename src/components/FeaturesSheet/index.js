@@ -1,1 +1,1 @@
-export { FeaturesSheet } from "./FeaturesSheet";
+export { FeaturesSheet } from "components/FeaturesSheet/FeaturesSheet";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { updateInfo } from "../DBHandler";
+import { updateInfo } from "components/DBHandler";
 
 export const MultiInfoBox = ({ info }) => {
   const { title, infoName, characterID } = info;

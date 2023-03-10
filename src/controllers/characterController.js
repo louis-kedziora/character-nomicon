@@ -2,6 +2,7 @@ const db = require("../models");
 const Character = db.characters.getModel();
 
 exports.getCharacter = (req, res) => {
+  console.log(req.body);
   // Validate request
   if (!req.body._id) {
     res.status(400).send({ message: "Missing body contents!" });

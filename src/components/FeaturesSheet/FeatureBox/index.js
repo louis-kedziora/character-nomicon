@@ -1,1 +1,1 @@
-export { FeatureBox } from "./FeatureBox";
+export { FeatureBox } from "components/FeaturesSheet/FeatureBox/FeatureBox";

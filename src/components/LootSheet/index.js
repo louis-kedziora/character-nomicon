@@ -1,1 +1,1 @@
-export { LootSheet } from "./LootSheet";
+export { LootSheet } from "components/LootSheet/LootSheet";

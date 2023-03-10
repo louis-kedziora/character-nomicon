@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 
-import { scoreMod } from "../AttributeSheet/Modifiers";
+import { scoreMod } from "components/AttributeSheet/Modifiers";
 
-import { SkillBox } from "./SkillBox";
+import { SkillBox } from "components/SkillsSheet/SkillBox";
 
 export const SkillsSheet = ({ characterID }) => {
   const [str, setStr] = useState();

@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import { scoreMod } from "../Modifiers";
+import { scoreMod } from "components/AttributeSheet/Modifiers";
 
 export const AttributeBox = ({ attribute }) => {
   const { attributeName, attributeScore } = attribute;

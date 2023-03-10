@@ -1,3 +1,3 @@
-export { Footer } from "./Footer";
-export { CharacterAppBar } from "./CharacterAppBar";
+export { Footer } from "components/partials/Footer";
+export { CharacterAppBar } from "components/partials/CharacterAppBar";
 

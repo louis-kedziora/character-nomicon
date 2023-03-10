@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 
-import { MultiInfoBox } from "../MultiInfoBox/MultiInfoBox";
+import { MultiInfoBox } from "components/MultiInfoBox";
 
 export const LootSheet = ({ characterID }) => {
   return (

@@ -1,1 +1,1 @@
-export { NotesSheet } from "./NotesSheet";
+export { NotesSheet } from "components/NotesSheet/NotesSheet";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { proficiencyBonus, scoreMod } from "../Modifiers";
+import { proficiencyBonus, scoreMod } from "components/AttributeSheet/Modifiers";
 
 export const InfoBox = ({ info }) => {
   const { title, infoName, characterID } = info;

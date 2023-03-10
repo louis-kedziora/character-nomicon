@@ -2,8 +2,8 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 
-import { MultiInfoBox } from "../MultiInfoBox/MultiInfoBox";
-import { FeatureBox } from "./FeatureBox";
+import { MultiInfoBox } from "components/MultiInfoBox";
+import { FeatureBox } from "components/FeaturesSheet/FeatureBox";
 
 const featureLabels = [
   "Class",

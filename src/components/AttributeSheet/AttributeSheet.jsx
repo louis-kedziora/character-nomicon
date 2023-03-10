@@ -3,10 +3,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 import Divider from '@mui/material/Divider';
 
-import { AttributeBox } from "./AttributeBox";
-import { InfoBox } from "./InfoBox";
-import { HPBox } from "./HPBox";
-import { ResourceBox } from "./ResourceBox";
+import { AttributeBox } from "components/AttributeSheet/AttributeBox";
+import { InfoBox } from "components/AttributeSheet/InfoBox";
+import { HPBox } from "components/AttributeSheet/HPBox";
+import { ResourceBox } from "components/AttributeSheet/ResourceBox";
 
 export const AttributeSheet = ({ characterID }) => {
   const [character, setCharacter] = useState();

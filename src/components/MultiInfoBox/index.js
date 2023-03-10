@@ -1,1 +1,1 @@
-export { InfoBox } from "./InfoBox";
+export { MultiInfoBox } from "components/MultiInfoBox/MultiInfoBox";

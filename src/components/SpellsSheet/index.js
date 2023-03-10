@@ -1,1 +1,1 @@
-export { SpellsSheet } from "./SpellsSheet";
+export { SpellsSheet } from "components/SpellsSheet/SpellsSheet";

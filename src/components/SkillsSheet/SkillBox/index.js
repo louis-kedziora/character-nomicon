@@ -1,1 +1,1 @@
-export { SkillBox } from "./SkillBox";
+export { SkillBox } from "components/SkillsSheet/SkillBox/SkillBox";

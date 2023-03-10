@@ -1,1 +1,1 @@
-export { ResourceBox } from "./ResourceBox";
+export { ResourceBox } from "components/AttributeSheet/ResourceBox/ResourceBox";
