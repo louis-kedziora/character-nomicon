@@ -3,7 +3,7 @@ import { updateInfo } from "../DBHandler";
 
 export const MultiInfoBox = ({ info }) => {
   const { title, infoName, characterID } = info;
-  const [content, setContent] = useState()
+  const [content, setContent] = useState();
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
@@ -26,19 +26,19 @@ export const MultiInfoBox = ({ info }) => {
 
   return (
     <div>
-    {isFetched &&
-    <div className="noteBox">
-      <h1>{title}</h1>
-      <textarea
-        onBlur={handleFocusLoss}
-        onChange={handleChange}
-        value={content}
-        id="notes"
-        name="notes"
-        rows={100}
-      ></textarea>
-    </div>
-    }
+      {isFetched && (
+        <div className="noteBox">
+          <h1>{title}</h1>
+          <textarea
+            onBlur={handleFocusLoss}
+            onChange={handleChange}
+            value={content}
+            id="notes"
+            name="notes"
+            rows={100}
+          ></textarea>
+        </div>
+      )}
     </div>
   );
 };

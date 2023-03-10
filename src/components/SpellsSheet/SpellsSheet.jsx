@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
+import Container from "@mui/material/Container";
 import Fab from "@mui/material/Fab";
 import { styled } from "@mui/material/styles";
 import { DataGrid } from "@mui/x-data-grid";
@@ -231,7 +232,7 @@ export const SpellsSheet = ({ characterID }) => {
   ];
 
   return (
-    <div>
+    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
       {isFetched && (
         <div className="spellBox">
           <Grid container spacing={2}>
@@ -290,6 +291,6 @@ export const SpellsSheet = ({ characterID }) => {
           </Grid>
         </div>
       )}
-    </div>
+    </Container>
   );
 };

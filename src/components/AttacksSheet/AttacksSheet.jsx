@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
+import Container from "@mui/material/Container";
 import Fab from "@mui/material/Fab";
 import { styled } from "@mui/material/styles";
 import { DataGrid } from "@mui/x-data-grid";
@@ -27,7 +28,7 @@ export const AttacksSheet = ({ characterID }) => {
     let character = JSON.parse(sessionStorage.getItem(characterID));
     character["attacks"] = newAttacks;
     sessionStorage.setItem(characterID, JSON.stringify(character));
-  }
+  };
 
   const onDeleteClick = (event, row) => {
     event.stopPropagation();
@@ -170,7 +171,7 @@ export const AttacksSheet = ({ characterID }) => {
     },
   }));
   return (
-    <div>
+    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
       {isFetched && (
         <div className="attackBox">
           <Grid container spacing={2}>
@@ -218,6 +219,6 @@ export const AttacksSheet = ({ characterID }) => {
           </Grid>
         </div>
       )}
-    </div>
+    </Container>
   );
 };

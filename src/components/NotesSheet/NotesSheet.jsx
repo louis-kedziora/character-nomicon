@@ -1,11 +1,13 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
+import Container from "@mui/material/Container";
+
 import { MultiInfoBox } from "../MultiInfoBox/MultiInfoBox";
 
 export const NotesSheet = ({ characterID }) => {
 
   return (
-    <div>
+    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
       <Grid xs={12}>
         <MultiInfoBox
           color="white"
@@ -16,6 +18,6 @@ export const NotesSheet = ({ characterID }) => {
           }}
         />
       </Grid>
-    </div>
+      </Container>
   );
 };
