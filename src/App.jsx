@@ -14,50 +14,60 @@ import { Footer, CharacterAppBar } from "./components/partials";
 function App() {
   const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
-  const characterName = "Gaston";
+  const characterID = "63ee8cedd307d6342d6580bd";
 
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.post("/", { name: characterName });
+      const request = await axios.post("/", { _id: characterID });
       setCharacter(request.data);
+      sessionStorage.setItem(request.data._id, JSON.stringify(request.data));
       setIsFetched(true);
       return request;
     }
     fetchData();
-  }, [characterName]);
+  }, [characterID]);
   // NOTE: If there are dependancies they must be put in this array at the bottom
   return (
     <div>
       {isFetched && (
         <div>
-          <CharacterAppBar characterName={character.name}/>
+          <CharacterAppBar characterName={character.name} />
           <Routes>
-            <Route path="/" element={<AttributeSheet gaston={character} />} />
+            <Route
+              path="/"
+              element={<AttributeSheet characterID={characterID} />}
+            />
             <Route
               path="/attacks"
-              element={<AttacksSheet gaston={character} />}
+              element={<AttacksSheet characterID={characterID} />}
             />
             <Route
               path="/attributes"
-              element={<AttributeSheet gaston={character} />}
+              element={<AttributeSheet characterID={characterID} />}
             />
             <Route
               path="/features"
-              element={<FeaturesSheet gaston={character} />}
-            />
-            <Route path="/loot" element={<LootSheet gaston={character} />} />
-            <Route path="/notes" element={<NotesSheet gaston={character} />} />
-            <Route
-              path="/skills"
-              element={<SkillsSheet gaston={character} />}
+              element={<FeaturesSheet characterID={characterID} />}
             />
             <Route
+              path="/loot"
+              element={<LootSheet characterID={characterID} />}
+            />
+            <Route
+              path="/notes"
+              element={<NotesSheet characterID={characterID} />}
+            />
+            <Route
               path="/skills"
-              element={<SkillsSheet gaston={character} />}
+              element={<SkillsSheet characterID={characterID} />}
+            />
+            <Route
+              path="/skills"
+              element={<SkillsSheet characterID={characterID} />}
             />
             <Route
               path="/spells"
-              element={<SpellsSheet gaston={character} />}
+              element={<SpellsSheet characterID={characterID} />}
             />
           </Routes>
           <Footer />

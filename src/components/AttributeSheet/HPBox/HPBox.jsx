@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -6,11 +6,20 @@ import { ChangeHPBox } from "./ChangeHPBox";
 import { updateHP } from "../../DBHandler/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
-  const { title, hpMax, currentHP } = characterInfo;
-  const [hp, setHP] = useState(currentHP);
+  const { title, characterID } = characterInfo;
+  const [hp, setHP] = useState();
+  const [hpMax, setMaxHP] = useState();
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("damage");
   const [cancelClicked, setCancelClicked] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
+
+  useEffect(() => {
+    const character = JSON.parse(sessionStorage.getItem(characterID));
+    setHP(character["currentHP"]);
+    setMaxHP(character["hpMax"]);
+    setIsFetched(true);
+  }, [characterID]);
 
   function openChangeState(event) {
     // Open the form
@@ -44,6 +53,9 @@ export const HPBox = ({ characterInfo }) => {
       ) {
         const newHP = updateHP(changeType, parseInt(changeValue), hp, hpMax);
         setHP(newHP);
+        let character = JSON.parse(sessionStorage.getItem(characterID));
+        character["currentHP"] = newHP;
+        sessionStorage.setItem(characterID, JSON.stringify(character));
       }
     }
     setChangeHP(false);
@@ -55,29 +67,33 @@ export const HPBox = ({ characterInfo }) => {
   }
 
   return (
-    <div className="basicBox resourceBox">
-      <h1>{title}</h1>
-      <div className="resourceCount">
-        <h2>{hp}</h2>
-      </div>
-      {!changeHP && (
-        <Grid container spacing={2}>
-          <Grid xs={12}>
-            <Fab size="small" color="error" onClick={openChangeState}>
-              <BloodtypeIcon fontSize="medium" />
-            </Fab>
-          </Grid>
-        </Grid>
-      )}
-      {changeHP && (
-        <ChangeHPBox
-          values={{ changeType: changeType, initialValue: 0 }}
-          methods={{
-            closeChangeState: closeChangeState,
-            handleRadio: handleRadio,
-            cancelHandler: cancelHandler,
-          }}
-        />
+    <div>
+      {isFetched && (
+        <div className="basicBox resourceBox">
+          <h1>{title}</h1>
+          <div className="resourceCount">
+            <h2>{hp}</h2>
+          </div>
+          {!changeHP && (
+            <Grid container spacing={2}>
+              <Grid xs={12}>
+                <Fab size="small" color="error" onClick={openChangeState}>
+                  <BloodtypeIcon fontSize="medium" />
+                </Fab>
+              </Grid>
+            </Grid>
+          )}
+          {changeHP && (
+            <ChangeHPBox
+              values={{ changeType: changeType, initialValue: 0 }}
+              methods={{
+                closeChangeState: closeChangeState,
+                handleRadio: handleRadio,
+                cancelHandler: cancelHandler,
+              }}
+            />
+          )}
+        </div>
       )}
     </div>
   );

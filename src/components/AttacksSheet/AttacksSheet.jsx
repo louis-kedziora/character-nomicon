@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Fab from "@mui/material/Fab";
-import { styled } from '@mui/material/styles';
-import { DataGrid } from '@mui/x-data-grid';
+import { styled } from "@mui/material/styles";
+import { DataGrid } from "@mui/x-data-grid";
 import mongoose from "mongoose";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
@@ -10,12 +10,24 @@ import IconButton from "@mui/material/IconButton";
 import { updateInfo } from "../DBHandler";
 import { InputForm } from "../InputForm";
 
-export const AttacksSheet = ({ gaston }) => {
-  const { attacks } = gaston;
-  const [currentAttacks, setCurrentAttacks] = useState(attacks);
+export const AttacksSheet = ({ characterID }) => {
+  const [currentAttacks, setCurrentAttacks] = useState();
   const [addNewAttack, setAddNewAttack] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [oldValue, setOldValue] = useState("");
+  const [isFetched, setIsFetched] = useState(false);
+
+  useEffect(() => {
+    const character = JSON.parse(sessionStorage.getItem(characterID));
+    setCurrentAttacks(character["attacks"]);
+    setIsFetched(true);
+  }, [characterID]);
+
+  const updateSession = (newAttacks) => {
+    let character = JSON.parse(sessionStorage.getItem(characterID));
+    character["attacks"] = newAttacks;
+    sessionStorage.setItem(characterID, JSON.stringify(character));
+  }
 
   const onDeleteClick = (event, row) => {
     event.stopPropagation();
@@ -23,6 +35,7 @@ export const AttacksSheet = ({ gaston }) => {
     newAttacks = newAttacks.filter((element) => element._id !== row._id);
     setCurrentAttacks(newAttacks);
     updateInfo("attacks", newAttacks);
+    updateSession(newAttacks);
   };
 
   const handleCellEditStart = (params, event) => {
@@ -37,6 +50,7 @@ export const AttacksSheet = ({ gaston }) => {
       foundRow[params.field] = event.target.value;
       setCurrentAttacks(currentAttacks);
       updateInfo("attacks", currentAttacks);
+      updateSession(currentAttacks);
     }
   };
 
@@ -67,6 +81,7 @@ export const AttacksSheet = ({ gaston }) => {
       newAttacks.push(newAttack);
       setCurrentAttacks(newAttacks);
       updateInfo("attacks", newAttacks);
+      updateSession(newAttacks);
     }
     setAddNewAttack(false);
   };
@@ -130,75 +145,79 @@ export const AttacksSheet = ({ gaston }) => {
   const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     fontFamily: "Montserrat",
     border: 0,
-    WebkitFontSmoothing: 'auto',
-    letterSpacing: 'normal',
-    '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
+    WebkitFontSmoothing: "auto",
+    letterSpacing: "normal",
+    "& .MuiDataGrid-columnsContainer": {
+      backgroundColor: theme.palette.mode === "light" ? "#fafafa" : "#1d1d1d",
     },
-    '& .MuiDataGrid-iconSeparator': {
-      display: 'none',
+    "& .MuiDataGrid-iconSeparator": {
+      display: "none",
     },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+    "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
       borderRight: "none",
     },
-    '& .MuiDataGrid-columnHeader': {
-      color: "#d97326"
+    "& .MuiDataGrid-columnHeader": {
+      color: "#d97326",
     },
-    '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
-      borderBottom: "none"
+    "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
+      borderBottom: "none",
     },
-    '& .MuiDataGrid-cell': {
+    "& .MuiDataGrid-cell": {
       color: "#5aa0ff",
     },
-    '& .MuiPaginationItem-root': {
+    "& .MuiPaginationItem-root": {
       borderRadius: 0,
     },
   }));
   return (
-    <div className="attackBox">
-      <Grid container spacing={2}>
-        <Grid
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          xs={12}
-        >
-          {!addNewAttack && (
-            <Fab
-              size="large"
-              color="primary"
-              variant="extended"
-              onClick={openNewAttackForm}
+    <div>
+      {isFetched && (
+        <div className="attackBox">
+          <Grid container spacing={2}>
+            <Grid
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              xs={12}
             >
-              <h1>New Attack</h1>
-            </Fab>
-          )}
-          {addNewAttack && (
-            <InputForm
-              methods={{
-                closeAddState: closeAddState,
-                cancelHandler: cancelHandler,
-              }}
-              fields={columns}
-            />
-          )}
-        </Grid>
-        <Grid xs={12}></Grid>
-        <div style={{ height: 400, width: "100%"}}>
-          <StyledDataGrid
-            hideFooter
-            experimentalFeatures={{ newEditingApi: true }}
-            columnVisibilityModel={{
-              id: false,
-            }}
-            rows={currentAttacks}
-            columns={columns}
-            getRowId={(row) => row._id.toString()}
-            onCellEditStop={handleCellEditStop}
-            onCellEditStart={handleCellEditStart}
-          />
+              {!addNewAttack && (
+                <Fab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openNewAttackForm}
+                >
+                  <h1>New Attack</h1>
+                </Fab>
+              )}
+              {addNewAttack && (
+                <InputForm
+                  methods={{
+                    closeAddState: closeAddState,
+                    cancelHandler: cancelHandler,
+                  }}
+                  fields={columns}
+                />
+              )}
+            </Grid>
+            <Grid xs={12}></Grid>
+            <div style={{ height: 400, width: "100%" }}>
+              <StyledDataGrid
+                hideFooter
+                experimentalFeatures={{ newEditingApi: true }}
+                columnVisibilityModel={{
+                  id: false,
+                }}
+                rows={currentAttacks}
+                columns={columns}
+                getRowId={(row) => row._id.toString()}
+                onCellEditStop={handleCellEditStop}
+                onCellEditStart={handleCellEditStart}
+              />
+            </div>
+          </Grid>
         </div>
-      </Grid>
+      )}
     </div>
   );
 };

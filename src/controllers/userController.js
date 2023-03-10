@@ -3,7 +3,6 @@ const User = db.users.getUserModel();
 
 // exports.createCharacter = (req, res) => {
 
-//     console.log(req.body)
 //     // Validate request
 //     // if (!req.body.name || !req.body.hpMax) {
 //     //   res.status(400).send({ message: "Content can not be empty!" });

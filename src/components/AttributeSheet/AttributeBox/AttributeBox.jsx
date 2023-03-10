@@ -5,7 +5,7 @@ import { scoreMod } from "../Modifiers";
 export const AttributeBox = ({ attribute }) => {
 
   if (attribute === undefined) {
-    // console.log("Character attributes are not being defined");
+    console.log("Character attributes are not being defined");
     return <div>Character attributes are not being defined</div>
   }
   const { attributeName, attributeScore } = attribute;

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Fab from "@mui/material/Fab";
-import { styled } from '@mui/material/styles';
-import { DataGrid } from '@mui/x-data-grid';
+import { styled } from "@mui/material/styles";
+import { DataGrid } from "@mui/x-data-grid";
 import mongoose from "mongoose";
 
 import CheckIcon from "@mui/icons-material/Check";
@@ -10,17 +10,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
-
-
 import { updateInfo } from "../DBHandler";
 import { InputForm } from "../InputForm";
 
-export const SpellsSheet = ({ gaston }) => {
-  const { spells } = gaston;
-  const [currentSpells, setCurrentSpells] = useState(spells);
+export const SpellsSheet = ({ characterID }) => {
+  const [currentSpells, setCurrentSpells] = useState();
   const [addNewSpell, setAddNewSpell] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [oldValue, setOldValue] = useState("");
+  const [isFetched, setIsFetched] = useState(false);
+
+  useEffect(() => {
+    const character = JSON.parse(sessionStorage.getItem(characterID));
+    setCurrentSpells(character["spells"]);
+    setIsFetched(true);
+  }, [characterID]);
+
+  const updateSession = (newSpells) => {
+    let character = JSON.parse(sessionStorage.getItem(characterID));
+    character["spells"] = newSpells;
+    sessionStorage.setItem(characterID, JSON.stringify(character));
+  };
 
   const onDeleteClick = (event, row) => {
     event.stopPropagation();
@@ -28,6 +38,7 @@ export const SpellsSheet = ({ gaston }) => {
     newSpells = newSpells.filter((element) => element._id !== row._id);
     setCurrentSpells(newSpells);
     updateInfo("spells", newSpells);
+    updateSession(newSpells);
   };
 
   const handleCellEditStart = (params, event) => {
@@ -40,6 +51,7 @@ export const SpellsSheet = ({ gaston }) => {
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
       updateInfo("spells", currentSpells);
+      updateSession(currentSpells);
     }
   };
 
@@ -73,6 +85,7 @@ export const SpellsSheet = ({ gaston }) => {
       newSpells.push(newSpell);
       setCurrentSpells(newSpells);
       updateInfo("spells", newSpells);
+      updateSession(newSpells);
     }
     setAddNewSpell(false);
   };
@@ -86,32 +99,33 @@ export const SpellsSheet = ({ gaston }) => {
     foundRow["spellPrepared"] = !foundRow["spellPrepared"];
     setCurrentSpells(currentSpells);
     updateInfo("spells", currentSpells);
+    updateSession(currentSpells);
   };
 
   const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     fontFamily: "Montserrat",
     border: 0,
-    WebkitFontSmoothing: 'auto',
-    letterSpacing: 'normal',
-    '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
+    WebkitFontSmoothing: "auto",
+    letterSpacing: "normal",
+    "& .MuiDataGrid-columnsContainer": {
+      backgroundColor: theme.palette.mode === "light" ? "#fafafa" : "#1d1d1d",
     },
-    '& .MuiDataGrid-iconSeparator': {
-      display: 'none',
+    "& .MuiDataGrid-iconSeparator": {
+      display: "none",
     },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+    "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
       borderRight: "none",
     },
-    '& .MuiDataGrid-columnHeader': {
-      color: "#d97326"
+    "& .MuiDataGrid-columnHeader": {
+      color: "#d97326",
     },
-    '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
-      borderBottom: "none"
+    "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
+      borderBottom: "none",
     },
-    '& .MuiDataGrid-cell': {
+    "& .MuiDataGrid-cell": {
       color: "#5aa0ff",
     },
-    '& .MuiPaginationItem-root': {
+    "& .MuiPaginationItem-root": {
       borderRadius: 0,
     },
   }));
@@ -217,57 +231,65 @@ export const SpellsSheet = ({ gaston }) => {
   ];
 
   return (
-    <div className="spellBox">
-      <Grid container spacing={2}>
-        <Grid
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          xs={12}
-        >
-          {!addNewSpell && (
-            <Fab
-              size="large"
-              color="primary"
-              variant="extended"
-              onClick={openNewSpellForm}
+    <div>
+      {isFetched && (
+        <div className="spellBox">
+          <Grid container spacing={2}>
+            <Grid
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              xs={12}
             >
-              <h1>New Spell</h1>
-            </Fab>
-          )}
-          {addNewSpell && (
-            <InputForm
-              methods={{
-                closeAddState: closeAddState,
-                cancelHandler: cancelHandler,
-              }}
-              fields={columns}
-            />
-          )}
-        </Grid>
-        <Grid xs={12}>
-          <div
-            style={{ height: 400, width: "100%", backgroundColor: "#0f111a" }}
-          >
-            <StyledDataGrid
-              className="customDataGrid"
-              hideFooter
-              experimentalFeatures={{ newEditingApi: true }}
-              columnVisibilityModel={{
-                id: false,
-              }}
-              rows={currentSpells}
-              columns={columns}
-              getRowId={(row) => row._id.toString()}
-              onCellEditStop={handleCellEditStop}
-              onCellEditStart={handleCellEditStart}
-              getRowClassName={(params) =>
-                `dataGrid--${params.row.spellPrepared}`
-              }
-            />
-          </div>
-        </Grid>
-      </Grid>
+              {!addNewSpell && (
+                <Fab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openNewSpellForm}
+                >
+                  <h1>New Spell</h1>
+                </Fab>
+              )}
+              {addNewSpell && (
+                <InputForm
+                  methods={{
+                    closeAddState: closeAddState,
+                    cancelHandler: cancelHandler,
+                  }}
+                  fields={columns}
+                />
+              )}
+            </Grid>
+            <Grid xs={12}>
+              <div
+                style={{
+                  height: 400,
+                  width: "100%",
+                  backgroundColor: "#0f111a",
+                }}
+              >
+                <StyledDataGrid
+                  className="customDataGrid"
+                  hideFooter
+                  experimentalFeatures={{ newEditingApi: true }}
+                  columnVisibilityModel={{
+                    id: false,
+                  }}
+                  rows={currentSpells}
+                  columns={columns}
+                  getRowId={(row) => row._id.toString()}
+                  onCellEditStop={handleCellEditStop}
+                  onCellEditStart={handleCellEditStart}
+                  getRowClassName={(params) =>
+                    `dataGrid--${params.row.spellPrepared}`
+                  }
+                />
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      )}
     </div>
   );
 };
