@@ -7,3 +7,5 @@ mongosh
 nodemon server.js
 // If nodemon command is not found
 sudo npm install -g nodemon
+
+export REACT_APP_SERVER_URL="https://player-sheet-server.herokuapp.com"
