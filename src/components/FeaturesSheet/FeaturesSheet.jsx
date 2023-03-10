@@ -1,67 +1,46 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
+import Container from "@mui/material/Container";
 
-import { InfoBox } from "../AttributeSheet/InfoBox";
 import { MultiInfoBox } from "../MultiInfoBox/MultiInfoBox";
+import { FeatureBox } from "./FeatureBox";
+
+const featureLabels = [
+  "Class",
+  "Race",
+  "Background",
+  "Alignment",
+  "Languages Known",
+  "Armor Proficiences",
+  "Weapon Proficiences",
+  "Tool Proficiences",
+];
+const featureNames = {
+  Class: "characterClass",
+  Race: "race",
+  Background: "background",
+  Alignment: "alignment",
+  LanguagesKnown: "languagesKnown",
+  ArmorProficiences: "armorProficiences",
+  WeaponProficiences: "weaponProficiences",
+  ToolProficiences: "toolProficiences",
+};
 
 export const FeaturesSheet = ({ characterID }) => {
   return (
-    <div>
+    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
       <Grid container spacing={4}>
         <Grid xs={12}>
-          <InfoBox
-            info={{
-              title: "Class",
-              infoName: "characterClass",
-              characterID: characterID,
-            }}
-          />
-          <InfoBox
-            info={{ title: "Race", infoName: "race", characterID: characterID }}
-          />
-          <InfoBox
-            info={{
-              title: "Background",
-              infoName: "background",
-              characterID: characterID,
-            }}
-          />
-          <InfoBox
-            info={{
-              title: "Alignment",
-              infoName: "alignment",
-              characterID: characterID,
-            }}
-          />
-          <InfoBox
-            info={{
-              title: "Languages Known",
-              infoName: "languagesKnown",
-              characterID: characterID,
-            }}
-          />
-          <InfoBox
-            info={{
-              title: "Armor Proficiences",
-              infoName: "armorProficiences",
-              characterID: characterID,
-            }}
-          />
-
-          <InfoBox
-            info={{
-              title: "Weapon Proficiences",
-              infoName: "weaponProficiences",
-              characterID: characterID,
-            }}
-          />
-          <InfoBox
-            info={{
-              title: "Tool Proficiences",
-              infoName: "toolProficiences",
-              characterID: characterID,
-            }}
-          />
+          {featureLabels.map((feature, index) => (
+            <FeatureBox
+              key={index}
+              info={{
+                title: feature,
+                infoName: featureNames[feature.replace(" ", "")],
+                characterID: characterID,
+              }}
+            />
+          ))}
         </Grid>
         <Grid xs={12}>
           <MultiInfoBox
@@ -73,8 +52,7 @@ export const FeaturesSheet = ({ characterID }) => {
             }}
           />
         </Grid>
-        Proficiences
       </Grid>
-    </div>
+    </Container>
   );
 };

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
+import Container from "@mui/material/Container";
+
 import { scoreMod } from "../AttributeSheet/Modifiers";
 
 import { SkillBox } from "./SkillBox";
@@ -26,7 +28,7 @@ export const SkillsSheet = ({ characterID }) => {
   // This all relies on everything being present and in order
   //    Prehaps make this safer somehow
   return (
-    <div>
+    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
       {isFetched && (
         <div className="skillSheet">
           <Grid container spacing={1}>
@@ -179,6 +181,6 @@ export const SkillsSheet = ({ characterID }) => {
           </Grid>
         </div>
       )}
-    </div>
+    </Container>
   );
 };

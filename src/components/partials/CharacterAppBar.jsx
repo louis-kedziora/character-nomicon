@@ -18,19 +18,19 @@ const sheetLabels = [
   "Attacks",
   "Attributes",
   "Features",
-  "Loot",
-  "Notes",
   "Skills",
   "Spells",
+  "Notes",
+  "Loot",
 ];
 const sheetLinks = {
   Attacks: "/attacks",
   Attributes: "/attributes",
   Features: "/features",
-  Loot: "/loot",
-  Notes: "/notes",
   Skills: "/skills",
   Spells: "/spells",
+  Notes: "/notes",
+  Loot: "/loot",
 };
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -60,7 +60,7 @@ export const CharacterAppBar = ({ characterName }) => {
       }}
       position="static"
     >
-      <Container maxWidth="xl">
+      <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
         <Toolbar disableGutters>
           <ShieldSharpIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
@@ -125,6 +125,7 @@ export const CharacterAppBar = ({ characterName }) => {
                   color: "white",
                   display: "block",
                   fontFamily: "Montserrat",
+                  boxSizing: "borderBox"
                 }}
               >
                 {sheet}
