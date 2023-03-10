@@ -3,22 +3,18 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 import { AttributeBox } from "./AttributeBox";
 import { InfoBox } from "./InfoBox";
-import { proficiencyBonus, scoreMod } from "./Modifiers";
 import { HPBox } from "./HPBox";
 import { ResourceBox } from "./ResourceBox";
 
 export const AttributeSheet = ({ characterID }) => {
   const [character, setCharacter] = useState();
   const [isFetched, setIsFetched] = useState(false);
-  //Helper Function could put it in utils.js
-  // const variableToString = (varObj) => Object.keys(varObj)[0];
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem(characterID));
     setCharacter(character);
     setIsFetched(true);
   }, [characterID]);
-
 
   return (
     <div>
@@ -27,7 +23,10 @@ export const AttributeSheet = ({ characterID }) => {
           <Grid container spacing={1}>
             <Grid xs={12}>
               <AttributeBox
-                attribute={{ attributeName: "Strength", attributeScore: character.str }}
+                attribute={{
+                  attributeName: "Strength",
+                  attributeScore: character.str,
+                }}
               />
               <AttributeBox
                 attribute={{
@@ -36,10 +35,16 @@ export const AttributeSheet = ({ characterID }) => {
                 }}
               />
               <AttributeBox
-                attribute={{ attributeName: "Dexterity", attributeScore: character.dex }}
+                attribute={{
+                  attributeName: "Dexterity",
+                  attributeScore: character.dex,
+                }}
               />
               <AttributeBox
-                attribute={{ attributeName: "Wisdom", attributeScore: character.wis }}
+                attribute={{
+                  attributeName: "Wisdom",
+                  attributeScore: character.wis,
+                }}
               />
               <AttributeBox
                 attribute={{
@@ -48,26 +53,48 @@ export const AttributeSheet = ({ characterID }) => {
                 }}
               />
               <AttributeBox
-                attribute={{ attributeName: "Charisma", attributeScore: character.char }}
+                attribute={{
+                  attributeName: "Charisma",
+                  attributeScore: character.char,
+                }}
               />
             </Grid>
             <Grid xs={12}>
-              <InfoBox info={{ title: "AC", content: character.ac }} />
+              <InfoBox
+                info={{ title: "AC", infoName: "ac", characterID: characterID }}
+              />
+
+              {/* HERE */}
               <InfoBox
                 info={{
                   title: "Proficiency",
-                  content: proficiencyBonus(character.level),
+                  infoName: "level",
+                  characterID: characterID,
                 }}
               />
-              <InfoBox info={{ title: "Speed", content: character.speed }} />
-              <InfoBox info={{ title: "Initiative", content: scoreMod(character.dex) }} />
+              <InfoBox
+                info={{
+                  title: "Speed",
+                  infoName: "speed",
+                  characterID: characterID,
+                }}
+              />
+
+              {/* HERE */}
+              <InfoBox
+                info={{
+                  title: "Initiative",
+                  infoName: "dex",
+                  characterID: characterID,
+                }}
+              />
             </Grid>
 
             <Grid xs={12}>
               <HPBox
                 characterInfo={{
                   title: "HP",
-                  characterID: characterID
+                  characterID: characterID,
                 }}
               />
               <ResourceBox
@@ -75,42 +102,42 @@ export const AttributeSheet = ({ characterID }) => {
                   title: "Hit Dice",
                   resourceName: "currentHitDice",
                   characterID: characterID,
-                  extraInfo: character.hitDice
+                  extraInfo: character.hitDice,
                 }}
               />
               <ResourceBox
                 characterInfo={{
                   title: "1st Level Spells",
                   resourceName: "currentOneSpellSlots",
-                  characterID: characterID
+                  characterID: characterID,
                 }}
               />
               <ResourceBox
                 characterInfo={{
                   title: "2nd Level Spells",
                   resourceName: "currentTwoSpellSlots",
-                  characterID: characterID
+                  characterID: characterID,
                 }}
               />
               <ResourceBox
                 characterInfo={{
                   title: "3rd Level Spell",
                   resourceName: "currentThreeSpellSlots",
-                  characterID: characterID
+                  characterID: characterID,
                 }}
               />
               <ResourceBox
                 characterInfo={{
                   title: "Wild Shapes",
                   resourceName: "currentWildShapes",
-                  characterID: characterID
+                  characterID: characterID,
                 }}
               />
               <ResourceBox
                 characterInfo={{
                   title: "Guiding Bolts",
                   resourceName: "currentGuidingBolts",
-                  characterID: characterID
+                  characterID: characterID,
                 }}
               />
               {/* May need a specific box for this or a additional Info for this
@@ -119,7 +146,7 @@ export const AttributeSheet = ({ characterID }) => {
                 characterInfo={{
                   title: "Cosmic Omens",
                   resourceName: "currentCosmicOmens",
-                  characterID: characterID
+                  characterID: characterID,
                 }}
               />
             </Grid>
