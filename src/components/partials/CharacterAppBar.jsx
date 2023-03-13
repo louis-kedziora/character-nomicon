@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,10 +8,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-// import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-// import Tooltip from "@mui/material/Tooltip";
-// import MenuItem from "@mui/material/MenuItem";
 import ShieldSharpIcon from "@mui/icons-material/ShieldSharp";
 
 const sheetLabels = [
@@ -32,31 +29,23 @@ const sheetLinks = {
   Notes: "/notes",
   Loot: "/loot",
 };
-// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 export const CharacterAppBar = ({ characterName }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  // const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
-
   return (
     <AppBar
       sx={{
         backgroundColor: "#010038",
+        boxShadow: "none",
       }}
       position="static"
     >
@@ -65,11 +54,10 @@ export const CharacterAppBar = ({ characterName }) => {
           <ShieldSharpIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
-            <Typography
+          <Typography
             variant="h6"
             noWrap
-            component={Link}
-            to="/"
+            to="/attributes"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -78,7 +66,7 @@ export const CharacterAppBar = ({ characterName }) => {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             {characterName}
@@ -115,53 +103,34 @@ export const CharacterAppBar = ({ characterName }) => {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {sheetLabels.map((sheet, index) => (
-              <Button
+              <NavLink
                 key={index}
-                onClick={handleCloseNavMenu}
-                component={Link}
                 to={sheetLinks[sheet]}
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  fontFamily: "Montserrat",
-                  boxSizing: "borderBox"
+                style={({ isActive, isPending }) => {
+                  return {
+                    fontWeight: isActive ? "bold" : "",
+                    backgroundImage: isActive ? `url(${"https://www.transparenttextures.com/patterns/buried.png"})` : "",
+                    backgroundColor: isActive ? "#0f111a" : "",
+                    fontFamily: "Montserrat",
+                    textDecoration: "none",
+                  };
                 }}
               >
-                {sheet}
-              </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    fontFamily: "Montserrat",
+                    boxSizing: "borderBox",
+                  }}
+                >
+                  {sheet}
+                </Button>
+              </NavLink>
             ))}
           </Box>
-          {/* DO NOT DELETE */}
-          {/* <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/lem-profile.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

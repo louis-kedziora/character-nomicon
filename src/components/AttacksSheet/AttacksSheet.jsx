@@ -12,7 +12,6 @@ import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
 
 export const AttacksSheet = ({ characterID }) => {
-  console.log("attaka");
   const [currentAttacks, setCurrentAttacks] = useState();
   const [addNewAttack, setAddNewAttack] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
@@ -169,6 +168,14 @@ export const AttacksSheet = ({ characterID }) => {
     },
     "& .MuiPaginationItem-root": {
       borderRadius: 0,
+    },
+    "& .MuiDataGrid-menuIconButton": {
+      opacity: 1,
+      color: "white",
+    },
+    "& .MuiDataGrid-sortIcon": {
+      opacity: 1,
+      color: "white",
     },
   }));
   return (

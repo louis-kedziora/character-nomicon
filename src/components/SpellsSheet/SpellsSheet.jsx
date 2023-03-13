@@ -129,6 +129,14 @@ export const SpellsSheet = ({ characterID }) => {
     "& .MuiPaginationItem-root": {
       borderRadius: 0,
     },
+    "& .MuiDataGrid-menuIconButton": {
+      opacity: 1,
+      color: "white",
+    },
+    "& .MuiDataGrid-sortIcon": {
+      opacity: 1,
+      color: "white",
+    },
   }));
 
   const columns = [

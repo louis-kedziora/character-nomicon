@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate  } from "react-router-dom";
 import { AttacksSheet } from "components/AttacksSheet";
 import { AttributeSheet } from "components/AttributeSheet";
 import { FeaturesSheet } from "components/FeaturesSheet";
@@ -10,16 +10,16 @@ import { SpellsSheet } from "components/SpellsSheet";
 import { LootSheet } from "components/LootSheet";
 import { Footer, CharacterAppBar } from "components/partials";
 
+const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
+const instance = axios.create({
+  baseURL: serverURL +"/api/characters/get"
+});
+
 function App() {
   const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
   const characterID = "63ee8cedd307d6342d6580bd";
 
-  const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
-  const instance = axios.create({
-    baseURL: serverURL +"/api/characters/get"
-  });
-  
   useEffect(() => {
     async function fetchData() {
       const request = await instance.post("/", { _id: characterID });
@@ -30,7 +30,8 @@ function App() {
     }
     fetchData();
   }, [characterID]);
-  // NOTE: If there are dependancies they must be put in this array at the bottom
+
+  
   return (
     <div>
       {isFetched && (
@@ -39,7 +40,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<AttributeSheet characterID={characterID} />}
+              element={<Navigate to="/attributes" replace={true} />}
             />
             <Route
               path="/attacks"
