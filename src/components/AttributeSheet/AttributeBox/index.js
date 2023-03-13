@@ -1,1 +1,1 @@
-export {AttributeBox} from "./AttributeBox"
+export {AttributeBox} from "components/AttributeSheet/AttributeBox/AttributeBox"

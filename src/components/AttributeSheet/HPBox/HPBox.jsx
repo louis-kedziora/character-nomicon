@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
-import { ChangeHPBox } from "./ChangeHPBox";
-import { updateHP } from "../../DBHandler/DBHandler";
+import { ChangeHPBox } from "components/AttributeSheet/HPBox/ChangeHPBox";
+import { updateHP } from "components/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
   const { title, characterID } = characterInfo;

@@ -1,1 +1,1 @@
-export { AttributeSheet } from "./AttributeSheet";
+export { AttributeSheet } from "components/AttributeSheet/AttributeSheet";

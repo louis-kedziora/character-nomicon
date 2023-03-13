@@ -1,1 +1,1 @@
-export { HPBox } from "./HPBox";
+export { HPBox } from "components/AttributeSheet/HPBox/HPBox";

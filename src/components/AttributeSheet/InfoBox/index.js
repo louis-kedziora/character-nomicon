@@ -1,1 +1,1 @@
-export { InfoBox } from "./InfoBox";
+export { InfoBox } from "components/AttributeSheet/InfoBox/InfoBox";

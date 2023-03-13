@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   modifierAndProficency,
   scoreMod,
-} from "../../AttributeSheet/Modifiers";
+} from "components/AttributeSheet/Modifiers";
 
 export const SkillBox = ({ info }) => {
   const { title, skill, characterID } = info;

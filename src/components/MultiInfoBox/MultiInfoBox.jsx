@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { updateInfo } from "../DBHandler";
+import Container from "@mui/material/Container";
+
+import { updateInfo } from "components/DBHandler";
 
 export const MultiInfoBox = ({ info }) => {
   const { title, infoName, characterID } = info;
@@ -27,7 +29,12 @@ export const MultiInfoBox = ({ info }) => {
   return (
     <div>
       {isFetched && (
-        <div className="noteBox">
+        <Container
+          className="noteBox"
+          width="100%"
+          maxWidth={false}
+          sx={{ ml: 0 }}
+        >
           <h1>{title}</h1>
           <textarea
             onBlur={handleFocusLoss}
@@ -37,7 +44,7 @@ export const MultiInfoBox = ({ info }) => {
             name="notes"
             rows={100}
           ></textarea>
-        </div>
+        </Container>
       )}
     </div>
   );

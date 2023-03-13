@@ -8,8 +8,8 @@ import mongoose from "mongoose";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
-import { updateInfo } from "../DBHandler";
-import { InputForm } from "../InputForm";
+import { updateInfo } from "components/DBHandler";
+import { InputForm } from "components/InputForm";
 
 export const AttacksSheet = ({ characterID }) => {
   const [currentAttacks, setCurrentAttacks] = useState();
@@ -168,6 +168,14 @@ export const AttacksSheet = ({ characterID }) => {
     },
     "& .MuiPaginationItem-root": {
       borderRadius: 0,
+    },
+    "& .MuiDataGrid-menuIconButton": {
+      opacity: 1,
+      color: "white",
+    },
+    "& .MuiDataGrid-sortIcon": {
+      opacity: 1,
+      color: "white",
     },
   }));
   return (

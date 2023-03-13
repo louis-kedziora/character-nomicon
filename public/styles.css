@@ -62,17 +62,25 @@ footer p {
 
 .featureBox h2 {
   font-size: 1.2em;
+  font-weight: 100;
 }
 
+.noteBox h1{
+  color: #DBE2EF;
+  margin: 10px 0 20px 0;
+}
 .noteBox textarea {
   width: 100%;
   border: none;
-  padding: 4px;
+  padding: 35px;
+  margin: 5px;
   outline: none;
   font-size: 1.2em;
   font-family: inherit;
   resize: none;
   overflow: hidden;
+  background-color: #0f111a;
+  color: bisque;
 }
 .noteBox {
   color: white;
@@ -86,6 +94,7 @@ footer p {
   float: center;
   text-align: center;
 }
+
 
 .spellBox {
   background: #0f111a;

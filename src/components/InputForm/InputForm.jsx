@@ -39,7 +39,7 @@ export const InputForm = ({ methods, fields }) => {
 
   return (
     <form className="inputForm" onSubmit={closeAddState}>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {newFields.map((field, index) => {
           return (
             <Grid
@@ -47,9 +47,11 @@ export const InputForm = ({ methods, fields }) => {
               display="flex"
               justifyContent="left"
               alignItems="left"
-              xs={12}
+              xs={6}
             >
+            {/* xs, sm, md, lg, and xl. */}
               <StyledTextField
+                fullWidth
                 label={field.headerName}
                 name={field.field}
                 id="outlined-basic"
@@ -58,21 +60,19 @@ export const InputForm = ({ methods, fields }) => {
           );
         })}
 
-        <Grid container spacing={4}>
-          <Grid display="flex" justifyContent="left" alignItems="left" xs={12}>
-            <Button
-              onClick={cancelHandler}
-              name="cancelButton"
-              variant="contained"
-              color="error"
-              type="submit"
-            >
-              Cancel
-            </Button>
-            <Button variant="contained" color="success" type="submit">
-              Add
-            </Button>
-          </Grid>
+        <Grid display="flex" justifyContent="left" alignItems="left" xs={12}>
+          <Button
+            onClick={cancelHandler}
+            name="cancelButton"
+            variant="contained"
+            color="error"
+            type="submit"
+          >
+            Cancel
+          </Button>
+          <Button variant="contained" color="success" type="submit">
+            Add
+          </Button>
         </Grid>
       </Grid>
     </form>

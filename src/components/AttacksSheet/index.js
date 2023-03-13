@@ -1,1 +1,1 @@
-export { AttacksSheet } from "./AttacksSheet";
+export { AttacksSheet } from "components/AttacksSheet/AttacksSheet";

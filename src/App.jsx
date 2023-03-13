@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
-import axios from "./axios";
-import { Routes, Route } from "react-router-dom";
-// import { SelectionSheet } from "./components/SelectionSheet";
-import { AttacksSheet } from "./components/AttacksSheet";
-import { AttributeSheet } from "./components/AttributeSheet";
-import { FeaturesSheet } from "./components/FeaturesSheet";
-import { NotesSheet } from "./components/NotesSheet";
-import { SkillsSheet } from "./components/SkillsSheet";
-import { SpellsSheet } from "./components/SpellsSheet";
-import { LootSheet } from "./components/LootSheet";
-import { Footer, CharacterAppBar } from "./components/partials";
+import axios from "axios";
+import { Routes, Route, Navigate  } from "react-router-dom";
+import { AttacksSheet } from "components/AttacksSheet";
+import { AttributeSheet } from "components/AttributeSheet";
+import { FeaturesSheet } from "components/FeaturesSheet";
+import { NotesSheet } from "components/NotesSheet";
+import { SkillsSheet } from "components/SkillsSheet";
+import { SpellsSheet } from "components/SpellsSheet";
+import { LootSheet } from "components/LootSheet";
+import { Footer, CharacterAppBar } from "components/partials";
+
+const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
+const instance = axios.create({
+  baseURL: serverURL +"/api/characters/get"
+});
 
 function App() {
   const [character, setCharacter] = useState({});
@@ -18,7 +22,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.post("/", { _id: characterID });
+      const request = await instance.post("/", { _id: characterID });
       setCharacter(request.data);
       sessionStorage.setItem(request.data._id, JSON.stringify(request.data));
       setIsFetched(true);
@@ -26,7 +30,8 @@ function App() {
     }
     fetchData();
   }, [characterID]);
-  // NOTE: If there are dependancies they must be put in this array at the bottom
+
+  
   return (
     <div>
       {isFetched && (
@@ -35,7 +40,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<AttributeSheet characterID={characterID} />}
+              element={<Navigate to="/attributes" replace={true} />}
             />
             <Route
               path="/attacks"
@@ -56,10 +61,6 @@ function App() {
             <Route
               path="/notes"
               element={<NotesSheet characterID={characterID} />}
-            />
-            <Route
-              path="/skills"
-              element={<SkillsSheet characterID={characterID} />}
             />
             <Route
               path="/skills"

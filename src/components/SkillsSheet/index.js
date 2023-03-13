@@ -1,1 +1,1 @@
-export { SkillsSheet } from "./SkillsSheet";
+export { SkillsSheet } from "components/SkillsSheet/SkillsSheet";
