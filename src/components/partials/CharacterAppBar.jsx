@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -57,6 +57,7 @@ export const CharacterAppBar = ({ characterName }) => {
           <Typography
             variant="h6"
             noWrap
+            component={Link}
             to="/attributes"
             sx={{
               mr: 2,
