@@ -24,6 +24,9 @@ export const InputForm = ({ methods, fields }) => {
     "& .MuiInput-underline:after": {
       borderBottomColor: "#03C988",
     },
+    "& input:-internal-autofill-selected": {
+      backgroundColor: "#0f111a",
+    },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderColor: "#03C988",
@@ -49,7 +52,6 @@ export const InputForm = ({ methods, fields }) => {
               alignItems="left"
               xs={6}
             >
-            {/* xs, sm, md, lg, and xl. */}
               <StyledTextField
                 fullWidth
                 label={field.headerName}
