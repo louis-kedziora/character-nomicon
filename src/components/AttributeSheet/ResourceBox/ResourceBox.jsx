@@ -24,13 +24,13 @@ export const ResourceBox = ({ characterInfo }) => {
     if (changeType === "Remove") {
       if (resourceValue > 0) {
         setResourceValue(resourceValue - 1);
-        updateResource(resourceName, -1, resourceValue, maxValue);
+        updateResource(resourceName, -1, resourceValue, maxValue, characterID);
         newValue = resourceValue - 1;
       }
     } else if (changeType === "Add") {
       if (resourceValue < maxValue) {
         setResourceValue(resourceValue + 1);
-        updateResource(resourceName, 1, resourceValue, maxValue);
+        updateResource(resourceName, 1, resourceValue, maxValue, characterID);
         newValue = resourceValue + 1;
       }
     }

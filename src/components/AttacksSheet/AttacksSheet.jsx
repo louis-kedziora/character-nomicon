@@ -35,7 +35,7 @@ export const AttacksSheet = ({ characterID }) => {
     let newAttacks = structuredClone(currentAttacks);
     newAttacks = newAttacks.filter((element) => element._id !== row._id);
     setCurrentAttacks(newAttacks);
-    updateInfo("attacks", newAttacks);
+    updateInfo("attacks", newAttacks, characterID);
     updateSession(newAttacks);
   };
 
@@ -50,7 +50,7 @@ export const AttacksSheet = ({ characterID }) => {
       );
       foundRow[params.field] = event.target.value;
       setCurrentAttacks(currentAttacks);
-      updateInfo("attacks", currentAttacks);
+      updateInfo("attacks", currentAttacks, characterID);
       updateSession(currentAttacks);
     }
   };
@@ -81,7 +81,7 @@ export const AttacksSheet = ({ characterID }) => {
       let newAttacks = structuredClone(currentAttacks);
       newAttacks.push(newAttack);
       setCurrentAttacks(newAttacks);
-      updateInfo("attacks", newAttacks);
+      updateInfo("attacks", newAttacks, characterID);
       updateSession(newAttacks);
     }
     setAddNewAttack(false);

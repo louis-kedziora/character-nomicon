@@ -38,7 +38,7 @@ export const SpellsSheet = ({ characterID }) => {
     let newSpells = structuredClone(currentSpells);
     newSpells = newSpells.filter((element) => element._id !== row._id);
     setCurrentSpells(newSpells);
-    updateInfo("spells", newSpells);
+    updateInfo("spells", newSpells, characterID);
     updateSession(newSpells);
   };
 
@@ -51,7 +51,7 @@ export const SpellsSheet = ({ characterID }) => {
       let foundRow = currentSpells.find((element) => element._id === params.id);
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
-      updateInfo("spells", currentSpells);
+      updateInfo("spells", currentSpells, characterID);
       updateSession(currentSpells);
     }
   };
@@ -85,7 +85,7 @@ export const SpellsSheet = ({ characterID }) => {
       let newSpells = structuredClone(currentSpells);
       newSpells.push(newSpell);
       setCurrentSpells(newSpells);
-      updateInfo("spells", newSpells);
+      updateInfo("spells", newSpells, characterID);
       updateSession(newSpells);
     }
     setAddNewSpell(false);
@@ -99,7 +99,7 @@ export const SpellsSheet = ({ characterID }) => {
 
     foundRow["spellPrepared"] = !foundRow["spellPrepared"];
     setCurrentSpells(currentSpells);
-    updateInfo("spells", currentSpells);
+    updateInfo("spells", currentSpells, characterID);
     updateSession(currentSpells);
   };
 

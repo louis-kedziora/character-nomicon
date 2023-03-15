@@ -2,7 +2,6 @@ const db = require("../models");
 const Character = db.characters.getModel();
 
 exports.getCharacter = (req, res) => {
-  console.log(req.body);
   // Validate request
   if (!req.body._id) {
     res.status(400).send({ message: "Missing body contents!" });
@@ -51,17 +50,17 @@ exports.createCharacter = (req, res) => {
 };
 
 exports.updateResource = (req, res) => {
-  if (!req.body || !req.body.name) {
+  if (!req.body || !req.body.characterID) {
     res.status(400).send({ message: "Body can not be empty!" });
     return;
   }
-  const updateName = req.body.name;
+  const characterID = req.body.characterID;
   let updateData = req.body;
-  delete updateData.name;
+  delete updateData.characterID;
   const updateField = Object.keys(updateData)[0];
   const updateValue = Object.values(updateData)[0];
 
-  Character.findOne({ name: updateName }, function (err, foundCharacter) {
+  Character.findOne({ _id: characterID }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
     } else {
@@ -86,18 +85,18 @@ exports.updateResource = (req, res) => {
 };
 
 exports.updateInfo = (req, res) => {
-
-  if (!req.body || !req.body.name) {
+  console.log(req.body);
+  if (!req.body || !req.body.characterID) {
     res.status(400).send({ message: "Body can not be empty!" });
     return;
   }
-  const updateName = req.body.name;
+  const characterID = req.body.characterID;
   let updateData = req.body;
-  delete updateData.name;
+  delete updateData.characterID;
   const updateField = Object.keys(updateData)[0];
   const updateValue = Object.values(updateData)[0];
 
-  Character.findOne({ name: updateName }, function (err, foundCharacter) {
+  Character.findOne({ _id: characterID }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
     } else {
@@ -124,13 +123,13 @@ exports.updateInfo = (req, res) => {
 exports.updateHP = (req, res) => {
   // Validate request
   console.log(req.body);
-  if (!req.body.name || typeof req.body.newHP !== "number") {
+  if (!req.body.characterID || typeof req.body.newHP !== "number") {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
 
-  const { name, newHP } = req.body;
-  Character.findOne({ name: name }, function (err, foundCharacter) {
+  const { characterID, newHP } = req.body;
+  Character.findOne({ _id: characterID }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
     } else {

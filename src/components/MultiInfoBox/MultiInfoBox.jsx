@@ -20,7 +20,7 @@ export const MultiInfoBox = ({ info }) => {
   }
 
   function handleFocusLoss(event) {
-    updateInfo(infoName, content);
+    updateInfo(infoName, content, characterID);
     let character = JSON.parse(sessionStorage.getItem(characterID));
     character[infoName] = content;
     sessionStorage.setItem(characterID, JSON.stringify(character));

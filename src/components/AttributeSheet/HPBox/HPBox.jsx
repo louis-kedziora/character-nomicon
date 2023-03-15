@@ -51,7 +51,7 @@ export const HPBox = ({ characterInfo }) => {
         !(changeType === "stabilize" && hp === 0) &&
         !(changeType === "damage" && changeValue === 0)
       ) {
-        const newHP = updateHP(changeType, parseInt(changeValue), hp, hpMax);
+        const newHP = updateHP(changeType, parseInt(changeValue), hp, hpMax, characterID);
         setHP(newHP);
         let character = JSON.parse(sessionStorage.getItem(characterID));
         character["currentHP"] = newHP;

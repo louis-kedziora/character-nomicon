@@ -1,7 +1,5 @@
-// TODO Need to implenment id for characters at this point 'gaston is hardcoded into all the methods'
 
 import axios from "axios";
-const HARDCODEDCHARACTERNAME = "Gaston";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
 export const getCharacter = (characterID) => {
@@ -9,7 +7,7 @@ export const getCharacter = (characterID) => {
     method: "post",
     url: serverURL + "/api/characters/get",
     data: {
-      _id: characterID
+      _id: characterID,
     },
   })
     .then(function (response) {
@@ -18,14 +16,14 @@ export const getCharacter = (characterID) => {
     .catch(function (error) {
       console.log(error);
     });
-}
+};
 
-export const updateInfo = (infoName, newInfo) => {
+export const updateInfo = (infoName, newInfo, characterID) => {
   axios({
     method: "patch",
     url: serverURL + "/api/characters/updateInfo",
     data: {
-      name: HARDCODEDCHARACTERNAME,
+      characterID: characterID,
       [infoName]: newInfo,
     },
   })
@@ -42,8 +40,18 @@ export const updateResource = (
   resourceName,
   changeAmount,
   currentValue,
-  maxValue
+  maxValue,
+  characterID
 ) => {
+  if (
+    resourceName === undefined ||
+    changeAmount === undefined ||
+    currentValue === undefined ||
+    maxValue === undefined ||
+    characterID === undefined
+  ) {
+    console.log("Missing parameters");
+  }
   let newValue;
   if (currentValue + changeAmount < 0) {
     newValue = 0;
@@ -56,7 +64,7 @@ export const updateResource = (
     method: "patch",
     url: serverURL + "/api/characters/updateResource",
     data: {
-      name: HARDCODEDCHARACTERNAME,
+      characterID: characterID,
       [resourceName]: newValue,
     },
   })
@@ -69,12 +77,19 @@ export const updateResource = (
   return newValue;
 };
 
-export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
+export const updateHP = (
+  updateType,
+  changeAmount,
+  currentHP,
+  hpMax,
+  characterID
+) => {
   if (
     updateType === undefined ||
     changeAmount === undefined ||
     currentHP === undefined ||
-    hpMax === undefined
+    hpMax === undefined ||
+    characterID === undefined
   ) {
     console.log("Missing updateType and/or changeAmount parameters");
   }
@@ -101,7 +116,7 @@ export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
     method: "patch",
     url: serverURL + "/api/characters/updatehp",
     data: {
-      name: HARDCODEDCHARACTERNAME,
+      characterID: characterID,
       newHP: newHP,
     },
   })
