@@ -1,14 +1,16 @@
 const db = require("../models");
 const Character = db.characters.getModel();
+const mongoose = require("mongoose");
 
 exports.getCharacter = (req, res) => {
   // Validate request
-  if (!req.body._id) {
+  if (!mongoose.isValidObjectId(req.body.characterID.characterID)) {
+    console.log("Invalid Character Mongoose ID");
     res.status(400).send({ message: "Missing body contents!" });
     return;
   }
 
-  Character.findOne({ _id: req.body._id }, function (err, foundCharacter) {
+  Character.findOne({ _id: req.body.characterID.characterID }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
     } else {

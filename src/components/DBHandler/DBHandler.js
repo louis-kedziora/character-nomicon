@@ -2,22 +2,6 @@
 import axios from "axios";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
-export const getCharacter = (characterID) => {
-  axios({
-    method: "post",
-    url: serverURL + "/api/characters/get",
-    data: {
-      _id: characterID,
-    },
-  })
-    .then(function (response) {
-      return response;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-};
-
 export const updateInfo = (infoName, newInfo, characterID) => {
   axios({
     method: "patch",

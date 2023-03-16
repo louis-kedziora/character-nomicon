@@ -1,74 +1,37 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Routes, Route, Navigate  } from "react-router-dom";
-import { AttacksSheet } from "components/AttacksSheet";
-import { AttributeSheet } from "components/AttributeSheet";
-import { FeaturesSheet } from "components/FeaturesSheet";
-import { NotesSheet } from "components/NotesSheet";
-import { SkillsSheet } from "components/SkillsSheet";
-import { SpellsSheet } from "components/SpellsSheet";
-import { LootSheet } from "components/LootSheet";
-import { Footer, CharacterAppBar } from "components/partials";
+import { Routes, Route } from "react-router-dom";
+import { Footer } from "components/partials";
+import { SelectionSheet } from "components/SelectionSheet";
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
-  baseURL: serverURL +"/api/characters/get"
+  baseURL: serverURL,
 });
 
 function App() {
-  const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
-  const characterID = "63ee8cedd307d6342d6580bd";
+  const userID = "64120226601e330164d590af";
 
   useEffect(() => {
-    async function fetchData() {
-      const request = await instance.post("/", { _id: characterID });
-      setCharacter(request.data);
-      sessionStorage.setItem(request.data._id, JSON.stringify(request.data));
+    async function fetchUserData() {
+      // Get User and put in session storage
+      const request = await instance.post("/api/users/get", { userID: userID });
+      sessionStorage.setItem(userID, JSON.stringify(request.data));
       setIsFetched(true);
       return request;
     }
-    fetchData();
-  }, [characterID]);
+    fetchUserData();
+  }, [userID]);
 
-  
   return (
     <div>
       {isFetched && (
         <div>
-          <CharacterAppBar characterName={character.name} />
           <Routes>
             <Route
               path="/"
-              element={<Navigate to="/attributes" replace={true} />}
-            />
-            <Route
-              path="/attacks"
-              element={<AttacksSheet characterID={characterID} />}
-            />
-            <Route
-              path="/attributes"
-              element={<AttributeSheet characterID={characterID} />}
-            />
-            <Route
-              path="/features"
-              element={<FeaturesSheet characterID={characterID} />}
-            />
-            <Route
-              path="/loot"
-              element={<LootSheet characterID={characterID} />}
-            />
-            <Route
-              path="/notes"
-              element={<NotesSheet characterID={characterID} />}
-            />
-            <Route
-              path="/skills"
-              element={<SkillsSheet characterID={characterID} />}
-            />
-            <Route
-              path="/spells"
-              element={<SpellsSheet characterID={characterID} />}
+              element={<SelectionSheet userInfo={{ userID: userID }} />}
             />
           </Routes>
           <Footer />

@@ -1,1 +1,1 @@
-export { updateResource, updateInfo, updateHP, getCharacter } from "components/DBHandler/DBHandler";
+export { updateResource, updateInfo, updateHP} from "components/DBHandler/DBHandler";
