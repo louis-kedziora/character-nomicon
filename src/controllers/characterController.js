@@ -2,21 +2,47 @@ const db = require("../models");
 const Character = db.characters.getModel();
 const mongoose = require("mongoose");
 
-exports.getCharacter = (req, res) => {
+exports.getManyCharacters = (req, res) => {
+  
   // Validate request
-  if (!mongoose.isValidObjectId(req.body.characterID.characterID)) {
+  req.body.characterIDs.forEach((characterID, index) => {
+    if (!mongoose.isValidObjectId(characterID)) {
+      console.log("Invalid Character Mongoose ID");
+      res.status(400).send({ message: "Missing body contents!" });
+      return;
+    }
+  })
+
+  Character.find({ _id: { $in: req.body.characterIDs} }, function (err, foundCharacters) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundCharacters) {
+        console.log("Characters Not Found!");
+      } else {
+        res.send(foundCharacters);
+      }
+    }
+  });
+};
+
+exports.getOneCharacter = (req, res) => {
+
+  // Validate request
+  if (!mongoose.isValidObjectId(req.body.characterID)) {
     console.log("Invalid Character Mongoose ID");
     res.status(400).send({ message: "Missing body contents!" });
     return;
   }
 
-  Character.findOne({ _id: req.body.characterID.characterID }, function (err, foundCharacter) {
+  Character.findOne({ _id: req.body.characterID }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
     } else {
       if (!foundCharacter) {
         console.log("Character Not Found!");
       } else {
+        console.log("character founds")
         res.send(foundCharacter);
       }
     }

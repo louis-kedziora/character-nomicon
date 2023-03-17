@@ -11,7 +11,11 @@ module.exports = (app) => {
   router.post("/create", characters.createCharacter);
 
   // Retrieve character data from database
-  router.post("/get", characters.getCharacter);
+  router.post("/getone", characters.getOneCharacter);
+
+  // Retrieve character(s) data from database
+  router.post("/getmany", characters.getManyCharacters);
+
 
   router.patch("/updatehp", characters.updateHP);
   router.patch("/updateresource", characters.updateResource);

@@ -7,31 +7,27 @@ import { CharacterBox } from "components/SelectionSheet/CharacterBox";
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
-  baseURL: serverURL + "/api/users/get",
+  baseURL: serverURL,
 });
 
 export const SelectionSheet = ({ userInfo }) => {
   const { userID } = userInfo;
-  const [user, setUser] = useState({});
+  const [characterIDs, setCharacterIDs] = useState({});
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     const localUser = JSON.parse(sessionStorage.getItem(userID));
-    setUser(localUser);
-    const characterIDs = localUser.userCharacters;
-    let userCharacters = [];
+    const characterIDs = [...localUser.userCharacters];
+    setCharacterIDs(characterIDs);
+
     async function fetchCharacterData() {
-      let request = {};
-      await characterIDs.forEach((currentID) => {
-        request = instance.post("/", { userID: currentID });
-        console.log("request.data");
-        console.log(request.data);
-        userCharacters[currentID] = request.data;
+      const request = await instance.post("/api/characters/getmany", {
+        characterIDs: characterIDs,
       });
+      sessionStorage.setItem("userCharacters", JSON.stringify(request.data));
+      setIsFetched(true);
       return request;
     }
-    sessionStorage.setItem("userCharacters", JSON.stringify(userCharacters));
-    setIsFetched(true);
     fetchCharacterData();
   }, [userID]);
   return (
@@ -39,7 +35,7 @@ export const SelectionSheet = ({ userInfo }) => {
       <h1>Selection Sheet</h1>
       {isFetched && (
         <Grid container spacing={1}>
-          {user.userCharacters.map((characterID, index) => (
+          {characterIDs.map((characterID, index) => (
             <Grid key={index} xs={12}>
               <CharacterBox characterID={characterID}></CharacterBox>
             </Grid>
