@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import { Routes, Route} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import { AttacksSheet } from "components/AttacksSheet";
 import { AttributeSheet } from "components/AttributeSheet";
 import { FeaturesSheet } from "components/FeaturesSheet";
@@ -7,22 +7,26 @@ import { NotesSheet } from "components/NotesSheet";
 import { SkillsSheet } from "components/SkillsSheet";
 import { SpellsSheet } from "components/SpellsSheet";
 import { LootSheet } from "components/LootSheet";
-import { Footer, CharacterAppBar } from "components/partials";
+import { CharacterAppBar } from "components/partials";
 
-export const CharacterSheet = (characterID) => {
+export const CharacterSheet = () => {
   const [character, setCharacter] = useState({});
+  const [characterID, setCharacterID] = useState("");
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
-    setCharacter(character);
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    setCharacterID(characterID);
+    setCharacter(JSON.parse(sessionStorage.getItem(characterID)));
     setIsFetched(true);
   }, [characterID]);
+
   return (
     <div>
       {isFetched && (
         <div>
-        <CharacterAppBar characterName={character.name} />
+          <CharacterAppBar characterName={character.name} />
+          <AttributeSheet characterID={characterID} />
           <Routes>
             <Route
               path="/attacks"
@@ -53,8 +57,7 @@ export const CharacterSheet = (characterID) => {
               element={<SpellsSheet characterID={characterID} />}
             />
           </Routes>
-          <Footer />
-          </div>
+        </div>
       )}
     </div>
   );

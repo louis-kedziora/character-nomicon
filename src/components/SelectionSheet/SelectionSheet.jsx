@@ -3,6 +3,7 @@ import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 
+import { SelectionAppBar } from "components/partials";
 import { CharacterBox } from "components/SelectionSheet/CharacterBox";
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
@@ -30,14 +31,24 @@ export const SelectionSheet = ({ userInfo }) => {
     }
     fetchCharacterData();
   }, [userID]);
+
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
-      <h1>Selection Sheet</h1>
+    <Container width="100%" disableGutters maxWidth={false}>
+      <SelectionAppBar />
       {isFetched && (
         <Grid container spacing={1}>
           {characterIDs.map((characterID, index) => (
-            <Grid key={index} xs={12}>
-              <CharacterBox characterID={characterID}></CharacterBox>
+            <Grid
+              item
+              key={index}
+              xs={6}
+              sx={{
+                justifyContent: "right",
+              }}
+            >
+              <CharacterBox
+                values={{ characterID: characterID }}
+              />
             </Grid>
           ))}
         </Grid>

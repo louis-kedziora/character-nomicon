@@ -3,6 +3,7 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import { Footer } from "components/partials";
 import { SelectionSheet } from "components/SelectionSheet";
+import { CharacterSheet } from "components/CharacterSheet";
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
@@ -32,6 +33,10 @@ function App() {
             <Route
               path="/"
               element={<SelectionSheet userInfo={{ userID: userID }} />}
+            />
+            <Route
+              path="/currentcharacter"
+              element={<CharacterSheet/>}
             />
           </Routes>
           <Footer />
