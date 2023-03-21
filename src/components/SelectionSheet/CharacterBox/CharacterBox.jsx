@@ -1,5 +1,4 @@
-import React, { useState, useEffect} from "react";
-import Container from "@mui/material/Container";
+import React, { useState, useEffect } from "react";
 import Fab from "@mui/material/Fab";
 
 export const CharacterBox = ({ values }) => {
@@ -22,28 +21,25 @@ export const CharacterBox = ({ values }) => {
   }
 
   return (
-    <Container width="100%" disableGutters maxWidth={false}>
+    <div>
       {isFetched && (
         <Fab
           variant="extended"
           href="/attributes"
+          onClick={onClickHandler}
           sx={{
             height: "25%",
-            width: "50%",
-            left: "25%",
-            float: "center",
+            width: "100%",
+            margin: "25px",
+            padding: "20px",
             display: "block",
-            marginTop: "25px",
-            marginLeft: "25px",
-            textAlign: "left",
           }}
-          onClick={onClickHandler}
         >
           <h1>{character.name}</h1>
           <h2>{character.race}</h2>
           <h2>{character.characterClass}</h2>
         </Fab>
       )}
-    </Container>
+    </div>
   );
 };
