@@ -3,28 +3,29 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 
 import { scoreMod } from "components/AttributeSheet/Modifiers";
-
 import { SkillBox } from "components/SkillsSheet/SkillBox";
 
-export const SkillsSheet = ({ characterID }) => {
+export const SkillsSheet = () => {
+  const [character, setCharacter] = useState({});
+  const [isFetched, setIsFetched] = useState(false);
   const [str, setStr] = useState();
   const [dex, setDex] = useState();
   const [wis, setWis] = useState();
   const [char, setChar] = useState();
   const [int, setInt] = useState();
 
-  const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
-    setStr(character["str"]);
-    setDex(character["dex"]);
-    setWis(character["wis"]);
-    setChar(character["char"]);
-    setInt(character["int"]);
-
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
+    setCharacter(getCharacter);
+    setStr(getCharacter["str"]);
+    setDex(getCharacter["dex"]);
+    setWis(getCharacter["wis"]);
+    setChar(getCharacter["char"]);
+    setInt(getCharacter["int"]);
     setIsFetched(true);
-  }, [characterID]);
+  }, []);
   // This all relies on everything being present and in order
   //    Prehaps make this safer somehow
   return (
@@ -38,7 +39,7 @@ export const SkillsSheet = ({ characterID }) => {
                 info={{
                   skill: "athletics",
                   title: "Athletics",
-                  characterID: characterID
+                  characterID: character._id
                   
                 }}
               />
@@ -50,21 +51,21 @@ export const SkillsSheet = ({ characterID }) => {
                 info={{
                   skill: "acrobatics",
                   title: "Acrobatics",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "sleightOfHand",
                   title: "Sleight Of Hand",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "stealth",
                   title: "Stealth",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
             </Grid>
@@ -75,35 +76,35 @@ export const SkillsSheet = ({ characterID }) => {
                 info={{
                   skill: "arcana",
                   title: "Arcana",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "history",
                   title: "History",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "investigation",
                   title: "Investigation",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "nature",
                   title: "Nature",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "religion",
                   title: "Religion",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
             </Grid>
@@ -114,35 +115,35 @@ export const SkillsSheet = ({ characterID }) => {
                 info={{
                   skill: "animalHandling",
                   title: "Animal Handling",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "insight",
                   title: "Insight",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "medicine",
                   title: "Medicine",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "perception",
                   title: "Perception",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "survival",
                   title: "Survival",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
             </Grid>
@@ -153,28 +154,28 @@ export const SkillsSheet = ({ characterID }) => {
                 info={{
                   skill: "deception",
                   title: "Deception",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "intimidation",
                   title: "Intimidation",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "performance",
                   title: "Performance",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
               <SkillBox
                 info={{
                   skill: "persuasion",
                   title: "Persuasion",
-                  characterID: characterID
+                  characterID: character._id
                 }}
               />
             </Grid>

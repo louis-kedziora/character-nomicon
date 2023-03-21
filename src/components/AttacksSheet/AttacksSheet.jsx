@@ -11,7 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
 
-export const AttacksSheet = ({ characterID }) => {
+export const AttacksSheet = () => {
+  const [character, setCharacter] = useState({});
   const [currentAttacks, setCurrentAttacks] = useState();
   const [addNewAttack, setAddNewAttack] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
@@ -19,15 +20,17 @@ export const AttacksSheet = ({ characterID }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
-    setCurrentAttacks(character["attacks"]);
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
+    setCharacter(getCharacter);
+    setCurrentAttacks(getCharacter["attacks"]);
     setIsFetched(true);
-  }, [characterID]);
+  }, []);
 
   const updateSession = (newAttacks) => {
-    let character = JSON.parse(sessionStorage.getItem(characterID));
+    let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     character["attacks"] = newAttacks;
-    sessionStorage.setItem(characterID, JSON.stringify(character));
+    sessionStorage.setItem("currentCharacter", JSON.stringify(character));
   };
 
   const onDeleteClick = (event, row) => {
@@ -35,7 +38,7 @@ export const AttacksSheet = ({ characterID }) => {
     let newAttacks = structuredClone(currentAttacks);
     newAttacks = newAttacks.filter((element) => element._id !== row._id);
     setCurrentAttacks(newAttacks);
-    updateInfo("attacks", newAttacks, characterID);
+    updateInfo("attacks", newAttacks, character._id);
     updateSession(newAttacks);
   };
 
@@ -50,7 +53,7 @@ export const AttacksSheet = ({ characterID }) => {
       );
       foundRow[params.field] = event.target.value;
       setCurrentAttacks(currentAttacks);
-      updateInfo("attacks", currentAttacks, characterID);
+      updateInfo("attacks", currentAttacks, character._id);
       updateSession(currentAttacks);
     }
   };
@@ -81,7 +84,7 @@ export const AttacksSheet = ({ characterID }) => {
       let newAttacks = structuredClone(currentAttacks);
       newAttacks.push(newAttack);
       setCurrentAttacks(newAttacks);
-      updateInfo("attacks", newAttacks, characterID);
+      updateInfo("attacks", newAttacks, character._id);
       updateSession(newAttacks);
     }
     setAddNewAttack(false);

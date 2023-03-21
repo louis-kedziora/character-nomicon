@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
 
 import { MultiInfoBox } from "components/MultiInfoBox";
 
-export const NotesSheet = ({ characterID }) => {
+export const NotesSheet = () => {
+  const [character, setCharacter] = useState({});
+  const [isFetched, setIsFetched] = useState(false);
 
+  useEffect(() => {
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
+    setCharacter(getCharacter);
+    setIsFetched(true);
+  }, []);
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
-      <Grid xs={12}>
-        <MultiInfoBox
-          color="white"
-          info={{
-            title: "Notes",
-            infoName: "notes",
-            characterID: characterID,
-          }}
-        />
-      </Grid>
-      </Container>
+    <div>
+      {isFetched && (
+        <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+          <Grid xs={12}>
+            <MultiInfoBox
+              color="white"
+              info={{
+                title: "Notes",
+                infoName: "notes",
+                characterID: character._id,
+              }}
+            />
+          </Grid>
+        </Container>
+      )}
+    </div>
   );
 };

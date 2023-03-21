@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Footer } from "components/partials";
 import { SelectionSheet } from "components/SelectionSheet";
-import { CharacterSheet } from "components/CharacterSheet";
+import { CharacterLayout } from "components/CharacterLayout";
+import { AttacksSheet } from "components/AttacksSheet";
+import { AttributeSheet } from "components/AttributeSheet";
+import { FeaturesSheet } from "components/FeaturesSheet";
+import { NotesSheet } from "components/NotesSheet";
+import { SkillsSheet } from "components/SkillsSheet";
+import { SpellsSheet } from "components/SpellsSheet";
+import { LootSheet } from "components/LootSheet";
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
@@ -30,14 +37,23 @@ function App() {
       {isFetched && (
         <div>
           <Routes>
-            <Route
+          <Route
               path="/"
+              element={<Navigate to="/characters" replace={true}  />}
+            />
+            <Route
+              path="/characters"
               element={<SelectionSheet userInfo={{ userID: userID }} />}
             />
-            <Route
-              path="/currentcharacter"
-              element={<CharacterSheet/>}
-            />
+            <Route element={<CharacterLayout />}>
+              <Route path="/attacks" element={<AttacksSheet />} />
+              <Route path="/attributes" element={<AttributeSheet />} />
+              <Route path="/features" element={<FeaturesSheet />} />
+              <Route path="/loot" element={<LootSheet />} />
+              <Route path="/notes" element={<NotesSheet />} />
+              <Route path="/skills" element={<SkillsSheet />} />
+              <Route path="/spells" element={<SpellsSheet />} />
+            </Route>
           </Routes>
           <Footer />
         </div>

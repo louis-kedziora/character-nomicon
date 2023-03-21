@@ -18,10 +18,7 @@ export const CharacterBox = ({ values }) => {
   }, [characterID]);
 
   function onClickHandler() {
-    console.log("");
     sessionStorage.setItem("currentCharacter", JSON.stringify(characterID));
-    console.log("currentCharacter:");
-    console.log(JSON.parse(sessionStorage.getItem("currentCharacter")));
   }
 
   return (
@@ -29,7 +26,7 @@ export const CharacterBox = ({ values }) => {
       {isFetched && (
         <Fab
           variant="extended"
-          href="/currentCharacter"
+          href="/attributes"
           sx={{
             height: "25%",
             width: "50%",

@@ -14,7 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
 
-export const SpellsSheet = ({ characterID }) => {
+export const SpellsSheet = () => {
+  const [character, setCharacter] = useState({});
   const [currentSpells, setCurrentSpells] = useState();
   const [addNewSpell, setAddNewSpell] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
@@ -22,15 +23,17 @@ export const SpellsSheet = ({ characterID }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
-    setCurrentSpells(character["spells"]);
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
+    setCharacter(getCharacter);
+    setCurrentSpells(getCharacter["spells"]);
     setIsFetched(true);
-  }, [characterID]);
+  }, []);
 
   const updateSession = (newSpells) => {
-    let character = JSON.parse(sessionStorage.getItem(characterID));
-    character["spells"] = newSpells;
-    sessionStorage.setItem(characterID, JSON.stringify(character));
+    let getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    getCharacter["spells"] = newSpells;
+    sessionStorage.setItem(character._id, JSON.stringify(getCharacter));
   };
 
   const onDeleteClick = (event, row) => {
@@ -38,7 +41,7 @@ export const SpellsSheet = ({ characterID }) => {
     let newSpells = structuredClone(currentSpells);
     newSpells = newSpells.filter((element) => element._id !== row._id);
     setCurrentSpells(newSpells);
-    updateInfo("spells", newSpells, characterID);
+    updateInfo("spells", newSpells, character._id);
     updateSession(newSpells);
   };
 
@@ -51,7 +54,7 @@ export const SpellsSheet = ({ characterID }) => {
       let foundRow = currentSpells.find((element) => element._id === params.id);
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
-      updateInfo("spells", currentSpells, characterID);
+      updateInfo("spells", currentSpells, character._id);
       updateSession(currentSpells);
     }
   };
@@ -85,7 +88,7 @@ export const SpellsSheet = ({ characterID }) => {
       let newSpells = structuredClone(currentSpells);
       newSpells.push(newSpell);
       setCurrentSpells(newSpells);
-      updateInfo("spells", newSpells, characterID);
+      updateInfo("spells", newSpells, character._id);
       updateSession(newSpells);
     }
     setAddNewSpell(false);
@@ -99,7 +102,7 @@ export const SpellsSheet = ({ characterID }) => {
 
     foundRow["spellPrepared"] = !foundRow["spellPrepared"];
     setCurrentSpells(currentSpells);
-    updateInfo("spells", currentSpells, characterID);
+    updateInfo("spells", currentSpells, character._id);
     updateSession(currentSpells);
   };
 
