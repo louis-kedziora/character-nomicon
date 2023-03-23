@@ -63,7 +63,7 @@ export const SpellsSheet = () => {
     setAddNewSpell(true);
   };
 
-  const closeAddState = (event) => {
+  const submitFormHandler = (event) => {
     // Only save the new spell if cancel was not clicked
 
     if (!cancelClicked) {
@@ -266,7 +266,7 @@ export const SpellsSheet = () => {
               {addNewSpell && (
                 <InputForm
                   methods={{
-                    closeAddState: closeAddState,
+                    submitFormHandler: submitFormHandler,
                     cancelHandler: cancelHandler,
                   }}
                   fields={columns}

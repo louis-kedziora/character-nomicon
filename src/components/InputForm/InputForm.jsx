@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 
 export const InputForm = ({ methods, fields }) => {
-  const { closeAddState, cancelHandler } = methods;
+  const { submitFormHandler, cancelHandler } = methods;
   const newFields = fields.filter(
     (element) =>
       element.field !== "actions" && element.field !== "spellPrepared"
@@ -41,7 +41,7 @@ export const InputForm = ({ methods, fields }) => {
   });
 
   return (
-    <form className="inputForm" onSubmit={closeAddState}>
+    <form className="inputForm" onSubmit={submitFormHandler}>
       <Grid container spacing={3}>
         {newFields.map((field, index) => {
           return (
@@ -52,12 +52,22 @@ export const InputForm = ({ methods, fields }) => {
               alignItems="left"
               xs={6}
             >
-              <StyledTextField
-                fullWidth
-                label={field.headerName}
-                name={field.field}
-                id="outlined-basic"
-              />
+              {field.type === undefined ? (
+                <StyledTextField
+                  fullWidth
+                  label={field.headerName}
+                  name={field.field}
+                  id="outlined-basic"
+                />
+              ) : (
+                <StyledTextField
+                  fullWidth
+                  label={field.headerName}
+                  name={field.field}
+                  type={field.type}
+                  id="outlined-basic"
+                />
+              )}
             </Grid>
           );
         })}

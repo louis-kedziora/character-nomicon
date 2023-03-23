@@ -62,7 +62,7 @@ export const AttacksSheet = () => {
     setAddNewAttack(true);
   };
 
-  const closeAddState = (event) => {
+  const submitFormHandler = (event) => {
     event.preventDefault();
     // Only save the new attack if cancel was not clicked
 
@@ -205,7 +205,7 @@ export const AttacksSheet = () => {
               {addNewAttack && (
                 <InputForm
                   methods={{
-                    closeAddState: closeAddState,
+                    submitFormHandler: submitFormHandler,
                     cancelHandler: cancelHandler,
                   }}
                   fields={columns}
