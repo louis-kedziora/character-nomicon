@@ -20,7 +20,7 @@ export const AttacksSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
     setCharacter(getCharacter);
     setCurrentAttacks(getCharacter["attacks"]);
@@ -97,6 +97,7 @@ export const AttacksSheet = () => {
     {
       field: "attackName",
       headerName: "Name",
+      type: "text",
       editable: true,
       flex: 1,
       minWidth: 200,
@@ -104,6 +105,7 @@ export const AttacksSheet = () => {
     {
       field: "attackRange",
       headerName: "Range",
+      type: "text",
       editable: true,
       flex: 0.5,
       minWidth: 200,
@@ -111,6 +113,7 @@ export const AttacksSheet = () => {
     {
       field: "attackType",
       headerName: "Type",
+      type: "text",
       editable: true,
       flex: 1,
       minWidth: 100,
@@ -118,6 +121,7 @@ export const AttacksSheet = () => {
     {
       field: "attackModifier",
       headerName: "Modifier",
+      type: "text",
       editable: true,
       flex: 0.3,
       minWidth: 200,
@@ -125,6 +129,7 @@ export const AttacksSheet = () => {
     {
       field: "attackDamage",
       headerName: "Damage",
+      type: "text",
       editable: true,
       flex: 0.5,
       minWidth: 200,
@@ -132,6 +137,7 @@ export const AttacksSheet = () => {
     {
       field: "actions",
       headerName: "Actions",
+      type: "text",
       width: 400,
       renderCell: (params) => {
         return (

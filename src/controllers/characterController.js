@@ -3,7 +3,6 @@ const Character = db.characters.getModel();
 const mongoose = require("mongoose");
 
 exports.getManyCharacters = (req, res) => {
-  
   // Validate request
   req.body.characterIDs.forEach((characterID, index) => {
     if (!mongoose.isValidObjectId(characterID)) {
@@ -11,23 +10,25 @@ exports.getManyCharacters = (req, res) => {
       res.status(400).send({ message: "Missing body contents!" });
       return;
     }
-  })
+  });
 
-  Character.find({ _id: { $in: req.body.characterIDs} }, function (err, foundCharacters) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (!foundCharacters) {
-        console.log("Characters Not Found!");
+  Character.find(
+    { _id: { $in: req.body.characterIDs } },
+    function (err, foundCharacters) {
+      if (err) {
+        console.log(err);
       } else {
-        res.send(foundCharacters);
+        if (!foundCharacters) {
+          console.log("Characters Not Found!");
+        } else {
+          res.send(foundCharacters);
+        }
       }
     }
-  });
+  );
 };
 
 exports.getOneCharacter = (req, res) => {
-
   // Validate request
   if (!mongoose.isValidObjectId(req.body.characterID)) {
     console.log("Invalid Character Mongoose ID");
@@ -35,46 +36,52 @@ exports.getOneCharacter = (req, res) => {
     return;
   }
 
-  Character.findOne({ _id: req.body.characterID }, function (err, foundCharacter) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (!foundCharacter) {
-        console.log("Character Not Found!");
+  Character.findOne(
+    { _id: req.body.characterID },
+    function (err, foundCharacter) {
+      if (err) {
+        console.log(err);
       } else {
-        console.log("character founds")
-        res.send(foundCharacter);
+        if (!foundCharacter) {
+          console.log("Character Not Found!");
+        } else {
+          console.log("character founds");
+          res.send(foundCharacter);
+        }
       }
     }
-  });
+  );
 };
 
 exports.createCharacter = (req, res) => {
   // Validate request
-  if (!req.body.name || !req.body.hpMax) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
-  }
+  // if (!req.body.name || !req.body.hpMax) {
+  //   res.status(400).send({ message: "Content can not be empty!" });
+  //   return;
+  // }
+  console.log("createCharacter request recieved!!!");
+  console.log("req.body:");
+  console.log(req.body);
 
+  // The new way of creating a character from the app may not need this....
   //  Trained skills and attacks will be sent as a stringified JSON object so this
   //    parses it and inserts it back into the new character object 'req.body'
-  req.body["trainedSkills"] = JSON.parse(req.body.trainedSkills);
-  req.body["attacks"] = JSON.parse(req.body.attacks);
+  // req.body["trainedSkills"] = JSON.parse(req.body.trainedSkills);
+  // req.body["attacks"] = JSON.parse(req.body.attacks);
 
-
-  const character = new Character(req.body);
-  // Save Character in the database
-  character
-    .save(character)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Character",
-      });
-    });
+  // const character = new Character(req.body);
+  // // Save Character in the database
+  // character
+  //   .save(character)
+  //   .then((data) => {
+  //     res.send(data);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while creating the Character",
+  //     });
+  //   });
 };
 
 exports.updateResource = (req, res) => {

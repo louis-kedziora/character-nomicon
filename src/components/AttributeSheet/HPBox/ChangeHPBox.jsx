@@ -79,7 +79,6 @@ export const ChangeHPBox = ({ values, methods }) => {
     },
   });
 
-  // Inspired by blueprintjs
   function BpRadio(props) {
     return (
       <Radio

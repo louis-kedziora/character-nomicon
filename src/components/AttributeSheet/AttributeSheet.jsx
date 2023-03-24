@@ -9,7 +9,6 @@ import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
 
 export const AttributeSheet = () => {
-  console.log("AttributeSheet Loaded");
   const [character, setCharacter] = useState();
   const [isFetched, setIsFetched] = useState(false);
 
