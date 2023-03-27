@@ -55,21 +55,12 @@ exports.getOneCharacter = (req, res) => {
 
 exports.createCharacter = (req, res) => {
   // Validate request
-  // if (!req.body.name || !req.body.hpMax) {
-  //   res.status(400).send({ message: "Content can not be empty!" });
-  //   return;
-  // }
-  console.log("createCharacter request recieved!!!");
-  console.log("req.body:");
-  console.log(req.body);
+  if (!req.body.newCharacter || !req.body.newCharacter._id) {
+    res.status(400).send({ message: "Content can not be empty!" });
+    return;
+  }
 
-  // The new way of creating a character from the app may not need this....
-  //  Trained skills and attacks will be sent as a stringified JSON object so this
-  //    parses it and inserts it back into the new character object 'req.body'
-  // req.body["trainedSkills"] = JSON.parse(req.body.trainedSkills);
-  // req.body["attacks"] = JSON.parse(req.body.attacks);
-
-  // const character = new Character(req.body);
+  // const character = new Character(req.body.newCharacter);
   // // Save Character in the database
   // character
   //   .save(character)

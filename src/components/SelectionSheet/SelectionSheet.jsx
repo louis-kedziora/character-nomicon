@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -7,7 +8,9 @@ import Fab from "@mui/material/Fab";
 import { SelectionAppBar } from "components/partials";
 import { CharacterBox } from "components/SelectionSheet/CharacterBox";
 import { EditSheet } from "components/EditSheet";
-import { createNewCharacter } from "components/DBHandler";
+import { createNewCharacter, updateUser } from "components/DBHandler";
+
+const mongoose = require('mongoose');
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
@@ -32,56 +35,169 @@ const characterInfo = [
     headerName: "Weapon Proficiencies",
   },
   { type: "text", field: "toolProficiences", headerName: "Tool Proficiencies" },
-  { field: "hpMax", headerName: "HP Max", type: "number" },
-  { type: "text", field: "str", headerName: "STR" },
-  { type: "text", field: "int", headerName: "INT" },
-  { type: "text", field: "dex", headerName: "DEX" },
-  { type: "text", field: "wis", headerName: "WIS" },
-  { type: "text", field: "con", headerName: "CON" },
-  { type: "text", field: "char", headerName: "CHA" },
-  { type: "text", field: "ac", headerName: "AC" },
+  { type: "number", field: "hpMax", headerName: "HP Max" },
+  { type: "number", field: "str", headerName: "Strength" },
+  {
+    type: "checkbox",
+    sheetType: "savingThrow",
+    field: "str",
+    headerName: "Saving Throw Proficiency (STR)",
+  },
+  { type: "number", field: "int", headerName: "Intelligence" },
+  {
+    type: "checkbox",
+    sheetType: "savingThrow",
+    field: "int",
+    headerName: "Saving Throw Proficiency (INT)",
+  },
+  { type: "number", field: "dex", headerName: "Dexterity" },
+  {
+    type: "checkbox",
+    sheetType: "savingThrow",
+    field: "dex",
+    headerName: "Saving Throw Proficiency (DEX)",
+  },
+  { type: "number", field: "wis", headerName: "Wisdom" },
+  {
+    type: "checkbox",
+    sheetType: "savingThrow",
+    field: "wis",
+    headerName: "Saving Throw Proficiency (WIS)",
+  },
+  { type: "number", field: "con", headerName: "Constitution" },
+  {
+    type: "checkbox",
+    sheetType: "savingThrow",
+    field: "con",
+    headerName: "Saving Throw Proficiency (CON)",
+  },
+  { type: "number", field: "char", headerName: "Charisma" },
+  {
+    type: "checkbox",
+    sheetType: "savingThrow",
+    field: "char",
+    headerName: "Saving Throw Proficiency (CHA)",
+  },
+
+  { type: "number", field: "ac", headerName: "AC" },
   { type: "text", field: "speed", headerName: "Speed" },
-  { type: "text", field: "level", headerName: "Level" },
+  { type: "number", field: "level", headerName: "Total Level" },
   { type: "text", field: "hitDice", headerName: "Hit Dice" },
-  { field: "maxHitDice", headerName: "Max Hit Dice", type: "number" },
+  { type: "number", field: "maxHitDice", headerName: "Max Hit Dice" },
   {
-    field: "maxOneSpellSlots",
-    headerName: "Max 1st Spell Slots",
-    type: "number",
+    type: "checkbox",
+    sheetType: "skills",
+    field: "athletics",
+    headerName: "Athletics",
   },
   {
-    field: "maxTwoSpellSlots",
-    headerName: "Max 2nd Spell Slots",
-    type: "number",
+    type: "checkbox",
+    sheetType: "skills",
+    field: "acrobatics",
+    headerName: "Acrobatics",
   },
   {
-    field: "maxThreeSpellSlots",
-    headerName: "Max 3rd Spell Slots",
-    type: "number",
+    type: "checkbox",
+    sheetType: "skills",
+    field: "sleightOfHand",
+    headerName: "Sleight Of Hand",
   },
-  { type: "checkbox", field: "athletics", headerName: "Athletics" },
-  { type: "checkbox", field: "acrobatics", headerName: "Acrobatics" },
-  { type: "checkbox", field: "sleightOfHand", headerName: "Sleight Of Hand" },
-  { type: "checkbox", field: "stealth", headerName: "Stealth" },
-  { type: "checkbox", field: "arcana", headerName: "Arcana" },
-  { type: "checkbox", field: "history", headerName: "History" },
-  { type: "checkbox", field: "investigation", headerName: "Investigation" },
-  { type: "checkbox", field: "nature", headerName: "Nature" },
-  { type: "checkbox", field: "religion", headerName: "Religion" },
-  { type: "checkbox", field: "animalHandling", headerName: "Animal Handling" },
-  { type: "checkbox", field: "insight", headerName: "Insight" },
-  { type: "checkbox", field: "medicine", headerName: "Medicine" },
-  { type: "checkbox", field: "perception", headerName: "Perception" },
-  { type: "checkbox", field: "survival", headerName: "Survival" },
-  { type: "checkbox", field: "deception", headerName: "Deception" },
-  { type: "checkbox", field: "intimidation", headerName: "Intimidation" },
-  { type: "checkbox", field: "performance", headerName: "Performance" },
-  { type: "checkbox", field: "persuasion", headerName: "Persuasion" },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "stealth",
+    headerName: "Stealth",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "arcana",
+    headerName: "Arcana",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "history",
+    headerName: "History",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "investigation",
+    headerName: "Investigation",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "nature",
+    headerName: "Nature",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "religion",
+    headerName: "Religion",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "animalHandling",
+    headerName: "Animal Handling",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "insight",
+    headerName: "Insight",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "medicine",
+    headerName: "Medicine",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "perception",
+    headerName: "Perception",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "survival",
+    headerName: "Survival",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "deception",
+    headerName: "Deception",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "intimidation",
+    headerName: "Intimidation",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "performance",
+    headerName: "Performance",
+  },
+  {
+    type: "checkbox",
+    sheetType: "skills",
+    field: "persuasion",
+    headerName: "Persuasion",
+  },
 ];
 
 export const SelectionSheet = ({ userInfo }) => {
   const { userID } = userInfo;
   const [characterIDs, setCharacterIDs] = useState({});
+  const [currentUserID, setCurrentUserID] = useState("");
   const [isFetched, setIsFetched] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [open, setOpen] = useState(false);
@@ -94,33 +210,10 @@ export const SelectionSheet = ({ userInfo }) => {
     setOpen(false);
   };
 
-  const submitFormHandler = (event) => {
-    event.preventDefault();
-    if (!cancelClicked) {
-      console.log("save was clicked");
-      let newCharacter = {};
-      const formData = event.target.elements;
-      for (let index = 0; index < formData.length; index++) {
-        const element = formData[index];
-        if (element.type === "checkbox") {
-          newCharacter[element.name] = element.checked;
-        } else {
-          newCharacter[element.name] = element.value;
-        }
-      }
-      console.log(newCharacter);
-      createNewCharacter(newCharacter, userID);
-
-    } else {
-      console.log("cancelClick was set to True");
-    }
-    setOpen(false);
-  };
-
   useEffect(() => {
     const localUser = JSON.parse(sessionStorage.getItem(userID));
     sessionStorage.setItem("currentUser", JSON.stringify(userID));
-
+    setCurrentUserID(userID);
     const characterIDs = [...localUser.userCharacters];
     setCharacterIDs(characterIDs);
 
@@ -134,6 +227,45 @@ export const SelectionSheet = ({ userInfo }) => {
     }
     fetchCharacterData();
   }, [userID]);
+
+  const submitFormHandler = (event) => {
+    event.preventDefault();
+    if (!cancelClicked) {
+      let newCharacter = { trainedSkills: {}, savingThrowProficiency: {} };
+      const formData = event.target.elements;
+      for (let index = 0; index < formData.length; index++) {
+        const element = formData[index];
+        if (element.type === "checkbox") {
+          if (element.value === "skills") {
+            newCharacter["trainedSkills"][element.name] = element.checked;
+          } else if (element.value === "savingThrow") {
+            newCharacter["savingThrowProficiency"][element.name] =
+              element.checked;
+          }
+        } else {
+          newCharacter[element.name] = element.value;
+        }
+      }
+      
+      delete newCharacter[''];
+      delete newCharacter.cancelButton;
+      const mongooseID = mongoose.Types.ObjectId();
+      createNewCharacter(newCharacter, mongooseID);
+
+      // Update local storage with new character
+      sessionStorage.setItem("userCharacters", JSON.stringify([...characterIDs,mongooseID.toString()]));
+      // Update User by adding the new character ID
+      updateUser("userCharacters",[...characterIDs,mongooseID.toString()], currentUserID);
+      // Update currentCharacter with new character and navigate to new page
+
+
+    } else {
+      console.log("cancelClick was set to True");
+    }
+    setOpen(false);
+  };
+
+
 
   return (
     <Container width="100%" disableGutters maxWidth={false}>

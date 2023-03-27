@@ -2,6 +2,48 @@ const db = require("../models");
 const User = db.users.getUserModel();
 const mongoose = require("mongoose");
 
+exports.updateUser = (req, res) => {
+  // Validate request
+  // Should look like:
+  // updateUser([updateField], [updateValue], userID);
+  if (!mongoose.isValidObjectId(req.body.userID)) {
+    console.log("Invalid User Mongoose ID");
+    res.status(400).send({ message: "Missing body contents!" });
+    return;
+  }
+
+  console.log(req.body);
+
+  const userID = req.body.userID;
+  let updateData = req.body;
+  delete updateData.userID;
+  const updateField = Object.keys(updateData)[0];
+  const updateValue = Object.values(updateData)[0];
+
+  // User.findOne({ _id: userID }, function (err, foundUser) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     if (!foundUser) {
+  //       console.log("Character Not Found!");
+  //     } else {
+  //       foundUser[updateField] = updateValue;
+  //       foundUser
+  //         .save(foundUser)
+  //         .then((data) => {
+  //           res.send(data);
+  //         })
+  //         .catch((err) => {
+  //           res.status(500).send({
+  //             message:
+  //               err.message || "Some error occurred while updating resource",
+  //           });
+  //         });
+  //     }
+  //   }
+  // });
+};
+
 exports.getUser = (req, res) => {
   // Validate request
   if (!mongoose.isValidObjectId(req.body.userID)) {
@@ -39,8 +81,7 @@ exports.createUser = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Character",
+        message: err.message || "Some error occurred while creating the User",
       });
     });
 };

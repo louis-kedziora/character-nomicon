@@ -70,7 +70,7 @@ export const InputForm = ({ methods, fields }) => {
               {field.type === "checkbox" ? (
                 <StyledFormControlLabel
                   control={
-                    <Checkbox name={field.field} sx={{ color: "#d97326" }} />
+                    <Checkbox value={field.sheetType} name={field.field} sx={{ color: "#d97326" }} />
                   }
                   label={field.headerName}
                 />

@@ -12,6 +12,8 @@ module.exports = (app) => {
   
     // Retrieve character data from database
     router.post("/get", users.getUser);
+
+    router.patch("/updateUser", users.updateUser);
   
     app.use("/api/users", router);
   };

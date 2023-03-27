@@ -3,13 +3,36 @@ import axios from "axios";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
 
-export const createNewCharacter = (newCharacter, userID) => {
+export const updateUser = (infoName, newInfo, userID) => {
+  console.log("updateUser:");
+  console.log(infoName);
+  console.log(newInfo);
+  console.log(userID);
 
+
+  axios({
+    method: "patch",
+    url: serverURL + "/api/users/updateUser",
+    data: {
+      userID: userID,
+      [infoName]: newInfo,
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return newInfo;
+};
+
+export const createNewCharacter = (newCharacter, mongooseID) => {
+  newCharacter["_id"] = mongooseID;
   axios({
     method: "post",
     url: serverURL + "/api/characters/create",
     data: {
-      userID: userID,
       newCharacter: newCharacter,
     },
   })
@@ -19,7 +42,7 @@ export const createNewCharacter = (newCharacter, userID) => {
     .catch(function (error) {
       console.log(error);
     });
-  return newCharacter;
+  return mongooseID;
 };
 
 export const updateInfo = (infoName, newInfo, characterID) => {
