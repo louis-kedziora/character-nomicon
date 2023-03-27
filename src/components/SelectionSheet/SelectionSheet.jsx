@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -10,7 +9,7 @@ import { CharacterBox } from "components/SelectionSheet/CharacterBox";
 import { EditSheet } from "components/EditSheet";
 import { createNewCharacter, updateUser } from "components/DBHandler";
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
@@ -246,26 +245,37 @@ export const SelectionSheet = ({ userInfo }) => {
           newCharacter[element.name] = element.value;
         }
       }
-      
-      delete newCharacter[''];
+
+      delete newCharacter[""];
       delete newCharacter.cancelButton;
+      newCharacter["currentHP"] = newCharacter.hpMax;
+      newCharacter["currentHitDice"] = newCharacter.maxHitDice;
+      newCharacter["notes"] = "";
+      newCharacter["features"] = "";
+      newCharacter["loot"] = "";
+      newCharacter["partyLoot"] = "";
+      newCharacter["customResources"] = [];
+      newCharacter["attacks"] = [];
+      newCharacter["spells"] = [];
+
       const mongooseID = mongoose.Types.ObjectId();
       createNewCharacter(newCharacter, mongooseID);
 
-      // Update local storage with new character
-      sessionStorage.setItem("userCharacters", JSON.stringify([...characterIDs,mongooseID.toString()]));
-      // Update User by adding the new character ID
-      updateUser("userCharacters",[...characterIDs,mongooseID.toString()], currentUserID);
+      sessionStorage.setItem(
+        "userCharacters",
+        JSON.stringify([...characterIDs, mongooseID.toString()])
+      );
+      updateUser(
+        "userCharacters",
+        [...characterIDs, mongooseID.toString()],
+        currentUserID
+      );
       // Update currentCharacter with new character and navigate to new page
-
-
     } else {
       console.log("cancelClick was set to True");
     }
     setOpen(false);
   };
-
-
 
   return (
     <Container width="100%" disableGutters maxWidth={false}>

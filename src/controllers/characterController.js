@@ -60,6 +60,8 @@ exports.createCharacter = (req, res) => {
     return;
   }
 
+  console.log(req.body.newCharacter);
+
   // const character = new Character(req.body.newCharacter);
   // // Save Character in the database
   // character
