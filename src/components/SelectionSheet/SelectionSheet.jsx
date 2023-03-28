@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
-import Fab from "@mui/material/Fab";
+import { StyledFab } from "components/StyledComponents";
 
 import { SelectionAppBar } from "components/partials";
 import { CharacterBox } from "components/SelectionSheet/CharacterBox";
@@ -16,6 +16,7 @@ const instance = axios.create({
   baseURL: serverURL,
 });
 
+// maybe put this in its own file
 const characterInfo = [
   { type: "text", field: "name", headerName: "Name" },
   { type: "text", field: "characterClass", headerName: "Character Class" },
@@ -221,6 +222,7 @@ export const SelectionSheet = ({ userInfo }) => {
         characterIDs: characterIDs,
       });
       sessionStorage.setItem("userCharacters", JSON.stringify(request.data));
+
       setIsFetched(true);
       return request;
     }
@@ -260,17 +262,17 @@ export const SelectionSheet = ({ userInfo }) => {
 
       const mongooseID = mongoose.Types.ObjectId();
       createNewCharacter(newCharacter, mongooseID);
-
+      const newCharacterIDs = [...characterIDs, mongooseID.toString()];
+      updateUser("userCharacters", newCharacterIDs, currentUserID);
+      sessionStorage.setItem("currentCharacter", JSON.stringify(newCharacter));
+      const userCharacters = JSON.parse(
+        sessionStorage.getItem("userCharacters")
+      );
       sessionStorage.setItem(
         "userCharacters",
-        JSON.stringify([...characterIDs, mongooseID.toString()])
+        JSON.stringify([...userCharacters, newCharacter])
       );
-      updateUser(
-        "userCharacters",
-        [...characterIDs, mongooseID.toString()],
-        currentUserID
-      );
-      // Update currentCharacter with new character and navigate to new page
+      setCharacterIDs(newCharacterIDs);
     } else {
       console.log("cancelClick was set to True");
     }
@@ -307,14 +309,14 @@ export const SelectionSheet = ({ userInfo }) => {
                 padding: "20px",
               }}
             >
-              <Fab
+              <StyledFab
                 size="large"
                 color="primary"
                 variant="extended"
                 onClick={openHandler}
               >
-                <h1>New Character</h1>
-              </Fab>
+                New Character
+              </StyledFab>
               {open && (
                 <EditSheet
                   info={{

@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 
-import { InputForm } from "components/InputForm";
+import { CharacterForm } from "components/CharacterForm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -55,7 +55,7 @@ export const EditSheet = ({ info }) => {
           backgroundImage: `url(${"https://www.transparenttextures.com/patterns/buried.png"})`,
         }}
       >
-        <InputForm
+        <CharacterForm
           methods={{
             submitFormHandler: submitFormHandler,
             cancelHandler: cancelHandler,

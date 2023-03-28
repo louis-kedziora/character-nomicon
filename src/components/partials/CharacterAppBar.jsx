@@ -36,7 +36,7 @@ export const CharacterAppBar = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
     setCharacter(getCharacter);
     setIsFetched(true);
@@ -61,9 +61,12 @@ export const CharacterAppBar = () => {
       {isFetched && (
         <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
           <Toolbar disableGutters>
-            <ShieldSharpIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
+            <Link color="white" to="/characters">
+              <ShieldSharpIcon
+                 sx={{ display: { color: "white", xs: "none", md: "flex" }, mr: 1 }}
+              />
+            </Link>
+
             <Typography
               variant="h6"
               noWrap

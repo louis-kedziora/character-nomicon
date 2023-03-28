@@ -1,15 +1,7 @@
-
 import axios from "axios";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
-
 export const updateUser = (infoName, newInfo, userID) => {
-  console.log("updateUser:");
-  console.log(infoName);
-  console.log(newInfo);
-  console.log(userID);
-
-
   axios({
     method: "patch",
     url: serverURL + "/api/users/updateUser",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Fab from "@mui/material/Fab";
+import { StyledFab } from "components/StyledComponents";
 
 export const CharacterBox = ({ values }) => {
   const { characterID } = values;
@@ -8,6 +8,7 @@ export const CharacterBox = ({ values }) => {
 
   useEffect(() => {
     const userCharacters = JSON.parse(sessionStorage.getItem("userCharacters"));
+    console.log("CharacterBox:");
     const storedCharacter = userCharacters.find(
       (character) => character._id === characterID
     );
@@ -23,7 +24,7 @@ export const CharacterBox = ({ values }) => {
   return (
     <div>
       {isFetched && (
-        <Fab
+        <StyledFab className="selectionBox"
           variant="extended"
           href="/attributes"
           onClick={onClickHandler}
@@ -33,12 +34,13 @@ export const CharacterBox = ({ values }) => {
             margin: "25px",
             padding: "20px",
             display: "block",
+            backgroundColor: "#0f111a",
           }}
         >
           <h1>{character.name}</h1>
           <h2>{character.race}</h2>
           <h2>{character.characterClass}</h2>
-        </Fab>
+        </StyledFab>
       )}
     </div>
   );

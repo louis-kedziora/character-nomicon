@@ -176,6 +176,21 @@ footer p {
   word-wrap: break-word;
 }
 
+.selectionBox {
+  background: #0f111a;
+}
+
+.selectionBox h1 {
+  font-size: 2.5em;
+  color: #03C988;
+
+}
+.selectionBox h2 {
+  font-size: 1.5em;
+  font-weight: 300;
+  color: #5aa0ff
+}
+
 .resourceBox {
   background: #0f111a;
 }

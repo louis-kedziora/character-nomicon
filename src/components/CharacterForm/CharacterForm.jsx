@@ -1,20 +1,16 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Button from "@mui/material/Button";
-import { StyledTextField } from "components/StyledComponents";
+import Checkbox from "@mui/material/Checkbox";
+import { StyledTextField, StyledFormControlLabel } from "components/StyledComponents";
 
-export const InputForm = ({ methods, fields }) => {
+export const CharacterForm = ({ methods, fields }) => {
   const { submitFormHandler, cancelHandler } = methods;
-
-  const newFields = fields.filter(
-    (element) =>
-      element.field !== "actions" && element.field !== "spellPrepared"
-  );
 
   return (
     <form className="inputForm" onSubmit={submitFormHandler}>
       <Grid container spacing={3} sx={{ margin: "20px", padding: "40px 0px" }}>
-        {newFields.map((field, index) => {
+        {fields.map((field, index) => {
           return (
             <Grid
               key={index}
@@ -23,13 +19,23 @@ export const InputForm = ({ methods, fields }) => {
               alignItems="left"
               xs={6}
             >
-              <StyledTextField
-                fullWidth
-                label={field.headerName}
-                name={field.field}
-                id="outlined-basic"
-                // required
-              />
+              {field.type === "checkbox" ? (
+                <StyledFormControlLabel
+                  control={
+                    <Checkbox value={field.sheetType} name={field.field} sx={{ color: "#d97326" }} />
+                  }
+                  label={field.headerName}
+                />
+              ) : (
+                <StyledTextField
+                  fullWidth
+                  label={field.headerName}
+                  name={field.field}
+                  type={field.type}
+                  id="outlined-basic"
+                  // required
+                />
+              )}
             </Grid>
           );
         })}

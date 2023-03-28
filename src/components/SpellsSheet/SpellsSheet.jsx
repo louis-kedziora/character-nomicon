@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
-import Fab from "@mui/material/Fab";
-import { styled } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
 import mongoose from "mongoose";
 
 import CheckIcon from "@mui/icons-material/Check";
@@ -13,6 +10,8 @@ import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
+import { StyledDataGrid } from "components/StyledComponents";
+import { StyledFab } from "components/StyledComponents";
 
 export const SpellsSheet = () => {
   const [character, setCharacter] = useState({});
@@ -23,7 +22,7 @@ export const SpellsSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
     setCharacter(getCharacter);
     setCurrentSpells(getCharacter["spells"]);
@@ -105,42 +104,6 @@ export const SpellsSheet = () => {
     updateInfo("spells", currentSpells, character._id);
     updateSession(currentSpells);
   };
-
-  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-    fontFamily: "Montserrat",
-    border: 0,
-    WebkitFontSmoothing: "auto",
-    letterSpacing: "normal",
-    "& .MuiDataGrid-columnsContainer": {
-      backgroundColor: theme.palette.mode === "light" ? "#fafafa" : "#1d1d1d",
-    },
-    "& .MuiDataGrid-iconSeparator": {
-      display: "none",
-    },
-    "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
-      borderRight: "none",
-    },
-    "& .MuiDataGrid-columnHeader": {
-      color: "#d97326",
-    },
-    "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
-      borderBottom: "none",
-    },
-    "& .MuiDataGrid-cell": {
-      color: "#5aa0ff",
-    },
-    "& .MuiPaginationItem-root": {
-      borderRadius: 0,
-    },
-    "& .MuiDataGrid-menuIconButton": {
-      opacity: 1,
-      color: "white",
-    },
-    "& .MuiDataGrid-sortIcon": {
-      opacity: 1,
-      color: "white",
-    },
-  }));
 
   const columns = [
     {
@@ -260,14 +223,14 @@ export const SpellsSheet = () => {
               xs={12}
             >
               {!addNewSpell && (
-                <Fab
+                <StyledFab
                   size="large"
                   color="primary"
                   variant="extended"
                   onClick={openNewSpellForm}
                 >
-                  <h1>New Spell</h1>
-                </Fab>
+                  New Spell
+                </StyledFab>
               )}
               {addNewSpell && (
                 <InputForm

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
-import Fab from "@mui/material/Fab";
-import { styled } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
 import mongoose from "mongoose";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
+import { StyledDataGrid } from "components/StyledComponents";
+import { StyledFab } from "components/StyledComponents";
 
 export const AttacksSheet = () => {
   const [character, setCharacter] = useState({});
@@ -152,41 +151,7 @@ export const AttacksSheet = () => {
       },
     },
   ];
-  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-    fontFamily: "Montserrat",
-    border: 0,
-    WebkitFontSmoothing: "auto",
-    letterSpacing: "normal",
-    "& .MuiDataGrid-columnsContainer": {
-      backgroundColor: theme.palette.mode === "light" ? "#fafafa" : "#1d1d1d",
-    },
-    "& .MuiDataGrid-iconSeparator": {
-      display: "none",
-    },
-    "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
-      borderRight: "none",
-    },
-    "& .MuiDataGrid-columnHeader": {
-      color: "#d97326",
-    },
-    "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
-      borderBottom: "none",
-    },
-    "& .MuiDataGrid-cell": {
-      color: "#5aa0ff",
-    },
-    "& .MuiPaginationItem-root": {
-      borderRadius: 0,
-    },
-    "& .MuiDataGrid-menuIconButton": {
-      opacity: 1,
-      color: "white",
-    },
-    "& .MuiDataGrid-sortIcon": {
-      opacity: 1,
-      color: "white",
-    },
-  }));
+
   return (
     <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
       {isFetched && (
@@ -199,14 +164,14 @@ export const AttacksSheet = () => {
               xs={12}
             >
               {!addNewAttack && (
-                <Fab
+                <StyledFab
                   size="large"
                   color="primary"
                   variant="extended"
                   onClick={openNewAttackForm}
                 >
-                  <h1>New Attack</h1>
-                </Fab>
+                  New Attack
+                </StyledFab>
               )}
               {addNewAttack && (
                 <InputForm
