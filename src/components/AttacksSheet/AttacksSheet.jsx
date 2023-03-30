@@ -19,17 +19,18 @@ export const AttacksSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setCharacter(getCharacter);
     setCurrentAttacks(getCharacter["attacks"]);
     setIsFetched(true);
   }, []);
 
   const updateSession = (newAttacks) => {
-    let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    character["attacks"] = newAttacks;
-    sessionStorage.setItem("currentCharacter", JSON.stringify(character));
+    console.log(Object.keys(sessionStorage));
+    let updateCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    console.log(updateCharacter);
+    updateCharacter["attacks"] = newAttacks;
+    sessionStorage.setItem("currentCharacter", JSON.stringify(updateCharacter));
   };
 
   const onDeleteClick = (event, row) => {
@@ -64,7 +65,7 @@ export const AttacksSheet = () => {
   const submitFormHandler = (event) => {
     event.preventDefault();
     // Only save the new attack if cancel was not clicked
-
+    setAddNewAttack(false);
     if (!cancelClicked) {
       const attackName = event.target.elements.attackName.value;
       const attackRange = event.target.elements.attackRange.value;
@@ -86,7 +87,6 @@ export const AttacksSheet = () => {
       updateInfo("attacks", newAttacks, character._id);
       updateSession(newAttacks);
     }
-    setAddNewAttack(false);
   };
   function cancelHandler() {
     setCancelClicked(true);

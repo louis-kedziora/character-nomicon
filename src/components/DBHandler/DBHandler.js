@@ -101,6 +101,7 @@ export const updateHP = (
   changeAmount,
   currentHP,
   hpMax,
+  tempHP,
   characterID
 ) => {
   if (

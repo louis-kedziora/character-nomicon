@@ -12,7 +12,7 @@ export const ResourceBox = ({ characterInfo }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
+    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setResourceValue(character[resourceName]);
     setMaxValue(character[resourceName.replace("current", "max")]);
     setIsFetched(true);
@@ -35,9 +35,9 @@ export const ResourceBox = ({ characterInfo }) => {
       }
     }
     if (newValue > -1) {
-      let character = JSON.parse(sessionStorage.getItem(characterID));
+      let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
       character[resourceName] = newValue;
-      sessionStorage.setItem(characterID, JSON.stringify(character));
+      sessionStorage.setItem("currentCharacter", JSON.stringify(character));
     }
   }
   // extraInfo is seemingly only needed for hitDice resource but because of Variance probably
@@ -54,7 +54,7 @@ export const ResourceBox = ({ characterInfo }) => {
               <div className="resourceCount">
                 <h2>
                   {extraInfo
-                    ? resourceValue + " / " + maxValue + extraInfo
+                    ? resourceValue + " / " + maxValue + " " + extraInfo
                     : resourceValue + " / " + maxValue}
                 </h2>
               </div>

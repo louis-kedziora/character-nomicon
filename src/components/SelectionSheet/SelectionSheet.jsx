@@ -264,7 +264,6 @@ export const SelectionSheet = ({ userInfo }) => {
       createNewCharacter(newCharacter, mongooseID);
       const newCharacterIDs = [...characterIDs, mongooseID.toString()];
       updateUser("userCharacters", newCharacterIDs, currentUserID);
-      sessionStorage.setItem("currentCharacter", JSON.stringify(newCharacter));
       const userCharacters = JSON.parse(
         sessionStorage.getItem("userCharacters")
       );

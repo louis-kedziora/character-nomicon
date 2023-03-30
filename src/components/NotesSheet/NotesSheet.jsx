@@ -9,9 +9,7 @@ export const NotesSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
-    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
-    setCharacter(getCharacter);
+    setCharacter(JSON.parse(sessionStorage.getItem("currentCharacter")));
     setIsFetched(true);
   }, []);
   return (

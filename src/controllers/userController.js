@@ -20,28 +20,28 @@ exports.updateUser = (req, res) => {
   const updateField = Object.keys(updateData)[0];
   const updateValue = Object.values(updateData)[0];
 
-  // User.findOne({ _id: userID }, function (err, foundUser) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     if (!foundUser) {
-  //       console.log("Character Not Found!");
-  //     } else {
-  //       foundUser[updateField] = updateValue;
-  //       foundUser
-  //         .save(foundUser)
-  //         .then((data) => {
-  //           res.send(data);
-  //         })
-  //         .catch((err) => {
-  //           res.status(500).send({
-  //             message:
-  //               err.message || "Some error occurred while updating resource",
-  //           });
-  //         });
-  //     }
-  //   }
-  // });
+  User.findOne({ _id: userID }, function (err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundUser) {
+        console.log("Character Not Found!");
+      } else {
+        foundUser[updateField] = updateValue;
+        foundUser
+          .save(foundUser)
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while updating resource",
+            });
+          });
+      }
+    }
+  });
 };
 
 exports.getUser = (req, res) => {

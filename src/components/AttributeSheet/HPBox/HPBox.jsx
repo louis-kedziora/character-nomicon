@@ -3,21 +3,23 @@ import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ChangeHPBox } from "components/AttributeSheet/HPBox/ChangeHPBox";
-import { updateHP } from "components/DBHandler";
+import { updateHP, updateInfo } from "components/DBHandler";
 
 export const HPBox = ({ characterInfo }) => {
   const { title, characterID } = characterInfo;
   const [hp, setHP] = useState();
   const [hpMax, setMaxHP] = useState();
+  const [tempHP, setTempHP] = useState();
   const [changeHP, setChangeHP] = useState(false);
   const [changeType, setChangeType] = useState("damage");
   const [cancelClicked, setCancelClicked] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
+    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setHP(character["currentHP"]);
     setMaxHP(character["hpMax"]);
+    setTempHP(character["tempHP"]);
     setIsFetched(true);
   }, [characterID]);
 
@@ -49,13 +51,49 @@ export const HPBox = ({ characterInfo }) => {
         !(changeType === "heal" && hp === hpMax) &&
         !(changeType === "heal" && changeValue === 0) &&
         !(changeType === "stabilize" && hp === 0) &&
-        !(changeType === "damage" && changeValue === 0)
+        !(changeType === "damage" && changeValue === 0) &&
+        !(changeType === "tempHP" && changeValue === 0) &&
+        !(changeType === "tempHP" && hp <= 0)
       ) {
-        const newHP = updateHP(changeType, parseInt(changeValue), hp, hpMax, characterID);
-        setHP(newHP);
-        let character = JSON.parse(sessionStorage.getItem(characterID));
-        character["currentHP"] = newHP;
-        sessionStorage.setItem(characterID, JSON.stringify(character));
+        let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
+        let newHP = hp;
+        if (changeType === "tempHP") {
+          const newTempHP = parseInt(changeValue);
+          updateInfo("tempHP", newTempHP, characterID);
+          setTempHP(newTempHP);
+          character["tempHP"] = newTempHP;
+        } else {
+          if(changeType === "damage" && tempHP > 0 && tempHP - changeValue > 0) {
+            const newTemps = tempHP - changeValue;
+            updateInfo("tempHP", newTemps, characterID);
+            setTempHP(newTemps);
+          } else if (changeType === "damage" && tempHP > 0 && tempHP - changeValue <= 0) {
+            changeValue = Math.abs(changeValue - tempHP);
+            updateInfo("tempHP", 0, characterID);
+            setTempHP(0);
+            newHP = updateHP(
+              changeType,
+              parseInt(changeValue),
+              hp,
+              hpMax,
+              tempHP,
+              characterID
+            );
+          } else {
+            newHP = updateHP(
+              changeType,
+              parseInt(changeValue),
+              hp,
+              hpMax,
+              tempHP,
+              characterID
+            );
+          }
+
+          setHP(newHP);
+          character["currentHP"] = newHP;
+        }
+        sessionStorage.setItem("currentCharacter", JSON.stringify(character));
       }
     }
     setChangeHP(false);
@@ -72,7 +110,7 @@ export const HPBox = ({ characterInfo }) => {
         <div className="basicBox resourceBox">
           <h1>{title}</h1>
           <div className="resourceCount">
-            <h2>{hp}</h2>
+            <h2>{tempHP > 0 ? hp + tempHP + " (+tmp)" : hp}</h2>
           </div>
           {!changeHP && (
             <Grid container spacing={2}>

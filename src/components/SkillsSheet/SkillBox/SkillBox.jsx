@@ -12,7 +12,7 @@ export const SkillBox = ({ info }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
+    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const skillDict = {
       athletics: "str",
       acrobatics: "dex",

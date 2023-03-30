@@ -7,7 +7,7 @@ export const InfoBox = ({ info }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
+    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     if (title === "Proficiency") {
       setContent(proficiencyBonus(character[infoName]));
     } else if (title === "Initiative") {

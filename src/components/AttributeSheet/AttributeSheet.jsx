@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Container from "@mui/material/Container";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 
 import { AttributeBox } from "components/AttributeSheet/AttributeBox";
 import { InfoBox } from "components/AttributeSheet/InfoBox";
 import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
 
+const attributes = [
+  { title: "Strength", scoreName: "str" },
+  { title: "Intelligence", scoreName: "int" },
+  { title: "Dexterity", scoreName: "dex" },
+  { title: "Wisdom", scoreName: "wis" },
+  { title: "Constitution", scoreName: "con" },
+  { title: "Charisma", scoreName: "char" },
+];
 export const AttributeSheet = () => {
   const [character, setCharacter] = useState();
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
-    setCharacter(JSON.parse(sessionStorage.getItem(characterID)));
+    setCharacter(JSON.parse(sessionStorage.getItem("currentCharacter")));
     setIsFetched(true);
   }, []);
 
@@ -23,45 +30,22 @@ export const AttributeSheet = () => {
       {isFetched && (
         <Grid container spacing={1}>
           <Grid xs={12}>
-            <AttributeBox
-              attribute={{
-                attributeName: "Strength",
-                attributeScore: character.str,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Intelligence",
-                attributeScore: character.int,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Dexterity",
-                attributeScore: character.dex,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Wisdom",
-                attributeScore: character.wis,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Constitution",
-                attributeScore: character.con,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Charisma",
-                attributeScore: character.char,
-              }}
-            />
+            {attributes.map((attribute, index) => {
+              return (
+                <AttributeBox
+                  key={index}
+                  attribute={{
+                    attributeName: attribute.title,
+                    attributeScore: character[attribute.scoreName],
+                    level: character.level,
+                    savingThrowProficiency: character.savingThrowProficiency[attribute.scoreName],
+                  }}
+                />
+              );
+            })}
           </Grid>
           <h1 className="sectionHeader">Statistics</h1>
-          <Divider sx={{ width:"100%", border: "1px solid #464b4c" }} />
+          <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
             <InfoBox
               info={{ title: "AC", infoName: "ac", characterID: character._id }}
@@ -90,7 +74,7 @@ export const AttributeSheet = () => {
             />
           </Grid>
           <h1 className="sectionHeader">Resources</h1>
-          <Divider sx={{ width:"100%", border: "1px solid #464b4c" }} />
+          <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
             <HPBox
               characterInfo={{

@@ -22,8 +22,7 @@ export const SpellsSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setCharacter(getCharacter);
     setCurrentSpells(getCharacter["spells"]);
     setIsFetched(true);
@@ -32,7 +31,7 @@ export const SpellsSheet = () => {
   const updateSession = (newSpells) => {
     let getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     getCharacter["spells"] = newSpells;
-    sessionStorage.setItem(character._id, JSON.stringify(getCharacter));
+    sessionStorage.setItem("currentCharacter", JSON.stringify(getCharacter));
   };
 
   const onDeleteClick = (event, row) => {
@@ -64,6 +63,7 @@ export const SpellsSheet = () => {
 
   const submitFormHandler = (event) => {
     // Only save the new spell if cancel was not clicked
+    setAddNewSpell(false);
 
     if (!cancelClicked) {
       const spellPrepared = false;
@@ -90,7 +90,6 @@ export const SpellsSheet = () => {
       updateInfo("spells", newSpells, character._id);
       updateSession(newSpells);
     }
-    setAddNewSpell(false);
   };
   const cancelHandler = () => {
     setCancelClicked(true);

@@ -7,7 +7,7 @@ export const FeatureBox = ({ info }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
+    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setContent(character[infoName]);
     setIsFetched(true);
   }, [characterID, infoName, title]);

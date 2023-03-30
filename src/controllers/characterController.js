@@ -62,19 +62,19 @@ exports.createCharacter = (req, res) => {
 
   console.log(req.body.newCharacter);
 
-  // const character = new Character(req.body.newCharacter);
-  // // Save Character in the database
-  // character
-  //   .save(character)
-  //   .then((data) => {
-  //     res.send(data);
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || "Some error occurred while creating the Character",
-  //     });
-  //   });
+  const character = new Character(req.body.newCharacter);
+  // Save Character in the database
+  character
+    .save(character)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Character",
+      });
+    });
 };
 
 exports.updateResource = (req, res) => {

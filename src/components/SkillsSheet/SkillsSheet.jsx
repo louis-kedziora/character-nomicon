@@ -16,8 +16,7 @@ export const SkillsSheet = () => {
 
 
   useEffect(() => {
-    const characterID = JSON.parse(sessionStorage.getItem("currentCharacter"))
-    const getCharacter = JSON.parse(sessionStorage.getItem(characterID));
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setCharacter(getCharacter);
     setStr(getCharacter["str"]);
     setDex(getCharacter["dex"]);

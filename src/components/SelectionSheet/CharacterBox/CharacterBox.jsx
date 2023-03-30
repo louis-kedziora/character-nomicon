@@ -8,7 +8,6 @@ export const CharacterBox = ({ values }) => {
 
   useEffect(() => {
     const userCharacters = JSON.parse(sessionStorage.getItem("userCharacters"));
-    console.log("CharacterBox:");
     const storedCharacter = userCharacters.find(
       (character) => character._id === characterID
     );
@@ -18,7 +17,15 @@ export const CharacterBox = ({ values }) => {
   }, [characterID]);
 
   function onClickHandler() {
-    sessionStorage.setItem("currentCharacter", JSON.stringify(characterID));
+    console.log("Setting Current Character:");
+    console.log("ID:");
+    console.log(characterID);
+    console.log(character);
+
+    sessionStorage.setItem("currentCharacterID", JSON.stringify(characterID));
+
+    sessionStorage.setItem("currentCharacter", JSON.stringify(character));
+
   }
 
   return (

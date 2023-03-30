@@ -74,11 +74,11 @@ export const StyledTextField = styled(TextField)({
       fontFamily: "Montserrat",
     },
     "&:hover fieldset": {
-      borderColor: "#d97326",
+      borderColor: "#5aa0ff",
       fontFamily: "Montserrat",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#03C988",
+      borderColor: "#5aa0ff",
       fontFamily: "Montserrat",
     },
   },

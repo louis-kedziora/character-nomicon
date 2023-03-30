@@ -1,9 +1,10 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import { scoreMod } from "components/AttributeSheet/Modifiers";
+import { scoreMod, modifierAndProficency } from "components/AttributeSheet/Modifiers";
 
 export const AttributeBox = ({ attribute }) => {
-  const { attributeName, attributeScore } = attribute;
+  const { attributeName, attributeScore, level, savingThrowProficiency } =
+    attribute;
 
   return (
     <div className="basicBox statBox">
@@ -16,12 +17,14 @@ export const AttributeBox = ({ attribute }) => {
         <Grid xs={4}>
           <p>Mod</p>
           <h2>{scoreMod(attributeScore)}</h2>
-
         </Grid>
         <Grid xs={4}>
           <p>Save</p>
-          <h2>{scoreMod(attributeScore)}</h2>
-
+          <h2>
+            {savingThrowProficiency
+              ? modifierAndProficency(attributeScore, level)
+              : scoreMod(attributeScore)}
+          </h2>
         </Grid>
       </Grid>
     </div>
