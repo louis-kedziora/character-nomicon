@@ -281,57 +281,62 @@ export const SelectionSheet = ({ userInfo }) => {
   };
 
   return (
-    <StyledSheetContainer maxWidth={false}>
+    <div>
       <SelectionAppBar />
-      {isFetched && (
-        <Grid container spacing={1}>
-          {characterIDs.map((characterID, index) => (
-            <Grid
-              item
-              key={index}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              xs={6}
-            >
-              <CharacterBox values={{ characterID: characterID }} />
-            </Grid>
-          ))}
-          <Grid item xs={12}>
-            <Grid
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              xs={12}
-              sx={{
-                height: "25%",
-                width: "100%",
-                margin: "25px",
-                padding: "20px",
-              }}
-            >
-              <StyledFab
-                size="large"
-                color="primary"
-                variant="extended"
-                onClick={openHandler}
+      <StyledSheetContainer maxWidth={false}>
+        {isFetched && (
+          <Grid container>
+            {characterIDs.map((characterID, index) => (
+              <Grid
+                item
+                key={index}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                xs={12}
+                md={6}
+                xl={4}
+                spacing={1}
               >
-                New Character
-              </StyledFab>
-              {open && (
-                <EditSheet
-                  info={{
-                    submitFormHandler: submitFormHandler,
-                    open: open,
-                    cancelHandler: cancelHandler,
-                    characterInfo: characterInfo,
-                  }}
-                ></EditSheet>
-              )}
+                <CharacterBox values={{ characterID: characterID }} />
+              </Grid>
+            ))}
+            <Grid item xs={12}>
+              <Grid
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                xs="auto"
+                sx={{
+                  height: "25%",
+                  width: "100%",
+                  margin: "25px",
+                  padding: "20px",
+                }}
+              >
+                <StyledFab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openHandler}
+                >
+                  New Character
+                </StyledFab>
+                {open && (
+                  <EditSheet
+                    info={{
+                      submitFormHandler: submitFormHandler,
+                      open: open,
+                      cancelHandler: cancelHandler,
+                      characterInfo: characterInfo,
+                    }}
+                  ></EditSheet>
+                )}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      )}
-    </StyledSheetContainer>
+        )}
+      </StyledSheetContainer>
+    </div>
   );
 };

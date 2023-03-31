@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyledFab } from "components/StyledComponents";
+import { StyledCharacterFab } from "components/StyledComponents";
 
 export const CharacterBox = ({ values }) => {
   const { characterID } = values;
@@ -31,23 +31,15 @@ export const CharacterBox = ({ values }) => {
   return (
     <div>
       {isFetched && (
-        <StyledFab className="selectionBox"
+        <StyledCharacterFab
           variant="extended"
           href="/attributes"
           onClick={onClickHandler}
-          sx={{
-            height: "25%",
-            width: "100%",
-            margin: "25px",
-            padding: "20px",
-            display: "block",
-            backgroundColor: "#0f111a",
-          }}
         >
           <h1>{character.name}</h1>
           <h2>{character.race}</h2>
           <h2>{character.characterClass}</h2>
-        </StyledFab>
+        </StyledCharacterFab>
       )}
     </div>
   );

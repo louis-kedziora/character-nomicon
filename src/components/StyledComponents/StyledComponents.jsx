@@ -5,10 +5,39 @@ import { DataGrid } from "@mui/x-data-grid";
 import Fab from "@mui/material/Fab";
 import Container from "@mui/material/Container";
 
+
+
+
 export const StyledSheetContainer = styled(Container)(({ theme }) => ({
   width: "100%",
   margin: "40px 0px",
   padding: "0px",
+}));
+
+export const StyledCharacterFab = styled(Fab)(({ theme }) => ({
+  fontFamily: "Montserrat",
+  height: "25%",
+  width: "35em",
+  margin: "25px",
+  padding: "20px",
+  display: "block",
+  backgroundColor: "#0f111a",
+  "&:hover": {
+    backgroundColor: "#464b4c",
+  },
+  "& h1": {
+    color: "#03C988",
+    fontSize: "2.5em",
+    padding: "10px",
+    fontWeight: "bolder",
+  },
+  "& h2": {
+    color: "#DBE2EF",
+    fontSize: "1.5em",
+    fontWeight: "500",
+    padding: "10px",
+
+  },
 }));
 
 export const StyledSkillFab = styled(Fab)(({ theme }) => ({
@@ -35,6 +64,8 @@ export const StyledSkillFab = styled(Fab)(({ theme }) => ({
 
   },
 }));
+
+
 
 export const StyledFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",

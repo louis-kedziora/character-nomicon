@@ -29,7 +29,7 @@ export const SelectionAppBar = ({ characterName }) => {
               display: { xs: "none", md: "flex" },
               fontFamily: "Montserrat",
               fontWeight: 700,
-              letterSpacing: ".3rem",
+              letterSpacing: ".15rem",
               color: "inherit",
               textDecoration: "none",
               textAlign: "center",
