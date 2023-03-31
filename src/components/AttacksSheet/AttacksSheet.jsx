@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
 import mongoose from "mongoose";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
-import { StyledDataGrid } from "components/StyledComponents";
-import { StyledFab } from "components/StyledComponents";
+import {
+  StyledDataGrid,
+  StyledFab,
+  StyledSheetContainer,
+} from "components/StyledComponents";
+
+
 
 export const AttacksSheet = () => {
   const [character, setCharacter] = useState({});
@@ -27,7 +31,9 @@ export const AttacksSheet = () => {
 
   const updateSession = (newAttacks) => {
     console.log(Object.keys(sessionStorage));
-    let updateCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    let updateCharacter = JSON.parse(
+      sessionStorage.getItem("currentCharacter")
+    );
     console.log(updateCharacter);
     updateCharacter["attacks"] = newAttacks;
     sessionStorage.setItem("currentCharacter", JSON.stringify(updateCharacter));
@@ -153,7 +159,7 @@ export const AttacksSheet = () => {
   ];
 
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+    <StyledSheetContainer maxWidth={false}>
       {isFetched && (
         <div className="attackBox">
           <Grid container spacing={2}>
@@ -183,7 +189,6 @@ export const AttacksSheet = () => {
                 />
               )}
             </Grid>
-            <Grid xs={12}></Grid>
             <div style={{ height: 400, width: "100%" }}>
               <StyledDataGrid
                 hideFooter
@@ -201,6 +206,6 @@ export const AttacksSheet = () => {
           </Grid>
         </div>
       )}
-    </Container>
+    </StyledSheetContainer>
   );
 };

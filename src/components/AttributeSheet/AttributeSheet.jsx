@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 
 import { AttributeBox } from "components/AttributeSheet/AttributeBox";
 import { InfoBox } from "components/AttributeSheet/InfoBox";
 import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
+import { StyledSheetContainer } from "components/StyledComponents";
+
 
 const attributes = [
   { title: "Strength", scoreName: "str" },
@@ -26,7 +27,8 @@ export const AttributeSheet = () => {
   }, []);
 
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+    <StyledSheetContainer maxWidth={false}>
+
       {isFetched && (
         <Grid container spacing={1}>
           <Grid xs={12}>
@@ -137,6 +139,6 @@ export const AttributeSheet = () => {
           </Grid>
         </Grid>
       )}
-    </Container>
+      </StyledSheetContainer>
   );
 };

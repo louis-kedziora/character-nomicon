@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
-import { StyledFab } from "components/StyledComponents";
 
 import { SelectionAppBar } from "components/partials";
 import { CharacterBox } from "components/SelectionSheet/CharacterBox";
 import { EditSheet } from "components/EditSheet";
 import { createNewCharacter, updateUser } from "components/DBHandler";
+import { StyledFab, StyledSheetContainer } from "components/StyledComponents";
 
 const mongoose = require("mongoose");
 
@@ -259,6 +258,9 @@ export const SelectionSheet = ({ userInfo }) => {
       newCharacter["customResources"] = [];
       newCharacter["attacks"] = [];
       newCharacter["spells"] = [];
+      newCharacter["tempHP"] = 0;
+      newCharacter["deathSaveSuccesses"] = 0;
+      newCharacter["deathSaveFailures"] = 0;
 
       const mongooseID = mongoose.Types.ObjectId();
       createNewCharacter(newCharacter, mongooseID);
@@ -279,7 +281,7 @@ export const SelectionSheet = ({ userInfo }) => {
   };
 
   return (
-    <Container width="100%" disableGutters maxWidth={false}>
+    <StyledSheetContainer maxWidth={false}>
       <SelectionAppBar />
       {isFetched && (
         <Grid container spacing={1}>
@@ -330,6 +332,6 @@ export const SelectionSheet = ({ userInfo }) => {
           </Grid>
         </Grid>
       )}
-    </Container>
+    </StyledSheetContainer>
   );
 };

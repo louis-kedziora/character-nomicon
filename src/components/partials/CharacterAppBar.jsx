@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
 import ShieldSharpIcon from "@mui/icons-material/ShieldSharp";
 
 const sheetLabels = [
@@ -61,7 +60,10 @@ export const CharacterAppBar = () => {
           <Toolbar disableGutters>
             <Link color="white" to="/characters">
               <ShieldSharpIcon
-                 sx={{ display: { color: "white", xs: "none", md: "flex" }, mr: 1 }}
+                sx={{
+                  display: { color: "white", xs: "none", md: "flex" },
+                  mr: 1,
+                }}
               />
             </Link>
 
@@ -75,7 +77,7 @@ export const CharacterAppBar = () => {
                 display: { xs: "none", md: "flex" },
                 fontFamily: "Montserrat",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".15rem",
                 color: "inherit",
                 textDecoration: "none",
                 textAlign: "center",
@@ -120,28 +122,15 @@ export const CharacterAppBar = () => {
                   to={sheetLinks[sheet]}
                   style={({ isActive, isPending }) => {
                     return {
-                      fontWeight: isActive ? "bold" : "",
-                      backgroundImage: isActive
-                        ? `url(${"https://www.transparenttextures.com/patterns/buried.png"})`
-                        : "",
-                      backgroundColor: isActive ? "#0f111a" : "",
+                      fontWeight: isActive ? "bolder" : "lighter",
+                      color: isActive ? "white" : "#464b4c",
                       fontFamily: "Montserrat",
-                      textDecoration: "none",
+                      textDecoration: isActive ? "underline #FFF" : "none",
+                      margin: "10px",
                     };
                   }}
                 >
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{
-                      my: 2,
-                      color: "white",
-                      display: "block",
-                      fontFamily: "Montserrat",
-                      boxSizing: "borderBox",
-                    }}
-                  >
-                    {sheet}
-                  </Button>
+                  {sheet}
                 </NavLink>
               ))}
             </Box>

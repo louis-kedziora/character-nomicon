@@ -3,14 +3,46 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { DataGrid } from "@mui/x-data-grid";
 import Fab from "@mui/material/Fab";
+import Container from "@mui/material/Container";
+
+export const StyledSheetContainer = styled(Container)(({ theme }) => ({
+  width: "100%",
+  margin: "40px 0px",
+  padding: "0px",
+}));
+
+export const StyledSkillFab = styled(Fab)(({ theme }) => ({
+  backgroundColor: "#0f111a",
+  width: "300px",
+  fontFamily: "Montserrat",
+  padding: "10px",
+  margin: "10px",
+  textAlign: "left",
+  "&:hover": {
+    backgroundColor: "#464b4c",
+  },
+  "& h1": {
+    color: "#DBE2EF",
+    fontSize: "20px",
+    padding: "10px",
+    fontWeight: "lighter",
+  },
+  "& h2": {
+    color: "#5aa0ff",
+    fontSize: "30px",
+    fontWeight: "bolder",
+    padding: "10px",
+
+  },
+}));
 
 export const StyledFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",
   fontFamily: "Montserrat",
   fontSize: "20px",
   "&:hover": {
-    backgroundColor: "#464b4c"
-  }
+    backgroundColor: "#464b4c",
+  },
 }));
 
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({

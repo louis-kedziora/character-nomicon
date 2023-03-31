@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
 
 import { MultiInfoBox } from "components/MultiInfoBox";
 import { FeatureBox } from "components/FeaturesSheet/FeatureBox";
+import { StyledSheetContainer } from "components/StyledComponents";
 
 const featureLabels = [
   "Class",
@@ -37,7 +37,8 @@ export const FeaturesSheet = () => {
   return (
     <div>
       {isFetched && (
-        <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+        <StyledSheetContainer maxWidth={false}>
+
           <Grid container spacing={4}>
             <Grid xs={12}>
               {featureLabels.map((feature, index) => (
@@ -62,7 +63,7 @@ export const FeaturesSheet = () => {
               />
             </Grid>
           </Grid>
-        </Container>
+          </StyledSheetContainer>
       )}
     </div>
   );

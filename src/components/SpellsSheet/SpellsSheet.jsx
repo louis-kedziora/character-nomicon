@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
 import mongoose from "mongoose";
 
 import CheckIcon from "@mui/icons-material/Check";
@@ -10,8 +9,11 @@ import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
-import { StyledDataGrid } from "components/StyledComponents";
-import { StyledFab } from "components/StyledComponents";
+import {
+  StyledDataGrid,
+  StyledFab,
+  StyledSheetContainer,
+} from "components/StyledComponents";
 
 export const SpellsSheet = () => {
   const [character, setCharacter] = useState({});
@@ -211,7 +213,7 @@ export const SpellsSheet = () => {
   ];
 
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+    <StyledSheetContainer maxWidth={false}>
       {isFetched && (
         <div className="spellBox">
           <Grid container spacing={2}>
@@ -270,6 +272,6 @@ export const SpellsSheet = () => {
           </Grid>
         </div>
       )}
-    </Container>
+    </StyledSheetContainer>
   );
 };

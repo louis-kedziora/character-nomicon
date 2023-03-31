@@ -24,7 +24,6 @@ html {
 body {
   background: #0f111a;
   background-image: url("https://www.transparenttextures.com/patterns/buried.png");
-  padding: 0px;
 }
 
 input:-webkit-autofill {
@@ -150,9 +149,13 @@ footer p {
   outline: none;
 }
 
+.skillSheet {
+  background-Color: #0f111a;
+  padding: 15px;
+}
+
 .skillSheet h1 {
-  margin: 10px;
-  color:#fff;
+  color: #03C988;;
 }
 
 .sectionHeader {

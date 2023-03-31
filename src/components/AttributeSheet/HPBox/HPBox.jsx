@@ -110,7 +110,7 @@ export const HPBox = ({ characterInfo }) => {
         <div className="basicBox resourceBox">
           <h1>{title}</h1>
           <div className="resourceCount">
-            <h2>{tempHP > 0 ? hp + tempHP + " (+tmp)" : hp}</h2>
+            <h2>{tempHP > 0 ? parseInt(hp + tempHP) + " (+tmp)" : hp}</h2>
           </div>
           {!changeHP && (
             <Grid container spacing={2}>

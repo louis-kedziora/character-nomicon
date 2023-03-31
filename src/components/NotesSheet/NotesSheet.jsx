@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
 
 import { MultiInfoBox } from "components/MultiInfoBox";
+import { StyledSheetContainer } from "components/StyledComponents";
 
 export const NotesSheet = () => {
   const [character, setCharacter] = useState({});
@@ -15,7 +15,8 @@ export const NotesSheet = () => {
   return (
     <div>
       {isFetched && (
-        <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+        <StyledSheetContainer maxWidth={false}>
+
           <Grid xs={12}>
             <MultiInfoBox
               color="white"
@@ -26,7 +27,7 @@ export const NotesSheet = () => {
               }}
             />
           </Grid>
-        </Container>
+        </StyledSheetContainer>
       )}
     </div>
   );

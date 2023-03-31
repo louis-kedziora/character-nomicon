@@ -1,1 +1,8 @@
-export {StyledFormControlLabel, StyledTextField, StyledDataGrid, StyledFab} from "components/StyledComponents/StyledComponents"
+export {
+  StyledFormControlLabel,
+  StyledTextField,
+  StyledDataGrid,
+  StyledFab,
+  StyledSheetContainer,
+  StyledSkillFab,
+} from "components/StyledComponents/StyledComponents";

@@ -1,12 +1,38 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
 
 import { scoreMod } from "components/AttributeSheet/Modifiers";
 import { SkillBox } from "components/SkillsSheet/SkillBox";
+import { StyledSheetContainer } from "components/StyledComponents";
+
+const strengthSkills = [{ title: "Athletics", skillName: "athletics" }];
+const dexteritySkills = [
+  { title: "Acrobatics", skillName: "acrobatics" },
+  { title: "Sleight of Hand", skillName: "sleightOfHand" },
+  { title: "Stealth", skillName: "stealth" },
+];
+const intelligenceSkills = [
+  { title: "Arcana", skillName: "arcana" },
+  { title: "History", skillName: "history" },
+  { title: "Investigation", skillName: "investigation" },
+  { title: "Nature", skillName: "nature" },
+  { title: "Religion", skillName: "religion" },
+];
+const wisdomSkills = [
+  { title: "Animal Handling", skillName: "animalHandling" },
+  { title: "Insight", skillName: "insight" },
+  { title: "Medicine", skillName: "medicine" },
+  { title: "Perception", skillName: "perception" },
+  { title: "Survival", skillName: "survival" },
+];
+const charismaSkills = [
+  { title: "Deception", skillName: "deception" },
+  { title: "Intimidation", skillName: "intimidation" },
+  { title: "Performance", skillName: "performance" },
+  { title: "Persuasion", skillName: "persuasion" },
+];
 
 export const SkillsSheet = () => {
-  const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
   const [str, setStr] = useState();
   const [dex, setDex] = useState();
@@ -14,10 +40,8 @@ export const SkillsSheet = () => {
   const [char, setChar] = useState();
   const [int, setInt] = useState();
 
-
   useEffect(() => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    setCharacter(getCharacter);
     setStr(getCharacter["str"]);
     setDex(getCharacter["dex"]);
     setWis(getCharacter["wis"]);
@@ -28,159 +52,89 @@ export const SkillsSheet = () => {
   // This all relies on everything being present and in order
   //    Prehaps make this safer somehow
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+    <StyledSheetContainer maxWidth={false}>
       {isFetched && (
-        <div className="skillSheet">
+        <div className="skillSheet attackBox">
           <Grid container spacing={1}>
-            <h1>Strength {scoreMod(str)}</h1>
-            <Grid xs={12}>
-              <SkillBox
-                info={{
-                  skill: "athletics",
-                  title: "Athletics",
-                  characterID: character._id
-                  
-                }}
-              />
+            <Grid xs={4}>
+              <h1>Strength {scoreMod(str)}</h1>
+              {strengthSkills.map((skill, index) => {
+                return (
+                    <SkillBox
+                      key={index}
+                      info={{
+                        title: skill.title,
+                        skill: skill.skillName,
+                      }}
+                    />
+                );
+              })}
             </Grid>
 
-            <h1>Dexterity {scoreMod(dex)}</h1>
-            <Grid xs={12}>
-              <SkillBox
-                info={{
-                  skill: "acrobatics",
-                  title: "Acrobatics",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "sleightOfHand",
-                  title: "Sleight Of Hand",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "stealth",
-                  title: "Stealth",
-                  characterID: character._id
-                }}
-              />
+            <Grid xs={4}>
+              <h1>Dexterity {scoreMod(dex)}</h1>
+              {dexteritySkills.map((skill, index) => {
+                return (
+                    <SkillBox
+                      key={index}
+                      info={{
+                        title: skill.title,
+                        skill: skill.skillName,
+                      }}
+                    />
+                );
+              })}
             </Grid>
 
-            <h1>Intelligence {scoreMod(int)}</h1>
-            <Grid xs={12}>
-              <SkillBox
-                info={{
-                  skill: "arcana",
-                  title: "Arcana",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "history",
-                  title: "History",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "investigation",
-                  title: "Investigation",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "nature",
-                  title: "Nature",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "religion",
-                  title: "Religion",
-                  characterID: character._id
-                }}
-              />
+            <Grid xs={4}>
+              <h1>Intelligence {scoreMod(int)}</h1>
+
+              {intelligenceSkills.map((skill, index) => {
+                return (
+                  <SkillBox
+                    key={index}
+                    info={{
+                      title: skill.title,
+                      skill: skill.skillName,
+                    }}
+                  />
+                );
+              })}
             </Grid>
 
-            <h1>Wisdom {scoreMod(wis)}</h1>
-            <Grid xs={12}>
-              <SkillBox
-                info={{
-                  skill: "animalHandling",
-                  title: "Animal Handling",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "insight",
-                  title: "Insight",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "medicine",
-                  title: "Medicine",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "perception",
-                  title: "Perception",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "survival",
-                  title: "Survival",
-                  characterID: character._id
-                }}
-              />
+            <Grid xs={4}>
+              <h1>Wisdom {scoreMod(wis)}</h1>
+
+              {wisdomSkills.map((skill, index) => {
+                return (
+                  <SkillBox
+                    key={index}
+                    info={{
+                      title: skill.title,
+                      skill: skill.skillName,
+                    }}
+                  />
+                );
+              })}
             </Grid>
 
-            <h1>Charisma {scoreMod(char)}</h1>
-            <Grid xs={12}>
-              <SkillBox
-                info={{
-                  skill: "deception",
-                  title: "Deception",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "intimidation",
-                  title: "Intimidation",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "performance",
-                  title: "Performance",
-                  characterID: character._id
-                }}
-              />
-              <SkillBox
-                info={{
-                  skill: "persuasion",
-                  title: "Persuasion",
-                  characterID: character._id
-                }}
-              />
+            <Grid xs={4}>
+              <h1>Charisma {scoreMod(char)}</h1>
+              {charismaSkills.map((skill, index) => {
+                return (
+                  <SkillBox
+                    key={index}
+                    info={{
+                      title: skill.title,
+                      skill: skill.skillName,
+                    }}
+                  />
+                );
+              })}
             </Grid>
           </Grid>
         </div>
       )}
-    </Container>
+    </StyledSheetContainer>
   );
 };
