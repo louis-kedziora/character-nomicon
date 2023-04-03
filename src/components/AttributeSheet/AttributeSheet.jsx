@@ -7,9 +7,6 @@ import { InfoBox } from "components/AttributeSheet/InfoBox";
 import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
 import { StyledSheetContainer } from "components/StyledComponents";
-import { variableToTitle } from "components/UtilityFunctions";
-
-
 
 const attributes = [
   { title: "Strength", scoreName: "str" },
@@ -24,14 +21,13 @@ export const AttributeSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setCharacter(getCharacter);
     setIsFetched(true);
   }, []);
 
   return (
     <StyledSheetContainer maxWidth={false}>
-
       {isFetched && (
         <Grid container spacing={1}>
           <Grid xs={12}>
@@ -43,7 +39,8 @@ export const AttributeSheet = () => {
                     attributeName: attribute.title,
                     attributeScore: character[attribute.scoreName],
                     level: character.level,
-                    savingThrowProficiency: character.savingThrowProficiency[attribute.scoreName],
+                    savingThrowProficiency:
+                      character.savingThrowProficiency[attribute.scoreName],
                   }}
                 />
               );
@@ -88,21 +85,18 @@ export const AttributeSheet = () => {
               }}
             />
             {character["customResources"].map((resource, index) => {
-              
-            return (
-              <ResourceBox
-                key={index}
-                characterInfo={{
-                  title: variableToTitle(resource.resourceName),
-                  resourceName: resource.resourceName,
-                }}
-              />
-            );
-          })}
-           
+              return (
+                <ResourceBox
+                  key={index}
+                  characterInfo={{
+                    resourceID: resource._id,
+                  }}
+                />
+              );
+            })}
           </Grid>
         </Grid>
       )}
-      </StyledSheetContainer>
+    </StyledSheetContainer>
   );
 };

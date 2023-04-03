@@ -4,20 +4,30 @@ import Grid from "@mui/material/Unstable_Grid2";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { updateResource } from "components/DBHandler";
+import { variableToTitle } from "components/UtilityFunctions";
 
 export const ResourceBox = ({ characterInfo }) => {
-  const { title, resourceName, resourceID } = characterInfo;
+  const { resourceID } = characterInfo;
+  console.log(resourceID)
+  const [characterID, setCharacterID] = useState();
   const [resourceValue, setResourceValue] = useState();
+  const [resourceName, setResourceName] = useState();
   const [maxValue, setMaxValue] = useState();
+  const [title, setTitle] = useState();
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const customResources = character.customResources;
-    console.log(customResources);
-    // setResourceValue(character[resourceName]);
-    // setMaxValue(character[resourceName.replace("current", "max")]);
-    // setIsFetched(true);
+    const foundResource = customResources.find(
+      (item) => item._id === resourceID
+    );
+    setCharacterID(character._id)
+    setTitle(variableToTitle(foundResource.resourceName));
+    setResourceValue(foundResource.currentResourceValue);
+    setMaxValue(foundResource.maxResourceValue);
+    setResourceName(foundResource.resourceName);
+    setIsFetched(true);
   }, [resourceID]);
 
   function onClickHandler(event) {
@@ -28,7 +38,7 @@ export const ResourceBox = ({ characterInfo }) => {
         setResourceValue(resourceValue - 1);
 
         // updateResource will need to be updated
-        // updateResource(resourceName, -1, resourceValue, maxValue, characterID);
+        updateResource(resourceName, -1, resourceValue, maxValue, characterID, resourceID);
 
         newValue = resourceValue - 1;
       }
@@ -37,14 +47,18 @@ export const ResourceBox = ({ characterInfo }) => {
         setResourceValue(resourceValue + 1);
 
         // updateResource will need to be updated
-        // updateResource(resourceName, 1, resourceValue, maxValue, characterID);
+        updateResource(resourceName, 1, resourceValue, maxValue, characterID, resourceID);
 
         newValue = resourceValue + 1;
       }
     }
     if (newValue > -1) {
       let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
-      character[resourceName] = newValue;
+      let customResources = character.customResources;
+      let foundResource = customResources.find(
+        (item) => item._id === resourceID
+      );
+      foundResource.currentResourceValue = newValue;
       sessionStorage.setItem("currentCharacter", JSON.stringify(character));
     }
   }
@@ -58,12 +72,7 @@ export const ResourceBox = ({ characterInfo }) => {
             <div className="basicBox resourceBox">
               <h1>{title}</h1>
               <div className="resourceCount">
-                <h2>
-                  {resourceValue + " / " + maxValue}}
-                  {/* {extraInfo
-                    ? resourceValue + " / " + maxValue + " " + extraInfo
-                    : resourceValue + " / " + maxValue} */}
-                </h2>
+                <h2>{resourceValue + " / " + maxValue}</h2>
               </div>
               <Grid container spacing={2}>
                 <Grid xs={6}>

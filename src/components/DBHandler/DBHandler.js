@@ -60,7 +60,8 @@ export const updateResource = (
   changeAmount,
   currentValue,
   maxValue,
-  characterID
+  characterID,
+  resourceID
 ) => {
   if (
     resourceName === undefined ||
@@ -84,6 +85,7 @@ export const updateResource = (
     url: serverURL + "/api/characters/updateResource",
     data: {
       characterID: characterID,
+      resourceID: resourceID,
       [resourceName]: newValue,
     },
   })

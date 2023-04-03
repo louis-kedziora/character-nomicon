@@ -78,15 +78,21 @@ exports.createCharacter = (req, res) => {
 };
 
 exports.updateResource = (req, res) => {
-  if (!req.body || !req.body.characterID) {
+  if (!req.body || !req.body.characterID || !req.body.resourceID) {
     res.status(400).send({ message: "Body can not be empty!" });
     return;
   }
   const characterID = req.body.characterID;
+  const resourceID = req.body.resourceID
   let updateData = req.body;
+  delete updateData.resourceID;
   delete updateData.characterID;
   const updateField = Object.keys(updateData)[0];
   const updateValue = Object.values(updateData)[0];
+  console.log(resourceID);
+  console.log(characterID);
+  console.log(updateField);
+  console.log(updateValue);
 
   Character.findOne({ _id: characterID }, function (err, foundCharacter) {
     if (err) {
@@ -95,7 +101,11 @@ exports.updateResource = (req, res) => {
       if (!foundCharacter) {
         console.log("Character Not Found!");
       } else {
-        foundCharacter[updateField] = updateValue;
+        let customResources = foundCharacter.customResources;
+        let foundResource = customResources.find(
+          (item) => item._id === resourceID
+        );
+        foundResource.currentResourceValue = updateValue;
         foundCharacter
           .save(foundCharacter)
           .then((data) => {

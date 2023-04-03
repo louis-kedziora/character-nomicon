@@ -58,6 +58,7 @@ const characterSchema = {
   loot: String,
   partyLoot: String,
   customResources: [{
+    resourceID: ObjectId,
     resourceName: String,
     currentResourceValue: Number,
     maxResourceValue: Number,
