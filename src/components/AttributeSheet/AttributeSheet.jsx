@@ -7,6 +7,8 @@ import { InfoBox } from "components/AttributeSheet/InfoBox";
 import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
 import { StyledSheetContainer } from "components/StyledComponents";
+import { variableToTitle } from "components/UtilityFunctions";
+
 
 
 const attributes = [
@@ -22,7 +24,8 @@ export const AttributeSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    setCharacter(JSON.parse(sessionStorage.getItem("currentCharacter")));
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    setCharacter(getCharacter);
     setIsFetched(true);
   }, []);
 
@@ -84,58 +87,19 @@ export const AttributeSheet = () => {
                 characterID: character._id,
               }}
             />
-            <ResourceBox
-              characterInfo={{
-                title: "Hit Dice",
-                resourceName: "currentHitDice",
-                characterID: character._id,
-                extraInfo: character.hitDice,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "1st Level Spells",
-                resourceName: "currentOneSpellSlots",
-                characterID: character._id,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "2nd Level Spells",
-                resourceName: "currentTwoSpellSlots",
-                characterID: character._id,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "3rd Level Spell",
-                resourceName: "currentThreeSpellSlots",
-                characterID: character._id,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "Wild Shapes",
-                resourceName: "currentWildShapes",
-                characterID: character._id,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "Guiding Bolts",
-                resourceName: "currentGuidingBolts",
-                characterID: character._id,
-              }}
-            />
-            {/* May need a specific box for this or a additional Info for this
-      ie. Woe / Weal*/}
-            <ResourceBox
-              characterInfo={{
-                title: "Cosmic Omens",
-                resourceName: "currentCosmicOmens",
-                characterID: character._id,
-              }}
-            />
+            {character["customResources"].map((resource, index) => {
+              
+            return (
+              <ResourceBox
+                key={index}
+                characterInfo={{
+                  title: variableToTitle(resource.resourceName),
+                  resourceName: resource.resourceName,
+                }}
+              />
+            );
+          })}
+           
           </Grid>
         </Grid>
       )}

@@ -81,8 +81,6 @@ const characterInfo = [
   { type: "number", field: "ac", headerName: "AC" },
   { type: "text", field: "speed", headerName: "Speed" },
   { type: "number", field: "level", headerName: "Total Level" },
-  { type: "text", field: "hitDice", headerName: "Hit Dice" },
-  { type: "number", field: "maxHitDice", headerName: "Max Hit Dice" },
   {
     type: "checkbox",
     sheetType: "skills",

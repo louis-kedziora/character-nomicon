@@ -6,17 +6,19 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { updateResource } from "components/DBHandler";
 
 export const ResourceBox = ({ characterInfo }) => {
-  const { title, resourceName, characterID, extraInfo } = characterInfo;
+  const { title, resourceName, resourceID } = characterInfo;
   const [resourceValue, setResourceValue] = useState();
   const [maxValue, setMaxValue] = useState();
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    setResourceValue(character[resourceName]);
-    setMaxValue(character[resourceName.replace("current", "max")]);
-    setIsFetched(true);
-  }, [characterID, resourceName]);
+    const customResources = character.customResources;
+    console.log(customResources);
+    // setResourceValue(character[resourceName]);
+    // setMaxValue(character[resourceName.replace("current", "max")]);
+    // setIsFetched(true);
+  }, [resourceID]);
 
   function onClickHandler(event) {
     const changeType = event.currentTarget.name;
@@ -24,13 +26,19 @@ export const ResourceBox = ({ characterInfo }) => {
     if (changeType === "Remove") {
       if (resourceValue > 0) {
         setResourceValue(resourceValue - 1);
-        updateResource(resourceName, -1, resourceValue, maxValue, characterID);
+
+        // updateResource will need to be updated
+        // updateResource(resourceName, -1, resourceValue, maxValue, characterID);
+
         newValue = resourceValue - 1;
       }
     } else if (changeType === "Add") {
       if (resourceValue < maxValue) {
         setResourceValue(resourceValue + 1);
-        updateResource(resourceName, 1, resourceValue, maxValue, characterID);
+
+        // updateResource will need to be updated
+        // updateResource(resourceName, 1, resourceValue, maxValue, characterID);
+
         newValue = resourceValue + 1;
       }
     }
@@ -40,8 +48,6 @@ export const ResourceBox = ({ characterInfo }) => {
       sessionStorage.setItem("currentCharacter", JSON.stringify(character));
     }
   }
-  // extraInfo is seemingly only needed for hitDice resource but because of Variance probably
-  //  need its own component ie. multiclassing can result in hitDice = 3/3d8s and 2/2d10s
   return (
     <div>
       {isFetched && (
@@ -53,9 +59,10 @@ export const ResourceBox = ({ characterInfo }) => {
               <h1>{title}</h1>
               <div className="resourceCount">
                 <h2>
-                  {extraInfo
+                  {resourceValue + " / " + maxValue}}
+                  {/* {extraInfo
                     ? resourceValue + " / " + maxValue + " " + extraInfo
-                    : resourceValue + " / " + maxValue}
+                    : resourceValue + " / " + maxValue} */}
                 </h2>
               </div>
               <Grid container spacing={2}>

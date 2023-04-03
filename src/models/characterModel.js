@@ -25,9 +25,6 @@ const characterSchema = {
   ac: Number,
   speed: Number,
   level: Number,
-  hitDice: String,
-  maxHitDice: Number,
-  currentHitDice: Number,
   trainedSkills: {
     athletics: Boolean,
     acrobatics: Boolean,
