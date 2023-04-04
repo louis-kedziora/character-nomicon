@@ -1,6 +1,46 @@
 import axios from "axios";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
+export const updateResource = (resourceID, characterID, newValue) => {
+  if (!characterID || !resourceID) {
+    console.log("Missing parameters");
+  }
+  axios({
+    method: "patch",
+    url: serverURL + "/api/characters/updateResource",
+    data: {
+      characterID: characterID,
+      resourceID: resourceID,
+      newValue: newValue,
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return newValue;
+};
+
+export const createNewResource = (newResource, characterID) => {
+  axios({
+    method: "patch",
+    url: serverURL + "/api/characters/createresource",
+    data: {
+      newResource: newResource,
+      characterID: characterID,
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return characterID;
+};
+
 export const updateUser = (infoName, newInfo, userID) => {
   axios({
     method: "patch",
@@ -53,49 +93,6 @@ export const updateInfo = (infoName, newInfo, characterID) => {
       console.log(error);
     });
   return newInfo;
-};
-
-export const updateResource = (
-  resourceName,
-  changeAmount,
-  currentValue,
-  maxValue,
-  characterID,
-  resourceID
-) => {
-  if (
-    resourceName === undefined ||
-    changeAmount === undefined ||
-    currentValue === undefined ||
-    maxValue === undefined ||
-    characterID === undefined
-  ) {
-    console.log("Missing parameters");
-  }
-  let newValue;
-  if (currentValue + changeAmount < 0) {
-    newValue = 0;
-  } else if (currentValue + changeAmount >= maxValue) {
-    newValue = maxValue;
-  } else {
-    newValue = currentValue + changeAmount;
-  }
-  axios({
-    method: "patch",
-    url: serverURL + "/api/characters/updateResource",
-    data: {
-      characterID: characterID,
-      resourceID: resourceID,
-      [resourceName]: newValue,
-    },
-  })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  return newValue;
 };
 
 export const updateHP = (

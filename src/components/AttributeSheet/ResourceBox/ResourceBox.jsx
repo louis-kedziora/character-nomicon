@@ -4,26 +4,22 @@ import Grid from "@mui/material/Unstable_Grid2";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { updateResource } from "components/DBHandler";
-import { variableToTitle } from "components/UtilityFunctions";
 
-export const ResourceBox = ({ characterInfo }) => {
-  const { resourceID } = characterInfo;
-  console.log(resourceID)
+export const ResourceBox = ({ resourceInfo }) => {
+  const { resourceID } = resourceInfo;
   const [characterID, setCharacterID] = useState();
   const [resourceValue, setResourceValue] = useState();
   const [resourceName, setResourceName] = useState();
   const [maxValue, setMaxValue] = useState();
-  const [title, setTitle] = useState();
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const customResources = character.customResources;
     const foundResource = customResources.find(
-      (item) => item._id === resourceID
+      (item) => item.resourceID === resourceID
     );
-    setCharacterID(character._id)
-    setTitle(variableToTitle(foundResource.resourceName));
+    setCharacterID(character._id);
     setResourceValue(foundResource.currentResourceValue);
     setMaxValue(foundResource.maxResourceValue);
     setResourceName(foundResource.resourceName);
@@ -36,27 +32,20 @@ export const ResourceBox = ({ characterInfo }) => {
     if (changeType === "Remove") {
       if (resourceValue > 0) {
         setResourceValue(resourceValue - 1);
-
-        // updateResource will need to be updated
-        updateResource(resourceName, -1, resourceValue, maxValue, characterID, resourceID);
-
         newValue = resourceValue - 1;
       }
     } else if (changeType === "Add") {
       if (resourceValue < maxValue) {
         setResourceValue(resourceValue + 1);
-
-        // updateResource will need to be updated
-        updateResource(resourceName, 1, resourceValue, maxValue, characterID, resourceID);
-
         newValue = resourceValue + 1;
       }
     }
     if (newValue > -1) {
+      updateResource(resourceID, characterID, newValue);
       let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
       let customResources = character.customResources;
       let foundResource = customResources.find(
-        (item) => item._id === resourceID
+        (item) => item.resourceID === resourceID
       );
       foundResource.currentResourceValue = newValue;
       sessionStorage.setItem("currentCharacter", JSON.stringify(character));
@@ -70,7 +59,7 @@ export const ResourceBox = ({ characterInfo }) => {
           if the Character does not have the resource do not render the box */}
           {maxValue > 0 && (
             <div className="basicBox resourceBox">
-              <h1>{title}</h1>
+              <h1>{resourceName}</h1>
               <div className="resourceCount">
                 <h2>{resourceValue + " / " + maxValue}</h2>
               </div>

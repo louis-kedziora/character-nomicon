@@ -194,18 +194,11 @@ const characterInfo = [
 export const SelectionSheet = ({ userInfo }) => {
   const { userID } = userInfo;
   const [characterIDs, setCharacterIDs] = useState({});
+  const [noCharacters, setNoCharacters] = useState(false);
   const [currentUserID, setCurrentUserID] = useState("");
   const [isFetched, setIsFetched] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [open, setOpen] = useState(false);
-  const openHandler = () => {
-    setCancelClicked(false);
-    setOpen(true);
-  };
-  const cancelHandler = () => {
-    setCancelClicked(true);
-    setOpen(false);
-  };
 
   useEffect(() => {
     const localUser = JSON.parse(sessionStorage.getItem(userID));
@@ -213,7 +206,7 @@ export const SelectionSheet = ({ userInfo }) => {
     setCurrentUserID(userID);
     const characterIDs = [...localUser.userCharacters];
     setCharacterIDs(characterIDs);
-
+    if (characterIDs.length < 1) setNoCharacters(true);
     async function fetchCharacterData() {
       const request = await instance.post("/api/characters/getmany", {
         characterIDs: characterIDs,
@@ -225,6 +218,15 @@ export const SelectionSheet = ({ userInfo }) => {
     }
     fetchCharacterData();
   }, [userID]);
+
+  const openHandler = () => {
+    setCancelClicked(false);
+    setOpen(true);
+  };
+  const cancelHandler = () => {
+    setCancelClicked(true);
+    setOpen(false);
+  };
 
   const submitFormHandler = (event) => {
     event.preventDefault();
@@ -248,7 +250,6 @@ export const SelectionSheet = ({ userInfo }) => {
       delete newCharacter[""];
       delete newCharacter.cancelButton;
       newCharacter["currentHP"] = newCharacter.hpMax;
-      newCharacter["currentHitDice"] = newCharacter.maxHitDice;
       newCharacter["notes"] = "";
       newCharacter["features"] = "";
       newCharacter["loot"] = "";
@@ -275,6 +276,7 @@ export const SelectionSheet = ({ userInfo }) => {
     } else {
       console.log("cancelClick was set to True");
     }
+    setNoCharacters(false);
     setOpen(false);
   };
 
@@ -283,22 +285,26 @@ export const SelectionSheet = ({ userInfo }) => {
       <SelectionAppBar />
       <StyledSheetContainer maxWidth={false}>
         {isFetched && (
-          <Grid container>
-            {characterIDs.map((characterID, index) => (
-              <Grid
-                item
-                key={index}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                xs={12}
-                md={6}
-                xl={4}
-                spacing={1}
-              >
-                <CharacterBox values={{ characterID: characterID }} />
+          <div>
+            {!noCharacters && (
+              <Grid container>
+                {characterIDs.map((characterID, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    xs={12}
+                    md={6}
+                    xl={4}
+                    spacing={1}
+                  >
+                    <CharacterBox values={{ characterID: characterID }} />
+                  </Grid>
+                ))}
               </Grid>
-            ))}
+            )}
             <Grid item xs={12}>
               <Grid
                 display="flex"
@@ -332,7 +338,7 @@ export const SelectionSheet = ({ userInfo }) => {
                 )}
               </Grid>
             </Grid>
-          </Grid>
+          </div>
         )}
       </StyledSheetContainer>
     </div>

@@ -2,6 +2,75 @@ const db = require("../models");
 const Character = db.characters.getModel();
 const mongoose = require("mongoose");
 
+exports.createResource = (req, res) => {
+  if (!req.body || !req.body.characterID || !req.body.newResource.resourceID) {
+    res.status(400).send({ message: "Body can not be empty!" });
+    return;
+  }
+
+  const characterID = req.body.characterID;
+  const newResource = req.body.newResource;
+
+  Character.findOne({ _id: characterID }, function (err, foundCharacter) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundCharacter) {
+        console.log("Character Not Found!");
+      } else {
+        foundCharacter.customResources.push(newResource);
+        foundCharacter
+          .save(foundCharacter)
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while updating resource",
+            });
+          });
+      }
+    }
+  });
+};
+
+exports.updateResource = (req, res) => {
+  if (!req.body || !req.body.characterID || !req.body.resourceID) {
+    res.status(400).send({ message: "Body can not be empty!" });
+    return;
+  }
+  const characterID = req.body.characterID;
+  const resourceID = req.body.resourceID;
+  const newValue = req.body.newValue
+  Character.findOne({ _id: characterID }, function (err, foundCharacter) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundCharacter) {
+        console.log("Character Not Found!");
+      } else {
+        let customResources = foundCharacter.customResources;
+        let foundResource = customResources.find(
+          (item) => item.resourceID === resourceID
+        );
+        foundResource.currentResourceValue = newValue;
+        foundCharacter
+          .save(foundCharacter)
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while updating resource",
+            });
+          });
+      }
+    }
+  });
+};
+
 exports.getManyCharacters = (req, res) => {
   // Validate request
   req.body.characterIDs.forEach((characterID, index) => {
@@ -60,8 +129,6 @@ exports.createCharacter = (req, res) => {
     return;
   }
 
-  console.log(req.body.newCharacter);
-
   const character = new Character(req.body.newCharacter);
   // Save Character in the database
   character
@@ -75,51 +142,6 @@ exports.createCharacter = (req, res) => {
           err.message || "Some error occurred while creating the Character",
       });
     });
-};
-
-exports.updateResource = (req, res) => {
-  if (!req.body || !req.body.characterID || !req.body.resourceID) {
-    res.status(400).send({ message: "Body can not be empty!" });
-    return;
-  }
-  const characterID = req.body.characterID;
-  const resourceID = req.body.resourceID
-  let updateData = req.body;
-  delete updateData.resourceID;
-  delete updateData.characterID;
-  const updateField = Object.keys(updateData)[0];
-  const updateValue = Object.values(updateData)[0];
-  console.log(resourceID);
-  console.log(characterID);
-  console.log(updateField);
-  console.log(updateValue);
-
-  Character.findOne({ _id: characterID }, function (err, foundCharacter) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (!foundCharacter) {
-        console.log("Character Not Found!");
-      } else {
-        let customResources = foundCharacter.customResources;
-        let foundResource = customResources.find(
-          (item) => item._id === resourceID
-        );
-        foundResource.currentResourceValue = updateValue;
-        foundCharacter
-          .save(foundCharacter)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while updating resource",
-            });
-          });
-      }
-    }
-  });
 };
 
 exports.updateInfo = (req, res) => {

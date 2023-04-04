@@ -18,8 +18,10 @@ module.exports = (app) => {
 
 
   router.patch("/updatehp", characters.updateHP);
-  router.patch("/updateresource", characters.updateResource);
   router.patch("/updateinfo", characters.updateInfo);
+  router.patch("/createresource", characters.createResource);
+  router.patch("/updateresource", characters.updateResource);
+
 
   app.use("/api/characters", router);
 };

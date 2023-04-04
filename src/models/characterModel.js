@@ -23,7 +23,7 @@ const characterSchema = {
   con: Number,
   char: Number,
   ac: Number,
-  speed: Number,
+  speed: String,
   level: Number,
   trainedSkills: {
     athletics: Boolean,
@@ -58,7 +58,7 @@ const characterSchema = {
   loot: String,
   partyLoot: String,
   customResources: [{
-    resourceID: ObjectId,
+    resourceID: String,
     resourceName: String,
     currentResourceValue: Number,
     maxResourceValue: Number,
