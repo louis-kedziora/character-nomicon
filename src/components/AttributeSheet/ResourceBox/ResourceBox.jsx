@@ -3,28 +3,118 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { updateResource } from "components/DBHandler";
+import EditIcon from "@mui/icons-material/Edit";
+import { updateResource, updateInfo } from "components/DBHandler";
+import { StyledFab } from "components/StyledComponents";
+import { ResourceForm } from "../ResourceForm";
 
 export const ResourceBox = ({ resourceInfo }) => {
-  const { resourceID } = resourceInfo;
+  const { resourceID, allResources, setAllResources } = resourceInfo;
   const [characterID, setCharacterID] = useState();
   const [resourceValue, setResourceValue] = useState();
   const [resourceName, setResourceName] = useState();
+  const [oldResourceName, setOldResourceName] = useState("");
   const [maxValue, setMaxValue] = useState();
+  const [oldMaxValue, setOldMaxValue] = useState("");
+  const [cancelEditResource, setCancelEditResource] = useState(false);
+  const [openEditResource, setOpenEditResource] = useState(false);
+  const [isDeleteResourceClicked, setDeleteResourceClicked] = useState(false);
+
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const customResources = character.customResources;
+    console.log(customResources);
     const foundResource = customResources.find(
-      (item) => item.resourceID === resourceID
+      (item) => item.resourceID === resourceID.toString()
     );
+    console.log(resourceID.toString());
+    console.log(foundResource);
     setCharacterID(character._id);
     setResourceValue(foundResource.currentResourceValue);
     setMaxValue(foundResource.maxResourceValue);
     setResourceName(foundResource.resourceName);
     setIsFetched(true);
   }, [resourceID]);
+
+  const openEditResourceHandler = () => {
+    setOldResourceName(resourceName);
+    setOldMaxValue(maxValue);
+    const currentResource = {
+      resourceName: resourceName,
+      maxResourceValue: maxValue,
+    };
+    sessionStorage.setItem("currentResource", JSON.stringify(currentResource));
+    setOpenEditResource(true);
+  };
+  const cancelEditResourceHandler = () => {
+    setCancelEditResource(true);
+    setOpenEditResource(false);
+    setCancelEditResource(false);
+  };
+
+  const submitEditResourceHandler = (event) => {
+    event.preventDefault();
+    if (!cancelEditResource) {
+      let updatedResource = {};
+      const formData = event.target.elements;
+      for (let index = 0; index < formData.length; index++) {
+        const element = formData[index];
+        if (element.name === "maxResourceValue") {
+          updatedResource[element.name] = parseInt(element.value);
+        } else {
+          updatedResource[element.name] = element.value;
+        }
+      }
+      delete updatedResource[""];
+      delete updatedResource.cancelButton;
+      if (updatedResource.maxResourceValue < resourceValue) {
+        updatedResource["currentResourceValue"] = updatedResource.maxResourceValue;
+      } else {
+        updatedResource["currentResourceValue"] = resourceValue;
+      }
+
+      updatedResource["resourceID"] = resourceID;
+      if (
+        !(
+          oldResourceName === updatedResource.resourceName &&
+          oldMaxValue === updatedResource.maxResourceValue
+        )
+      ) {
+        let allNewResources = [...allResources];
+        let foundResourceIndex = allNewResources.findIndex(
+          (item) => item.resourceID === resourceID
+        );
+        allNewResources[foundResourceIndex] = updatedResource;
+
+        // Update Character in DB with new resource
+        updateInfo("customResources", allNewResources, characterID);
+
+        //Update local Storage
+        sessionStorage.setItem(
+          "currentResource",
+          JSON.stringify(updatedResource)
+        );
+        let currentCharacter = JSON.parse(
+          sessionStorage.getItem("currentCharacter")
+        );
+        currentCharacter.customResources = allNewResources;
+        sessionStorage.setItem(
+          "currentCharacter",
+          JSON.stringify(currentCharacter)
+        );
+
+        // //Update react components
+        setResourceName(updatedResource.resourceName);
+        setMaxValue(updatedResource.maxResourceValue);
+        setResourceValue(updatedResource.currentResourceValue);
+        setAllResources(allNewResources);
+      }
+    }
+    setOpenEditResource(false);
+    setCancelEditResource(false);
+  };
 
   function onClickHandler(event) {
     const changeType = event.currentTarget.name;
@@ -60,11 +150,12 @@ export const ResourceBox = ({ resourceInfo }) => {
           {maxValue > 0 && (
             <div className="basicBox resourceBox">
               <h1>{resourceName}</h1>
+
               <div className="resourceCount">
                 <h2>{resourceValue + " / " + maxValue}</h2>
               </div>
               <Grid container spacing={2}>
-                <Grid xs={6}>
+                <Grid xs={4}>
                   <Fab
                     size="small"
                     name="Remove"
@@ -74,7 +165,22 @@ export const ResourceBox = ({ resourceInfo }) => {
                     <RemoveIcon fontSize="large" name="Remove" />
                   </Fab>
                 </Grid>
-                <Grid xs={6}>
+                <Grid xs={4}>
+                  <StyledFab size="small" onClick={openEditResourceHandler}>
+                    <EditIcon />
+                  </StyledFab>
+                  {openEditResource && (
+                    <ResourceForm
+                      info={{
+                        newResource: false,
+                        submitResourceFormHandler: submitEditResourceHandler,
+                        openResourceForm: openEditResource,
+                        cancelResourceFormHandler: cancelEditResourceHandler,
+                      }}
+                    ></ResourceForm>
+                  )}
+                </Grid>
+                <Grid xs={4}>
                   <Fab
                     size="small"
                     name="Add"

@@ -147,7 +147,7 @@ exports.createCharacter = (req, res) => {
 exports.updateInfo = (req, res) => {
   console.log(req.body);
   if (!req.body || !req.body.characterID) {
-    res.status(400).send({ message: "Body can not be empty!" });
+    res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
   const characterID = req.body.characterID;

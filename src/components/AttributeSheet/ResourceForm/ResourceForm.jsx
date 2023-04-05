@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -9,13 +9,29 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { StyledTextField } from "components/StyledComponents";
 
 export const ResourceForm = ({ info }) => {
+  const [resourceName, setResourceName] = useState("");
+  const [maxValue, setMaxValue] = useState("");
+  const [isFetched, setIsFetched] = useState(false);
+
   const {
+    newResource,
     submitResourceFormHandler,
     openResourceForm,
     cancelResourceFormHandler,
   } = info;
 
+  useEffect(() => {
+    if (newResource === false) {
+      const currentResource = JSON.parse(sessionStorage.getItem("currentResource"));
+      setMaxValue(currentResource.maxResourceValue);
+      setResourceName(currentResource.resourceName);
+    }
+    setIsFetched(true);
+  }, [newResource]);
+
   return (
+    <div>
+    {isFetched && (
     <Dialog open={openResourceForm} onClose={cancelResourceFormHandler}>
       <DialogTitle
         sx={{
@@ -35,7 +51,7 @@ export const ResourceForm = ({ info }) => {
           variant="h6"
           component="div"
         >
-          New Resource
+          {newResource ? "New Resource" : "Edit Resource"}
         </Typography>
       </DialogTitle>
       <DialogContent
@@ -48,6 +64,8 @@ export const ResourceForm = ({ info }) => {
             <Grid xs={12}>
               <StyledTextField
                 fullWidth
+                value={resourceName}
+                onChange={e => setResourceName(e.target.value)}
                 label="Resource Title"
                 name="resourceName"
                 type="text"
@@ -57,6 +75,8 @@ export const ResourceForm = ({ info }) => {
             <Grid xs={12}>
               <StyledTextField
                 fullWidth
+                value={maxValue}
+                onChange={e => setMaxValue(e.target.value)}
                 label="Maximum Value"
                 name="maxResourceValue"
                 type="number"
@@ -93,5 +113,7 @@ export const ResourceForm = ({ info }) => {
         </form>
       </DialogContent>
     </Dialog>
+    )}
+    </div>
   );
 };

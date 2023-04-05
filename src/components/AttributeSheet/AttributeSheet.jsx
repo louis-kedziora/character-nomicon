@@ -45,6 +45,8 @@ export const AttributeSheet = () => {
   const cancelResourceFormHandler = () => {
     setCancelResourceForm(true);
     setOpenResourceForm(false);
+    setCancelResourceForm(true);
+
   };
 
   const submitResourceFormHandler = (event) => {
@@ -71,12 +73,13 @@ export const AttributeSheet = () => {
         sessionStorage.getItem("currentCharacter")
       );
       currentCharacter.customResources = [...resources, newResource];
+      console.log(currentCharacter);
       sessionStorage.setItem(
         "currentCharacter",
         JSON.stringify(currentCharacter)
       );
 
-      //Update react components
+      // // Update react components
       setResources([...resources, newResource]);
       setOpenResourceForm(false);
     }
@@ -146,6 +149,8 @@ export const AttributeSheet = () => {
                   key={index}
                   resourceInfo={{
                     resourceID: resource.resourceID,
+                    allResources: resources,
+                    setAllResources: setResources
                   }}
                 />
               );
@@ -176,6 +181,7 @@ export const AttributeSheet = () => {
               {openResourceForm && (
                 <ResourceForm
                   info={{
+                    newResource: true,
                     submitResourceFormHandler: submitResourceFormHandler,
                     openResourceForm: openResourceForm,
                     cancelResourceFormHandler: cancelResourceFormHandler,
