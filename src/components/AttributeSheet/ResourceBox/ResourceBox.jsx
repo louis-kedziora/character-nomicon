@@ -18,19 +18,15 @@ export const ResourceBox = ({ resourceInfo }) => {
   const [oldMaxValue, setOldMaxValue] = useState("");
   const [cancelEditResource, setCancelEditResource] = useState(false);
   const [openEditResource, setOpenEditResource] = useState(false);
-  const [isDeleteResourceClicked, setDeleteResourceClicked] = useState(false);
-
+  // const [isDeleteResourceClicked, setDeleteResourceClicked] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const customResources = character.customResources;
-    console.log(customResources);
     const foundResource = customResources.find(
       (item) => item.resourceID === resourceID.toString()
     );
-    console.log(resourceID.toString());
-    console.log(foundResource);
     setCharacterID(character._id);
     setResourceValue(foundResource.currentResourceValue);
     setMaxValue(foundResource.maxResourceValue);
@@ -48,8 +44,37 @@ export const ResourceBox = ({ resourceInfo }) => {
     sessionStorage.setItem("currentResource", JSON.stringify(currentResource));
     setOpenEditResource(true);
   };
+
   const cancelEditResourceHandler = () => {
     setCancelEditResource(true);
+    setOpenEditResource(false);
+    setCancelEditResource(false);
+  };
+
+  const deleteResourceHandler = () => {
+    let newResources = [...allResources].filter(
+      (resource) => resource.resourceID.toString() !== resourceID
+    );
+
+    // Update Character in DB with new resource
+    updateInfo("customResources", newResources, characterID);
+
+    // //Update local Storage
+    sessionStorage.setItem(
+      "currentResource",
+      JSON.stringify("")
+    );
+    let currentCharacter = JSON.parse(
+      sessionStorage.getItem("currentCharacter")
+    );
+    currentCharacter.customResources = newResources;
+    sessionStorage.setItem(
+      "currentCharacter",
+      JSON.stringify(currentCharacter)
+    );
+
+    // Update react components
+    setAllResources(newResources);
     setOpenEditResource(false);
     setCancelEditResource(false);
   };
@@ -70,7 +95,8 @@ export const ResourceBox = ({ resourceInfo }) => {
       delete updatedResource[""];
       delete updatedResource.cancelButton;
       if (updatedResource.maxResourceValue < resourceValue) {
-        updatedResource["currentResourceValue"] = updatedResource.maxResourceValue;
+        updatedResource["currentResourceValue"] =
+          updatedResource.maxResourceValue;
       } else {
         updatedResource["currentResourceValue"] = resourceValue;
       }
@@ -176,6 +202,7 @@ export const ResourceBox = ({ resourceInfo }) => {
                         submitResourceFormHandler: submitEditResourceHandler,
                         openResourceForm: openEditResource,
                         cancelResourceFormHandler: cancelEditResourceHandler,
+                        deleteResourceHandler: deleteResourceHandler,
                       }}
                     ></ResourceForm>
                   )}
