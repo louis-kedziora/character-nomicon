@@ -22,7 +22,7 @@ export const AttributeBox = ({ attribute }) => {
           <p>Save</p>
           <h2>
             {savingThrowProficiency
-              ? modifierAndProficency(attributeScore, level)
+              ? modifierAndProficency(level, attributeScore)
               : scoreMod(attributeScore)}
           </h2>
         </Grid>

@@ -10,7 +10,10 @@ export const proficiencyBonus = (level) => {
 }
 
 export const modifierAndProficency = (level, score) => {
-    let result = Math.floor((score - 10) / 2) + (Math.floor((level / 4) - 0.1) + 2)
+    const prof = (Math.floor((level / 4) - 0.1) + 2);
+    const mod = (Math.floor((score - 10) / 2));
+    let result = prof + mod
     if(result > 0) result = "+" + result;
+    console.log(result);
     return result;
 }

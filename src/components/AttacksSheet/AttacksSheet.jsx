@@ -163,6 +163,20 @@ export const AttacksSheet = () => {
       {isFetched && (
         <div className="attackBox">
           <Grid container spacing={2}>
+            <div style={{ height: 400, width: "100%" }}>
+              <StyledDataGrid
+                hideFooter
+                experimentalFeatures={{ newEditingApi: true }}
+                columnVisibilityModel={{
+                  id: false,
+                }}
+                rows={currentAttacks}
+                columns={columns}
+                getRowId={(row) => row._id.toString()}
+                onCellEditStop={handleCellEditStop}
+                onCellEditStart={handleCellEditStart}
+              />
+            </div>
             <Grid
               display="flex"
               justifyContent="center"
@@ -189,20 +203,6 @@ export const AttacksSheet = () => {
                 />
               )}
             </Grid>
-            <div style={{ height: 400, width: "100%" }}>
-              <StyledDataGrid
-                hideFooter
-                experimentalFeatures={{ newEditingApi: true }}
-                columnVisibilityModel={{
-                  id: false,
-                }}
-                rows={currentAttacks}
-                columns={columns}
-                getRowId={(row) => row._id.toString()}
-                onCellEditStop={handleCellEditStop}
-                onCellEditStart={handleCellEditStart}
-              />
-            </div>
           </Grid>
         </div>
       )}

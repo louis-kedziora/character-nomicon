@@ -217,32 +217,6 @@ export const SpellsSheet = () => {
       {isFetched && (
         <div className="spellBox">
           <Grid container spacing={2}>
-            <Grid
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              xs={12}
-            >
-              {!addNewSpell && (
-                <StyledFab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openNewSpellForm}
-                >
-                  New Spell
-                </StyledFab>
-              )}
-              {addNewSpell && (
-                <InputForm
-                  methods={{
-                    submitFormHandler: submitFormHandler,
-                    cancelHandler: cancelHandler,
-                  }}
-                  fields={columns}
-                />
-              )}
-            </Grid>
             <Grid xs={12}>
               <div
                 style={{
@@ -268,6 +242,32 @@ export const SpellsSheet = () => {
                   }
                 />
               </div>
+              <Grid
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              xs={12}
+            >
+              {!addNewSpell && (
+                <StyledFab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openNewSpellForm}
+                >
+                  New Spell
+                </StyledFab>
+              )}
+              {addNewSpell && (
+                <InputForm
+                  methods={{
+                    submitFormHandler: submitFormHandler,
+                    cancelHandler: cancelHandler,
+                  }}
+                  fields={columns}
+                />
+              )}
+            </Grid>
             </Grid>
           </Grid>
         </div>
