@@ -6,7 +6,15 @@ import Fab from "@mui/material/Fab";
 import Container from "@mui/material/Container";
 
 
-
+export const StyledGridFab = styled(Fab)(({ theme }) => ({
+  backgroundColor: "#0f111a",
+  fontFamily: "Montserrat",
+  margin: "2em 0 2em 0",
+  fontSize: "20px",
+  "&:hover": {
+    backgroundColor: "#464b4c",
+  },
+}));
 
 export const StyledSheetContainer = styled(Container)(({ theme }) => ({
   width: "100%",
@@ -42,13 +50,13 @@ export const StyledCharacterFab = styled(Fab)(({ theme }) => ({
 
 export const StyledSkillFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",
-  width: "300px",
+  width: "350px",
   fontFamily: "Montserrat",
   padding: "10px",
   margin: "10px",
   textAlign: "left",
   "&:hover": {
-    backgroundColor: "#464b4c",
+    backgroundColor: "#0f111a",
   },
   "& h1": {
     color: "#DBE2EF",

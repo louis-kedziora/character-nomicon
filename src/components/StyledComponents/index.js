@@ -5,5 +5,6 @@ export {
   StyledFab,
   StyledSheetContainer,
   StyledSkillFab,
-  StyledCharacterFab
+  StyledCharacterFab,
+  StyledGridFab,
 } from "components/StyledComponents/StyledComponents";

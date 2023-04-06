@@ -33,7 +33,7 @@ export const CharacterForm = ({ methods, fields }) => {
                   name={field.field}
                   type={field.type}
                   id="outlined-basic"
-                  // required
+                  required
                 />
               )}
             </Grid>

@@ -14,6 +14,5 @@ export const modifierAndProficency = (level, score) => {
     const mod = (Math.floor((score - 10) / 2));
     let result = prof + mod
     if(result > 0) result = "+" + result;
-    console.log(result);
     return result;
 }

@@ -11,7 +11,7 @@ import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
 import {
   StyledDataGrid,
-  StyledFab,
+  StyledGridFab,
   StyledSheetContainer,
 } from "components/StyledComponents";
 
@@ -249,14 +249,14 @@ export const SpellsSheet = () => {
               xs={12}
             >
               {!addNewSpell && (
-                <StyledFab
+                <StyledGridFab
                   size="large"
                   color="primary"
                   variant="extended"
                   onClick={openNewSpellForm}
                 >
                   New Spell
-                </StyledFab>
+                </StyledGridFab>
               )}
               {addNewSpell && (
                 <InputForm

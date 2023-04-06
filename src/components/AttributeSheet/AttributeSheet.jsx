@@ -61,7 +61,6 @@ export const AttributeSheet = () => {
       delete newResource[""];
       delete newResource.cancelButton;
       newResource["currentResourceValue"] = newResource.maxResourceValue;
-      console.log(newResource);
       const mongooseID = mongoose.Types.ObjectId();
       newResource["resourceID"] = mongooseID;
 
@@ -73,7 +72,6 @@ export const AttributeSheet = () => {
         sessionStorage.getItem("currentCharacter")
       );
       currentCharacter.customResources = [...resources, newResource];
-      console.log(currentCharacter);
       sessionStorage.setItem(
         "currentCharacter",
         JSON.stringify(currentCharacter)

@@ -8,7 +8,7 @@ import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
 import {
   StyledDataGrid,
-  StyledFab,
+  StyledGridFab,
   StyledSheetContainer,
 } from "components/StyledComponents";
 
@@ -30,11 +30,9 @@ export const AttacksSheet = () => {
   }, []);
 
   const updateSession = (newAttacks) => {
-    console.log(Object.keys(sessionStorage));
     let updateCharacter = JSON.parse(
       sessionStorage.getItem("currentCharacter")
     );
-    console.log(updateCharacter);
     updateCharacter["attacks"] = newAttacks;
     sessionStorage.setItem("currentCharacter", JSON.stringify(updateCharacter));
   };
@@ -184,14 +182,14 @@ export const AttacksSheet = () => {
               xs={12}
             >
               {!addNewAttack && (
-                <StyledFab
+                <StyledGridFab
                   size="large"
                   color="primary"
                   variant="extended"
                   onClick={openNewAttackForm}
                 >
                   New Attack
-                </StyledFab>
+                </StyledGridFab>
               )}
               {addNewAttack && (
                 <InputForm
