@@ -65,6 +65,7 @@ const characterSchema = {
   }],
   attacks: [
     {
+      attackID: String,
       attackName: String,
       attackRange: String,
       attackModifier: String,
@@ -74,6 +75,7 @@ const characterSchema = {
   ],
   spells: [
     {
+      spellID: String,
       spellPrepared: Boolean,
       spellName: String,
       spellTime: String,

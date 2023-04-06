@@ -29,7 +29,7 @@ export const AttacksSheet = () => {
     setIsFetched(true);
   }, []);
 
-  const updateSession = (newAttacks) => {
+  const updateLocalStorage = (newAttacks) => {
     let updateCharacter = JSON.parse(
       sessionStorage.getItem("currentCharacter")
     );
@@ -40,10 +40,10 @@ export const AttacksSheet = () => {
   const onDeleteClick = (event, row) => {
     event.stopPropagation();
     let newAttacks = structuredClone(currentAttacks);
-    newAttacks = newAttacks.filter((element) => element._id !== row._id);
+    newAttacks = newAttacks.filter((element) => element.attackID !== row.attackID);
     setCurrentAttacks(newAttacks);
     updateInfo("attacks", newAttacks, character._id);
-    updateSession(newAttacks);
+    updateLocalStorage(newAttacks);
   };
 
   const handleCellEditStart = (params, event) => {
@@ -53,12 +53,12 @@ export const AttacksSheet = () => {
   const handleCellEditStop = (params, event) => {
     if (String(oldValue) !== String(event.target.value)) {
       let foundRow = currentAttacks.find(
-        (element) => element._id === params.id
+        (element) => element.attackID === params.id
       );
       foundRow[params.field] = event.target.value;
       setCurrentAttacks(currentAttacks);
       updateInfo("attacks", currentAttacks, character._id);
-      updateSession(currentAttacks);
+      updateLocalStorage(currentAttacks);
     }
   };
 
@@ -76,20 +76,20 @@ export const AttacksSheet = () => {
       const attackType = event.target.elements.attackType.value;
       const attackModifier = event.target.elements.attackModifier.value;
       const attackDamage = event.target.elements.attackDamage.value;
-
+      const newID = mongoose.Types.ObjectId();
       const newAttack = {
         attackName: attackName,
         attackRange: attackRange,
         attackType: attackType,
         attackModifier: attackModifier,
         attackDamage: attackDamage,
-        _id: mongoose.Types.ObjectId(),
+        attackID: newID.toString(),
       };
       let newAttacks = structuredClone(currentAttacks);
       newAttacks.push(newAttack);
       setCurrentAttacks(newAttacks);
       updateInfo("attacks", newAttacks, character._id);
-      updateSession(newAttacks);
+      updateLocalStorage(newAttacks);
     }
   };
   function cancelHandler() {
@@ -170,7 +170,7 @@ export const AttacksSheet = () => {
                 }}
                 rows={currentAttacks}
                 columns={columns}
-                getRowId={(row) => row._id.toString()}
+                getRowId={(row) => row.attackID}
                 onCellEditStop={handleCellEditStop}
                 onCellEditStart={handleCellEditStart}
               />

@@ -39,7 +39,7 @@ export const SpellsSheet = () => {
   const onDeleteClick = (event, row) => {
     event.stopPropagation();
     let newSpells = structuredClone(currentSpells);
-    newSpells = newSpells.filter((element) => element._id !== row._id);
+    newSpells = newSpells.filter((element) => element.spellID !== row.spellID);
     setCurrentSpells(newSpells);
     updateInfo("spells", newSpells, character._id);
     updateSession(newSpells);
@@ -50,8 +50,9 @@ export const SpellsSheet = () => {
   };
 
   const handleCellEditStop = (params, event) => {
+    
     if (String(oldValue) !== String(event.target.value)) {
-      let foundRow = currentSpells.find((element) => element._id === params.id);
+      let foundRow = currentSpells.find((element) => element.spellID === params.id);
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
       updateInfo("spells", currentSpells, character._id);
@@ -75,7 +76,7 @@ export const SpellsSheet = () => {
       const spellHitOrDC = event.target.elements.spellHitOrDC.value;
       const spellEffect = event.target.elements.spellEffect.value;
       const spellNotes = event.target.elements.spellNotes.value;
-
+      const newID = mongoose.Types.ObjectId();
       const newSpell = {
         spellPrepared: spellPrepared,
         spellName: spellName,
@@ -84,7 +85,7 @@ export const SpellsSheet = () => {
         spellHitOrDC: spellHitOrDC,
         spellEffect: spellEffect,
         spellNotes: spellNotes,
-        _id: mongoose.Types.ObjectId(),
+        spellID: newID.toString(),
       };
       let newSpells = structuredClone(currentSpells);
       newSpells.push(newSpell);
@@ -98,7 +99,7 @@ export const SpellsSheet = () => {
   };
 
   const onPreparedClick = (event, row) => {
-    let foundRow = currentSpells.find((element) => element._id === row._id);
+    let foundRow = currentSpells.find((element) => element.spellID === row.spellID);
 
     foundRow["spellPrepared"] = !foundRow["spellPrepared"];
     setCurrentSpells(currentSpells);
@@ -234,7 +235,7 @@ export const SpellsSheet = () => {
                   }}
                   rows={currentSpells}
                   columns={columns}
-                  getRowId={(row) => row._id.toString()}
+                  getRowId={(row) => row.spellID}
                   onCellEditStop={handleCellEditStop}
                   onCellEditStart={handleCellEditStart}
                   getRowClassName={(params) =>
