@@ -1,83 +1,126 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 
 import { AttributeBox } from "components/AttributeSheet/AttributeBox";
 import { InfoBox } from "components/AttributeSheet/InfoBox";
 import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
+import { ResourceForm } from "components/AttributeSheet/ResourceForm";
+import { StyledFab, StyledSheetContainer } from "components/StyledComponents";
+import { createNewResource } from "components/DBHandler";
 
-export const AttributeSheet = ({ characterID }) => {
+const mongoose = require("mongoose");
+
+const attributes = [
+  { title: "Strength", scoreName: "str" },
+  { title: "Intelligence", scoreName: "int" },
+  { title: "Dexterity", scoreName: "dex" },
+  { title: "Wisdom", scoreName: "wis" },
+  { title: "Constitution", scoreName: "con" },
+  { title: "Charisma", scoreName: "char" },
+];
+export const AttributeSheet = () => {
   const [character, setCharacter] = useState();
+  const [resources, setResources] = useState();
   const [isFetched, setIsFetched] = useState(false);
+  const [cancelResourceForm, setCancelResourceForm] = useState(false);
+  const [openResourceForm, setOpenResourceForm] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
-    setCharacter(character);
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    setCharacter(getCharacter);
+    setResources(getCharacter.customResources);
+    sessionStorage.setItem(
+      "customResources",
+      JSON.stringify(getCharacter.customResources)
+    );
     setIsFetched(true);
-  }, [characterID]);
+  }, []);
+
+  const openResourceFormHandler = () => {
+    setCancelResourceForm(false);
+    setOpenResourceForm(true);
+  };
+  const cancelResourceFormHandler = () => {
+    setCancelResourceForm(true);
+    setOpenResourceForm(false);
+    setCancelResourceForm(true);
+
+  };
+
+  const submitResourceFormHandler = (event) => {
+    event.preventDefault();
+    if (!cancelResourceForm) {
+      let newResource = {};
+      const formData = event.target.elements;
+      for (let index = 0; index < formData.length; index++) {
+        const element = formData[index];
+        newResource[element.name] = element.value;
+      }
+      delete newResource[""];
+      delete newResource.cancelButton;
+      newResource["currentResourceValue"] = newResource.maxResourceValue;
+      const mongooseID = mongoose.Types.ObjectId();
+      newResource["resourceID"] = mongooseID;
+
+      //Update Character in DB with new resource
+      createNewResource(newResource, character._id);
+
+      //Update local Storage
+      let currentCharacter = JSON.parse(
+        sessionStorage.getItem("currentCharacter")
+      );
+      currentCharacter.customResources = [...resources, newResource];
+      sessionStorage.setItem(
+        "currentCharacter",
+        JSON.stringify(currentCharacter)
+      );
+
+      // // Update react components
+      setResources([...resources, newResource]);
+      setOpenResourceForm(false);
+    }
+  };
 
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+    <StyledSheetContainer maxWidth={false}>
       {isFetched && (
         <Grid container spacing={1}>
           <Grid xs={12}>
-            <AttributeBox
-              attribute={{
-                attributeName: "Strength",
-                attributeScore: character.str,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Intelligence",
-                attributeScore: character.int,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Dexterity",
-                attributeScore: character.dex,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Wisdom",
-                attributeScore: character.wis,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Constitution",
-                attributeScore: character.con,
-              }}
-            />
-            <AttributeBox
-              attribute={{
-                attributeName: "Charisma",
-                attributeScore: character.char,
-              }}
-            />
+            {attributes.map((attribute, index) => {
+              return (
+                <AttributeBox
+                  key={index}
+                  attribute={{
+                    attributeName: attribute.title,
+                    attributeScore: character[attribute.scoreName],
+                    level: character.level,
+                    savingThrowProficiency:
+                      character.savingThrowProficiency[attribute.scoreName],
+                  }}
+                />
+              );
+            })}
           </Grid>
           <h1 className="sectionHeader">Statistics</h1>
-          <Divider sx={{ width:"100%", border: "1px solid #464b4c" }} />
+          <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
             <InfoBox
-              info={{ title: "AC", infoName: "ac", characterID: characterID }}
+              info={{ title: "AC", infoName: "ac", characterID: character._id }}
             />
             <InfoBox
               info={{
                 title: "Proficiency",
                 infoName: "level",
-                characterID: characterID,
+                characterID: character._id,
               }}
             />
             <InfoBox
               info={{
                 title: "Speed",
                 infoName: "speed",
-                characterID: characterID,
+                characterID: character._id,
               }}
             />
 
@@ -85,74 +128,68 @@ export const AttributeSheet = ({ characterID }) => {
               info={{
                 title: "Initiative",
                 infoName: "dex",
-                characterID: characterID,
+                characterID: character._id,
               }}
             />
           </Grid>
           <h1 className="sectionHeader">Resources</h1>
-          <Divider sx={{ width:"100%", border: "1px solid #464b4c" }} />
+          <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
             <HPBox
               characterInfo={{
                 title: "HP",
-                characterID: characterID,
+                characterID: character._id,
               }}
             />
-            <ResourceBox
-              characterInfo={{
-                title: "Hit Dice",
-                resourceName: "currentHitDice",
-                characterID: characterID,
-                extraInfo: character.hitDice,
+            {resources.map((resource, index) => {
+              return (
+                <ResourceBox
+                  key={index}
+                  resourceInfo={{
+                    resourceID: resource.resourceID,
+                    allResources: resources,
+                    setAllResources: setResources
+                  }}
+                />
+              );
+            })}
+          </Grid>
+          <Grid item xs={12}>
+            <Grid
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              xs="auto"
+              sx={{
+                height: "25%",
+                width: "100%",
+                margin: "25px",
+                padding: "20px",
               }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "1st Level Spells",
-                resourceName: "currentOneSpellSlots",
-                characterID: characterID,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "2nd Level Spells",
-                resourceName: "currentTwoSpellSlots",
-                characterID: characterID,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "3rd Level Spell",
-                resourceName: "currentThreeSpellSlots",
-                characterID: characterID,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "Wild Shapes",
-                resourceName: "currentWildShapes",
-                characterID: characterID,
-              }}
-            />
-            <ResourceBox
-              characterInfo={{
-                title: "Guiding Bolts",
-                resourceName: "currentGuidingBolts",
-                characterID: characterID,
-              }}
-            />
-            {/* May need a specific box for this or a additional Info for this
-      ie. Woe / Weal*/}
-            <ResourceBox
-              characterInfo={{
-                title: "Cosmic Omens",
-                resourceName: "currentCosmicOmens",
-                characterID: characterID,
-              }}
-            />
+            >
+              <StyledFab
+                size="large"
+                color="primary"
+                variant="extended"
+                onClick={openResourceFormHandler}
+              >
+                New Resource
+              </StyledFab>
+
+              {openResourceForm && (
+                <ResourceForm
+                  info={{
+                    newResource: true,
+                    submitResourceFormHandler: submitResourceFormHandler,
+                    openResourceForm: openResourceForm,
+                    cancelResourceFormHandler: cancelResourceFormHandler,
+                  }}
+                ></ResourceForm>
+              )}
+            </Grid>
           </Grid>
         </Grid>
       )}
-    </Container>
+    </StyledSheetContainer>
   );
 };

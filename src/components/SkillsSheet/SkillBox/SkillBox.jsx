@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
+
 import {
   modifierAndProficency,
   scoreMod,
 } from "components/AttributeSheet/Modifiers";
+import { StyledSkillFab } from "components/StyledComponents";
 
 export const SkillBox = ({ info }) => {
-  const { title, skill, characterID } = info;
+  const { title, skill } = info;
   const [isTrained, setIsTrained] = useState();
   const [score, setScore] = useState();
   const [level, setLevel] = useState();
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
+    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     const skillDict = {
       athletics: "str",
       acrobatics: "dex",
@@ -33,22 +35,22 @@ export const SkillBox = ({ info }) => {
       performance: "char",
       persuasion: "char",
     };
-    const trainedSkills = character["trainedSkills"]
+    const trainedSkills = character["trainedSkills"];
     setIsTrained(trainedSkills[skill]);
     setScore(character[skillDict[skill]]);
     setLevel(character["level"]);
     setIsFetched(true);
-  }, [characterID, skill]);
+  }, [skill]);
 
   return (
     <div>
       {isFetched && (
-        <div className="basicBox resourceBox">
+        <StyledSkillFab variant="extended">
           <h1>{title}</h1>
           <h2>
             {isTrained ? modifierAndProficency(level, score) : scoreMod(score)}
           </h2>
-        </div>
+        </StyledSkillFab>
       )}
     </div>
   );

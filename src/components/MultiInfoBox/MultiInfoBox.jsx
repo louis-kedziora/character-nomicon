@@ -9,7 +9,7 @@ export const MultiInfoBox = ({ info }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
+    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setContent(character[infoName]);
     setIsFetched(true);
   }, [characterID, infoName]);
@@ -20,10 +20,10 @@ export const MultiInfoBox = ({ info }) => {
   }
 
   function handleFocusLoss(event) {
-    updateInfo(infoName, content);
-    let character = JSON.parse(sessionStorage.getItem(characterID));
+    updateInfo(infoName, content, characterID);
+    let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     character[infoName] = content;
-    sessionStorage.setItem(characterID, JSON.stringify(character));
+    sessionStorage.setItem("currentCharacter", JSON.stringify(character));
   }
 
   return (

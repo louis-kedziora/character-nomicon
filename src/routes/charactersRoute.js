@@ -1,24 +1,27 @@
-module.exports = app => {
-    const characters = require("../controllers/characterController");
-  
-    var router = require("express").Router();
+module.exports = (app) => {
+  const characters = require("../controllers/characterController");
 
-    // For whatever reason axios get requests ignore the body so post is used instead
-    // see here: https://stackoverflow.com/questions/46404051/send-object-with-axios-get-request
-    // For this code post requests and get requests will be used interchangably
+  var router = require("express").Router();
 
-    // Create a new Character
-    router.post("/create", characters.createCharacter);
+  // For whatever reason axios get requests ignore the body so post is used instead
+  // see here: https://stackoverflow.com/questions/46404051/send-object-with-axios-get-request
+  // For this code post requests and get requests will be used interchangably
 
-    // Retrieve character data from database
-    router.post("/get", characters.getCharacter);
+  // Create a new Character
+  router.post("/create", characters.createCharacter);
 
-    router.patch("/updatehp", characters.updateHP);
-    router.patch("/updateresource", characters.updateResource);
-    router.patch("/updateinfo", characters.updateInfo);
+  // Retrieve character data from database
+  router.post("/getone", characters.getOneCharacter);
+
+  // Retrieve character(s) data from database
+  router.post("/getmany", characters.getManyCharacters);
 
 
-    
+  router.patch("/updatehp", characters.updateHP);
+  router.patch("/updateinfo", characters.updateInfo);
+  router.patch("/createresource", characters.createResource);
+  router.patch("/updateresource", characters.updateResource);
 
-    app.use('/api/characters', router);
-  };
+
+  app.use("/api/characters", router);
+};

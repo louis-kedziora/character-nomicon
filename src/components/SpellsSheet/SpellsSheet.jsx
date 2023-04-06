@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
-import Fab from "@mui/material/Fab";
-import { styled } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
 import mongoose from "mongoose";
 
 import CheckIcon from "@mui/icons-material/Check";
@@ -13,8 +9,14 @@ import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
+import {
+  StyledDataGrid,
+  StyledGridFab,
+  StyledSheetContainer,
+} from "components/StyledComponents";
 
-export const SpellsSheet = ({ characterID }) => {
+export const SpellsSheet = () => {
+  const [character, setCharacter] = useState({});
   const [currentSpells, setCurrentSpells] = useState();
   const [addNewSpell, setAddNewSpell] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
@@ -22,15 +24,16 @@ export const SpellsSheet = ({ characterID }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
-    setCurrentSpells(character["spells"]);
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    setCharacter(getCharacter);
+    setCurrentSpells(getCharacter["spells"]);
     setIsFetched(true);
-  }, [characterID]);
+  }, []);
 
   const updateSession = (newSpells) => {
-    let character = JSON.parse(sessionStorage.getItem(characterID));
-    character["spells"] = newSpells;
-    sessionStorage.setItem(characterID, JSON.stringify(character));
+    let getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    getCharacter["spells"] = newSpells;
+    sessionStorage.setItem("currentCharacter", JSON.stringify(getCharacter));
   };
 
   const onDeleteClick = (event, row) => {
@@ -38,7 +41,7 @@ export const SpellsSheet = ({ characterID }) => {
     let newSpells = structuredClone(currentSpells);
     newSpells = newSpells.filter((element) => element._id !== row._id);
     setCurrentSpells(newSpells);
-    updateInfo("spells", newSpells);
+    updateInfo("spells", newSpells, character._id);
     updateSession(newSpells);
   };
 
@@ -51,7 +54,7 @@ export const SpellsSheet = ({ characterID }) => {
       let foundRow = currentSpells.find((element) => element._id === params.id);
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
-      updateInfo("spells", currentSpells);
+      updateInfo("spells", currentSpells, character._id);
       updateSession(currentSpells);
     }
   };
@@ -60,8 +63,9 @@ export const SpellsSheet = ({ characterID }) => {
     setAddNewSpell(true);
   };
 
-  const closeAddState = (event) => {
+  const submitFormHandler = (event) => {
     // Only save the new spell if cancel was not clicked
+    setAddNewSpell(false);
 
     if (!cancelClicked) {
       const spellPrepared = false;
@@ -85,10 +89,9 @@ export const SpellsSheet = ({ characterID }) => {
       let newSpells = structuredClone(currentSpells);
       newSpells.push(newSpell);
       setCurrentSpells(newSpells);
-      updateInfo("spells", newSpells);
+      updateInfo("spells", newSpells, character._id);
       updateSession(newSpells);
     }
-    setAddNewSpell(false);
   };
   const cancelHandler = () => {
     setCancelClicked(true);
@@ -99,45 +102,9 @@ export const SpellsSheet = ({ characterID }) => {
 
     foundRow["spellPrepared"] = !foundRow["spellPrepared"];
     setCurrentSpells(currentSpells);
-    updateInfo("spells", currentSpells);
+    updateInfo("spells", currentSpells, character._id);
     updateSession(currentSpells);
   };
-
-  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-    fontFamily: "Montserrat",
-    border: 0,
-    WebkitFontSmoothing: "auto",
-    letterSpacing: "normal",
-    "& .MuiDataGrid-columnsContainer": {
-      backgroundColor: theme.palette.mode === "light" ? "#fafafa" : "#1d1d1d",
-    },
-    "& .MuiDataGrid-iconSeparator": {
-      display: "none",
-    },
-    "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
-      borderRight: "none",
-    },
-    "& .MuiDataGrid-columnHeader": {
-      color: "#d97326",
-    },
-    "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
-      borderBottom: "none",
-    },
-    "& .MuiDataGrid-cell": {
-      color: "#5aa0ff",
-    },
-    "& .MuiPaginationItem-root": {
-      borderRadius: 0,
-    },
-    "& .MuiDataGrid-menuIconButton": {
-      opacity: 1,
-      color: "white",
-    },
-    "& .MuiDataGrid-sortIcon": {
-      opacity: 1,
-      color: "white",
-    },
-  }));
 
   const columns = [
     {
@@ -176,6 +143,7 @@ export const SpellsSheet = ({ characterID }) => {
       field: "spellName",
       headerName: "Name",
       headerClassName: "dataGrid--header",
+      type: "text",
       editable: true,
       flex: 0.75,
       minWidth: 100,
@@ -184,6 +152,7 @@ export const SpellsSheet = ({ characterID }) => {
       field: "spellTime",
       headerName: "Time",
       headerClassName: "dataGrid--header",
+      type: "text",
       editable: true,
       flex: 0.25,
       minWidth: 50,
@@ -192,6 +161,7 @@ export const SpellsSheet = ({ characterID }) => {
       field: "spellRange",
       headerName: "Range",
       headerClassName: "dataGrid--header",
+      type: "text",
       editable: true,
       flex: 0.5,
       minWidth: 50,
@@ -200,6 +170,7 @@ export const SpellsSheet = ({ characterID }) => {
       field: "spellHitOrDC",
       headerName: "Hit / DC",
       headerClassName: "dataGrid--header",
+      type: "text",
       editable: true,
       flex: 0.5,
       minWidth: 100,
@@ -208,6 +179,7 @@ export const SpellsSheet = ({ characterID }) => {
       field: "spellEffect",
       headerName: "Effect",
       headerClassName: "dataGrid--header",
+      type: "text",
       editable: true,
       flex: 1,
       minWidth: 200,
@@ -216,6 +188,7 @@ export const SpellsSheet = ({ characterID }) => {
       field: "spellNotes",
       headerName: "Notes",
       headerClassName: "dataGrid--header",
+      type: "text",
       editable: true,
       flex: 1,
       minWidth: 200,
@@ -240,36 +213,10 @@ export const SpellsSheet = ({ characterID }) => {
   ];
 
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+    <StyledSheetContainer maxWidth={false}>
       {isFetched && (
         <div className="spellBox">
           <Grid container spacing={2}>
-            <Grid
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              xs={12}
-            >
-              {!addNewSpell && (
-                <Fab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openNewSpellForm}
-                >
-                  <h1>New Spell</h1>
-                </Fab>
-              )}
-              {addNewSpell && (
-                <InputForm
-                  methods={{
-                    closeAddState: closeAddState,
-                    cancelHandler: cancelHandler,
-                  }}
-                  fields={columns}
-                />
-              )}
-            </Grid>
             <Grid xs={12}>
               <div
                 style={{
@@ -295,10 +242,36 @@ export const SpellsSheet = ({ characterID }) => {
                   }
                 />
               </div>
+              <Grid
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              xs={12}
+            >
+              {!addNewSpell && (
+                <StyledGridFab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openNewSpellForm}
+                >
+                  New Spell
+                </StyledGridFab>
+              )}
+              {addNewSpell && (
+                <InputForm
+                  methods={{
+                    submitFormHandler: submitFormHandler,
+                    cancelHandler: cancelHandler,
+                  }}
+                  fields={columns}
+                />
+              )}
+            </Grid>
             </Grid>
           </Grid>
         </div>
       )}
-    </Container>
+    </StyledSheetContainer>
   );
 };

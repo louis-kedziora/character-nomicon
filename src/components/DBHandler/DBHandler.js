@@ -1,31 +1,52 @@
-// TODO Need to implenment id for characters at this point 'gaston is hardcoded into all the methods'
-
 import axios from "axios";
-const HARDCODEDCHARACTERNAME = "Gaston";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
-export const getCharacter = (characterID) => {
+export const updateResource = (resourceID, characterID, newValue) => {
+  if (!characterID || !resourceID) {
+    console.log("Missing parameters");
+  }
   axios({
-    method: "post",
-    url: serverURL + "/api/characters/get",
+    method: "patch",
+    url: serverURL + "/api/characters/updateResource",
     data: {
-      _id: characterID
+      characterID: characterID,
+      resourceID: resourceID,
+      newValue: newValue,
     },
   })
     .then(function (response) {
-      return response;
+      console.log(response);
     })
     .catch(function (error) {
       console.log(error);
     });
-}
+  return newValue;
+};
 
-export const updateInfo = (infoName, newInfo) => {
+export const createNewResource = (newResource, characterID) => {
   axios({
     method: "patch",
-    url: serverURL + "/api/characters/updateInfo",
+    url: serverURL + "/api/characters/createresource",
     data: {
-      name: HARDCODEDCHARACTERNAME,
+      newResource: newResource,
+      characterID: characterID,
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return characterID;
+};
+
+export const updateUser = (infoName, newInfo, userID) => {
+  axios({
+    method: "patch",
+    url: serverURL + "/api/users/updateUser",
+    data: {
+      userID: userID,
       [infoName]: newInfo,
     },
   })
@@ -38,26 +59,13 @@ export const updateInfo = (infoName, newInfo) => {
   return newInfo;
 };
 
-export const updateResource = (
-  resourceName,
-  changeAmount,
-  currentValue,
-  maxValue
-) => {
-  let newValue;
-  if (currentValue + changeAmount < 0) {
-    newValue = 0;
-  } else if (currentValue + changeAmount >= maxValue) {
-    newValue = maxValue;
-  } else {
-    newValue = currentValue + changeAmount;
-  }
+export const createNewCharacter = (newCharacter, mongooseID) => {
+  newCharacter["_id"] = mongooseID;
   axios({
-    method: "patch",
-    url: serverURL + "/api/characters/updateResource",
+    method: "post",
+    url: serverURL + "/api/characters/create",
     data: {
-      name: HARDCODEDCHARACTERNAME,
-      [resourceName]: newValue,
+      newCharacter: newCharacter,
     },
   })
     .then(function (response) {
@@ -66,15 +74,41 @@ export const updateResource = (
     .catch(function (error) {
       console.log(error);
     });
-  return newValue;
+  return mongooseID;
 };
 
-export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
+export const updateInfo = (infoName, newInfo, characterID) => {
+  axios({
+    method: "patch",
+    url: serverURL + "/api/characters/updateInfo",
+    data: {
+      characterID: characterID,
+      [infoName]: newInfo,
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return newInfo;
+};
+
+export const updateHP = (
+  updateType,
+  changeAmount,
+  currentHP,
+  hpMax,
+  tempHP,
+  characterID
+) => {
   if (
     updateType === undefined ||
     changeAmount === undefined ||
     currentHP === undefined ||
-    hpMax === undefined
+    hpMax === undefined ||
+    characterID === undefined
   ) {
     console.log("Missing updateType and/or changeAmount parameters");
   }
@@ -101,7 +135,7 @@ export const updateHP = (updateType, changeAmount, currentHP, hpMax) => {
     method: "patch",
     url: serverURL + "/api/characters/updatehp",
     data: {
-      name: HARDCODEDCHARACTERNAME,
+      characterID: characterID,
       newHP: newHP,
     },
   })

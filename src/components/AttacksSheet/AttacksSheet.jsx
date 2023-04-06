@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
-import Container from "@mui/material/Container";
-import Fab from "@mui/material/Fab";
-import { styled } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
 import mongoose from "mongoose";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
+import {
+  StyledDataGrid,
+  StyledGridFab,
+  StyledSheetContainer,
+} from "components/StyledComponents";
 
-export const AttacksSheet = ({ characterID }) => {
+
+
+export const AttacksSheet = () => {
+  const [character, setCharacter] = useState({});
   const [currentAttacks, setCurrentAttacks] = useState();
   const [addNewAttack, setAddNewAttack] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
@@ -19,15 +23,18 @@ export const AttacksSheet = ({ characterID }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem(characterID));
-    setCurrentAttacks(character["attacks"]);
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    setCharacter(getCharacter);
+    setCurrentAttacks(getCharacter["attacks"]);
     setIsFetched(true);
-  }, [characterID]);
+  }, []);
 
   const updateSession = (newAttacks) => {
-    let character = JSON.parse(sessionStorage.getItem(characterID));
-    character["attacks"] = newAttacks;
-    sessionStorage.setItem(characterID, JSON.stringify(character));
+    let updateCharacter = JSON.parse(
+      sessionStorage.getItem("currentCharacter")
+    );
+    updateCharacter["attacks"] = newAttacks;
+    sessionStorage.setItem("currentCharacter", JSON.stringify(updateCharacter));
   };
 
   const onDeleteClick = (event, row) => {
@@ -35,7 +42,7 @@ export const AttacksSheet = ({ characterID }) => {
     let newAttacks = structuredClone(currentAttacks);
     newAttacks = newAttacks.filter((element) => element._id !== row._id);
     setCurrentAttacks(newAttacks);
-    updateInfo("attacks", newAttacks);
+    updateInfo("attacks", newAttacks, character._id);
     updateSession(newAttacks);
   };
 
@@ -50,7 +57,7 @@ export const AttacksSheet = ({ characterID }) => {
       );
       foundRow[params.field] = event.target.value;
       setCurrentAttacks(currentAttacks);
-      updateInfo("attacks", currentAttacks);
+      updateInfo("attacks", currentAttacks, character._id);
       updateSession(currentAttacks);
     }
   };
@@ -59,10 +66,10 @@ export const AttacksSheet = ({ characterID }) => {
     setAddNewAttack(true);
   };
 
-  const closeAddState = (event) => {
+  const submitFormHandler = (event) => {
     event.preventDefault();
     // Only save the new attack if cancel was not clicked
-
+    setAddNewAttack(false);
     if (!cancelClicked) {
       const attackName = event.target.elements.attackName.value;
       const attackRange = event.target.elements.attackRange.value;
@@ -81,10 +88,9 @@ export const AttacksSheet = ({ characterID }) => {
       let newAttacks = structuredClone(currentAttacks);
       newAttacks.push(newAttack);
       setCurrentAttacks(newAttacks);
-      updateInfo("attacks", newAttacks);
+      updateInfo("attacks", newAttacks, character._id);
       updateSession(newAttacks);
     }
-    setAddNewAttack(false);
   };
   function cancelHandler() {
     setCancelClicked(true);
@@ -94,6 +100,7 @@ export const AttacksSheet = ({ characterID }) => {
     {
       field: "attackName",
       headerName: "Name",
+      type: "text",
       editable: true,
       flex: 1,
       minWidth: 200,
@@ -101,6 +108,7 @@ export const AttacksSheet = ({ characterID }) => {
     {
       field: "attackRange",
       headerName: "Range",
+      type: "text",
       editable: true,
       flex: 0.5,
       minWidth: 200,
@@ -108,6 +116,7 @@ export const AttacksSheet = ({ characterID }) => {
     {
       field: "attackType",
       headerName: "Type",
+      type: "text",
       editable: true,
       flex: 1,
       minWidth: 100,
@@ -115,6 +124,7 @@ export const AttacksSheet = ({ characterID }) => {
     {
       field: "attackModifier",
       headerName: "Modifier",
+      type: "text",
       editable: true,
       flex: 0.3,
       minWidth: 200,
@@ -122,6 +132,7 @@ export const AttacksSheet = ({ characterID }) => {
     {
       field: "attackDamage",
       headerName: "Damage",
+      type: "text",
       editable: true,
       flex: 0.5,
       minWidth: 200,
@@ -129,6 +140,7 @@ export const AttacksSheet = ({ characterID }) => {
     {
       field: "actions",
       headerName: "Actions",
+      type: "text",
       width: 400,
       renderCell: (params) => {
         return (
@@ -143,73 +155,12 @@ export const AttacksSheet = ({ characterID }) => {
       },
     },
   ];
-  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-    fontFamily: "Montserrat",
-    border: 0,
-    WebkitFontSmoothing: "auto",
-    letterSpacing: "normal",
-    "& .MuiDataGrid-columnsContainer": {
-      backgroundColor: theme.palette.mode === "light" ? "#fafafa" : "#1d1d1d",
-    },
-    "& .MuiDataGrid-iconSeparator": {
-      display: "none",
-    },
-    "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
-      borderRight: "none",
-    },
-    "& .MuiDataGrid-columnHeader": {
-      color: "#d97326",
-    },
-    "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
-      borderBottom: "none",
-    },
-    "& .MuiDataGrid-cell": {
-      color: "#5aa0ff",
-    },
-    "& .MuiPaginationItem-root": {
-      borderRadius: 0,
-    },
-    "& .MuiDataGrid-menuIconButton": {
-      opacity: 1,
-      color: "white",
-    },
-    "& .MuiDataGrid-sortIcon": {
-      opacity: 1,
-      color: "white",
-    },
-  }));
+
   return (
-    <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
+    <StyledSheetContainer maxWidth={false}>
       {isFetched && (
         <div className="attackBox">
           <Grid container spacing={2}>
-            <Grid
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              xs={12}
-            >
-              {!addNewAttack && (
-                <Fab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openNewAttackForm}
-                >
-                  <h1>New Attack</h1>
-                </Fab>
-              )}
-              {addNewAttack && (
-                <InputForm
-                  methods={{
-                    closeAddState: closeAddState,
-                    cancelHandler: cancelHandler,
-                  }}
-                  fields={columns}
-                />
-              )}
-            </Grid>
-            <Grid xs={12}></Grid>
             <div style={{ height: 400, width: "100%" }}>
               <StyledDataGrid
                 hideFooter
@@ -224,9 +175,35 @@ export const AttacksSheet = ({ characterID }) => {
                 onCellEditStart={handleCellEditStart}
               />
             </div>
+            <Grid
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              xs={12}
+            >
+              {!addNewAttack && (
+                <StyledGridFab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openNewAttackForm}
+                >
+                  New Attack
+                </StyledGridFab>
+              )}
+              {addNewAttack && (
+                <InputForm
+                  methods={{
+                    submitFormHandler: submitFormHandler,
+                    cancelHandler: cancelHandler,
+                  }}
+                  fields={columns}
+                />
+              )}
+            </Grid>
           </Grid>
         </div>
       )}
-    </Container>
+    </StyledSheetContainer>
   );
 };

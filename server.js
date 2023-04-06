@@ -28,6 +28,8 @@ mongoose
   });
 
 require("./src/routes/charactersRoute")(app);
+require("./src/routes/usersRoute")(app);
+
 
 // set port, listen for requests
 let PORT = process.env.PORT || 4000;

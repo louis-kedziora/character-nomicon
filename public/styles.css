@@ -1,18 +1,14 @@
-/* Coding Colors
-
-Background - #0f111a
+/* Background - #0f111a
 Text/Foreground - #5aa0ff
 Secondary Text - #c789c3
 Third Text - #d97326
 Comment Color - #464b4c 
-Nice Green - #03C988*/
-
-
+Nice Green - #03C988 */
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 html {
@@ -24,7 +20,14 @@ html {
 body {
   background: #0f111a;
   background-image: url("https://www.transparenttextures.com/patterns/buried.png");
-  padding: 0px;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #0f111a inset;
+}
+
+input {
+  color-scheme: dark;
 }
 
 .navLinks {
@@ -35,13 +38,12 @@ footer {
   text-align: center;
   width: 100%;
   height: 2.5rem;
-  padding: 16px 32px;
+  padding: 125px 50px;
 }
 
 footer p {
   color: #ccc;
 }
-
 
 .basicBox {
   background: #0f111a;
@@ -56,8 +58,8 @@ footer p {
 }
 
 .featureBox {
-  width: 340px;
-  height: 90px;
+  width: 21em;
+  height: 8em;
 }
 
 .featureBox h2 {
@@ -65,8 +67,8 @@ footer p {
   font-weight: 100;
 }
 
-.noteBox h1{
-  color: #DBE2EF;
+.noteBox h1 {
+  color: #dbe2ef;
   margin: 10px 0 20px 0;
 }
 .noteBox textarea {
@@ -95,7 +97,6 @@ footer p {
   text-align: center;
 }
 
-
 .spellBox {
   background: #0f111a;
   box-shadow: 0 2px 5px #464b4c;
@@ -123,7 +124,7 @@ footer p {
 }
 
 .inputForm TextField {
-  color:#03C988;
+  color: #03c988;
 }
 
 .inputForm Button {
@@ -142,9 +143,13 @@ footer p {
   outline: none;
 }
 
+.skillSheet {
+  background-color: #0f111a;
+  padding: 15px;
+}
+
 .skillSheet h1 {
-  margin: 10px;
-  color:#fff;
+  color: #03c988;
 }
 
 .sectionHeader {
@@ -155,10 +160,10 @@ footer p {
 .statBox h1 {
   font-size: 1.7em;
   margin-bottom: 6px;
-  color: #DBE2EF
+  color: #dbe2ef;
 }
 .statBox h2 {
-  color: #03C988
+  color: #03c988;
 }
 .statBox p {
   color: #464b4c;
@@ -174,15 +179,13 @@ footer p {
 
 .resourceBox h1 {
   font-size: 1.3em;
-  color: #d97326
-
+  color: #d97326;
 }
 .resourceBox h2 {
   font-size: 1.9em;
-  color: #5aa0ff
+  color: #5aa0ff;
 }
 .resourceCount {
   padding-top: 15px;
   padding-bottom: 10px;
 }
-  
