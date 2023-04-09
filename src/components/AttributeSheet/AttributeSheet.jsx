@@ -7,6 +7,8 @@ import { InfoBox } from "components/AttributeSheet/InfoBox";
 import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
 import { ResourceForm } from "components/AttributeSheet/ResourceForm";
+import { SkillBox } from "components/SkillsSheet/SkillBox";
+import { skillsData } from "components/SkillsSheet/SkillsData";
 import { StyledFab, StyledSheetContainer } from "components/StyledComponents";
 import { createNewResource } from "components/DBHandler";
 
@@ -46,7 +48,6 @@ export const AttributeSheet = () => {
     setCancelResourceForm(true);
     setOpenResourceForm(false);
     setCancelResourceForm(true);
-
   };
 
   const submitResourceFormHandler = (event) => {
@@ -148,7 +149,7 @@ export const AttributeSheet = () => {
                   resourceInfo={{
                     resourceID: resource.resourceID,
                     allResources: resources,
-                    setAllResources: setResources
+                    setAllResources: setResources,
                   }}
                 />
               );
@@ -187,6 +188,25 @@ export const AttributeSheet = () => {
                 ></ResourceForm>
               )}
             </Grid>
+          </Grid>
+          <h1 className="sectionHeader">Skills</h1>
+          <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
+          <Grid xs={12}>
+          <div className="skillSheet attackBox">
+        <Grid container spacing={1}>
+          {skillsData.map((skill, index) => {
+            return (
+              <SkillBox
+                key={index}
+                info={{
+                  title: skill.title,
+                  skill: skill.skillName,
+                }}
+              />
+            );
+          })}
+        </Grid>
+      </div>
           </Grid>
         </Grid>
       )}
