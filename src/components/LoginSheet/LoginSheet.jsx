@@ -4,21 +4,20 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 import { StyledTextField } from "components/StyledComponents";
 import { StyledFab } from "components/StyledComponents";
 
 export const LoginSheet = ({ handleSetLogin }) => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  //   const handleSubmit = (event) => {
+  //     event.preventDefault();
+  //     const data = new FormData(event.currentTarget);
+  //     console.log({
+  //       email: data.get("email"),
+  //       password: data.get("password"),
+  //     });
+  //   };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -37,14 +36,12 @@ export const LoginSheet = ({ handleSetLogin }) => {
         <Avatar sx={{ m: 1, bgcolor: "#5aa0ff" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ m: 1, color: "white", fontFamily: "Montserrat" }}
+        <Box
+          component="form"
+          onSubmit={handleSetLogin}
+          noValidate
+          sx={{ mt: 1 }}
         >
-          Login
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <StyledTextField
             margin="normal"
             required
@@ -65,22 +62,29 @@ export const LoginSheet = ({ handleSetLogin }) => {
             id="password"
             autoComplete="current-password"
           />
-          <Grid container>
+          <Grid justifyContent="center" container>
             <Grid item>
               <StyledFab
+                href="/characters"
+                onClick={handleSetLogin}
                 type="submit"
-                fullWidth
+                size="large"
+                color="primary"
                 variant="extended"
                 sx={{ mt: 3, mb: 2 }}
               >
-                <h2>Login</h2>
+                Login
               </StyledFab>
             </Grid>
           </Grid>
 
-          <Grid container>
+          <Grid justifyContent="center" container>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link
+                href="#"
+                variant="body2"
+                sx={{ color: "#5aa0ff", fontFamily: "Montserrat" }}
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

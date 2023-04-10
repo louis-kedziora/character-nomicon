@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Switch } from "react-router-dom";
 import { Footer } from "components/partials";
 import { SelectionSheet } from "components/SelectionSheet";
 import { AttacksSheet } from "components/AttacksSheet";
@@ -38,26 +38,38 @@ function App() {
 
   const handleSetLogin = () => {
     setLoggedIn(true);
-  }
+  };
 
   return (
     <div>
       {isFetched && (
         <div>
+          <Switch>
+            <Route path="/public">
+              <PublicPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <PrivateRoute path="/protected">
+              <ProtectedPage />
+            </PrivateRoute>
+          </Switch>
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace={true} />} />
             <Route
               path="/login"
-              element={<LoginSheet loginInfo={{ handleSetLogin: handleSetLogin }} />}
+              element={
+                <LoginSheet loginInfo={{ handleSetLogin: handleSetLogin }} />
+              }
             />
-            {isLoggedIn && (
-              <Route element={<SelectionLayout />}>
-                <Route
-                  path="/characters"
-                  element={<SelectionSheet userInfo={{ userID: userID }} />}
-                />
-              </Route>
-            )}
+            <Route element={<SelectionLayout />}>
+              <Route
+                path="/characters"
+                element={<SelectionSheet userInfo={{ userID: userID }} />}
+              />
+            </Route>
+
             {isLoggedIn && (
               <Route element={<CharacterLayout />}>
                 <Route path="/attacks" element={<AttacksSheet />} />
