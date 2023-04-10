@@ -78,7 +78,8 @@ export const StyledSkillFab = styled(Fab)(({ theme }) => ({
 export const StyledFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",
   fontFamily: "Montserrat",
-  fontSize: "20px",
+  fontSize: "16px",
+  color: "white",
   "&:hover": {
     backgroundColor: "#464b4c",
   },

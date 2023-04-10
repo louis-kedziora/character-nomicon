@@ -3,7 +3,6 @@ import axios from "axios";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Footer } from "components/partials";
 import { SelectionSheet } from "components/SelectionSheet";
-import { CharacterLayout } from "components/CharacterLayout";
 import { AttacksSheet } from "components/AttacksSheet";
 import { AttributeSheet } from "components/AttributeSheet";
 import { FeaturesSheet } from "components/FeaturesSheet";
@@ -12,6 +11,10 @@ import { SkillsSheet } from "components/SkillsSheet";
 import { SpellsSheet } from "components/SpellsSheet";
 import { LootSheet } from "components/LootSheet";
 
+import { CharacterLayout } from "components/CharacterLayout";
+import { SelectionLayout } from "components/SelectionSheet/SelectionLayout";
+import { LoginSheet } from "components/LoginSheet";
+
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
   baseURL: serverURL,
@@ -19,6 +22,7 @@ const instance = axios.create({
 
 function App() {
   const [isFetched, setIsFetched] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const userID = "64120226601e330164d590af";
 
   useEffect(() => {
@@ -32,28 +36,39 @@ function App() {
     fetchUserData();
   }, [userID]);
 
+  const handleSetLogin = () => {
+    setLoggedIn(true);
+  }
+
   return (
     <div>
       {isFetched && (
         <div>
           <Routes>
-          <Route
-              path="/"
-              element={<Navigate to="/characters" replace={true}  />}
-            />
+            <Route path="/" element={<Navigate to="/login" replace={true} />} />
             <Route
-              path="/characters"
-              element={<SelectionSheet userInfo={{ userID: userID }} />}
+              path="/login"
+              element={<LoginSheet loginInfo={{ handleSetLogin: handleSetLogin }} />}
             />
-            <Route element={<CharacterLayout />}>
-              <Route path="/attacks" element={<AttacksSheet />} />
-              <Route path="/attributes" element={<AttributeSheet />} />
-              <Route path="/features" element={<FeaturesSheet />} />
-              <Route path="/loot" element={<LootSheet />} />
-              <Route path="/notes" element={<NotesSheet />} />
-              <Route path="/skills" element={<SkillsSheet />} />
-              <Route path="/spells" element={<SpellsSheet />} />
-            </Route>
+            {isLoggedIn && (
+              <Route element={<SelectionLayout />}>
+                <Route
+                  path="/characters"
+                  element={<SelectionSheet userInfo={{ userID: userID }} />}
+                />
+              </Route>
+            )}
+            {isLoggedIn && (
+              <Route element={<CharacterLayout />}>
+                <Route path="/attacks" element={<AttacksSheet />} />
+                <Route path="/attributes" element={<AttributeSheet />} />
+                <Route path="/features" element={<FeaturesSheet />} />
+                <Route path="/loot" element={<LootSheet />} />
+                <Route path="/notes" element={<NotesSheet />} />
+                <Route path="/skills" element={<SkillsSheet />} />
+                <Route path="/spells" element={<SpellsSheet />} />
+              </Route>
+            )}
           </Routes>
           <Footer />
         </div>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
 
-import { SelectionAppBar } from "components/partials";
 import { CharacterBox } from "components/SelectionSheet/CharacterBox";
 import { EditSheet } from "components/EditSheet";
 import { createNewCharacter, updateUser } from "components/DBHandler";
@@ -104,7 +103,6 @@ export const SelectionSheet = ({ userInfo }) => {
 
   return (
     <div>
-      <SelectionAppBar />
       <StyledSheetContainer maxWidth={false}>
         {isFetched && (
           <div>
