@@ -17,11 +17,8 @@ export const CharacterBox = ({ values }) => {
   }, [characterID]);
 
   function onClickHandler() {
-
     sessionStorage.setItem("currentCharacterID", JSON.stringify(characterID));
-
     sessionStorage.setItem("currentCharacter", JSON.stringify(character));
-
   }
 
   return (

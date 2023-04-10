@@ -9,16 +9,13 @@ import Container from "@mui/material/Container";
 import { StyledTextField } from "components/StyledComponents";
 import { StyledFab } from "components/StyledComponents";
 
-export const LoginSheet = ({ handleSetLogin }) => {
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     console.log({
-  //       email: data.get("email"),
-  //       password: data.get("password"),
-  //     });
-  //   };
+export const LoginSheet = ({ loginInfo }) => {
+  const { setSignIn } = loginInfo;
 
+  const signIn = (event) => {
+    event.preventDefault();
+    setSignIn(true);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -36,12 +33,7 @@ export const LoginSheet = ({ handleSetLogin }) => {
         <Avatar sx={{ m: 1, bgcolor: "#5aa0ff" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Box
-          component="form"
-          onSubmit={handleSetLogin}
-          noValidate
-          sx={{ mt: 1 }}
-        >
+        <form onSubmit={signIn}>
           <StyledTextField
             margin="normal"
             required
@@ -66,8 +58,7 @@ export const LoginSheet = ({ handleSetLogin }) => {
             <Grid item>
               <StyledFab
                 href="/characters"
-                onClick={handleSetLogin}
-                type="submit"
+                onClick={signIn}
                 size="large"
                 color="primary"
                 variant="extended"
@@ -89,7 +80,7 @@ export const LoginSheet = ({ handleSetLogin }) => {
               </Link>
             </Grid>
           </Grid>
-        </Box>
+        </form>
       </Box>
     </Container>
   );
