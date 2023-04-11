@@ -24,6 +24,26 @@ const instance = axios.create({
 function App() {
   const [isFetched, setIsFetched] = useState(false);
   const [attemptLogin, setAttemptLogin] = useState(false);
+  const [allUsers, setAllUsers] = useState({});
+
+  const userID = "64120226601e330164d590af";
+
+  useEffect(() => {
+    async function fetchUserData() {
+      // Get User and put in session storage
+      const request = await instance.post("/api/users/getAll");
+      const fetchedAllUsers = request.data;
+
+      setAllUsers(fetchedAllUsers);
+
+      sessionStorage.setItem("allUsers", JSON.stringify(fetchedAllUsers));
+      sessionStorage.setItem("authenticated", JSON.stringify(false));
+
+      setIsFetched(true);
+      return request;
+    }
+    fetchUserData();
+  }, [userID]);
 
   const signInHandler = (event) => {
     event.preventDefault();
@@ -41,21 +61,6 @@ function App() {
     setAttemptLogin(true);
   };
 
-  const userID = "64120226601e330164d590af";
-
-  useEffect(() => {
-    async function fetchUserData() {
-      // Get User and put in session storage
-      const request = await instance.post("/api/users/get", { userID: userID });
-      sessionStorage.setItem(userID, JSON.stringify(request.data));
-      sessionStorage.setItem("authenticated", JSON.stringify(false));
-
-      setIsFetched(true);
-      return request;
-    }
-    fetchUserData();
-  }, [userID]);
-
   return (
     <div>
       {isFetched && (
@@ -69,6 +74,7 @@ function App() {
                   loginInfo={{
                     signInHandler: signInHandler,
                     attemptLogin: attemptLogin,
+                    allUsers: allUsers,
                   }}
                 />
               }

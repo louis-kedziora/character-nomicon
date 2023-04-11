@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
 
@@ -107,10 +106,11 @@ export const SelectionSheet = ({ userInfo }) => {
     setNoCharacters(false);
     setOpen(false);
   };
-
-  return (
-    <div>
-      {authenticated && (
+  if (!authenticated) {
+    <Navigate to="/login" replace={true} />;
+  } else {
+    return (
+      <div>
         <StyledSheetContainer maxWidth={false}>
           {isFetched && (
             <div>
@@ -169,7 +169,7 @@ export const SelectionSheet = ({ userInfo }) => {
             </div>
           )}
         </StyledSheetContainer>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
 };

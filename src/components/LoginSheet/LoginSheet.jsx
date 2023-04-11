@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -10,10 +9,16 @@ import Container from "@mui/material/Container";
 
 import { StyledTextField } from "components/StyledComponents";
 import { StyledFab } from "components/StyledComponents";
+import { NewUserForm } from "./NewUserForm";
 
 export const LoginSheet = ({ loginInfo }) => {
-  const { signInHandler, attemptLogin } = loginInfo;
+  const { signInHandler, attemptLogin, allUsers } = loginInfo;
   const [emailAddress, setEmailAddress] = useState("");
+  const [isNewUserFormOpen, setNewUserFormOpen] = useState(false);
+
+  const newUserHandleOpen = () => {
+    setNewUserFormOpen(true);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -72,13 +77,21 @@ export const LoginSheet = ({ loginInfo }) => {
 
           <Grid justifyContent="center" container>
             <Grid item>
-              <Link
-                href="#"
-                variant="body2"
+              <StyledFab
+                onClick={newUserHandleOpen}
+                variant="extended"
                 sx={{ color: "#5aa0ff", fontFamily: "Montserrat" }}
               >
                 {"Don't have an account? Sign Up"}
-              </Link>
+              </StyledFab>
+              {isNewUserFormOpen && (
+                <NewUserForm
+                  userData={{
+                    allUsers: allUsers,
+                    openNewUserForm: isNewUserFormOpen,
+                  }}
+                />
+              )}
             </Grid>
           </Grid>
         </form>

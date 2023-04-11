@@ -44,6 +44,16 @@ exports.updateUser = (req, res) => {
   });
 };
 
+exports.getAllUsers = (req, res) => {
+  User.find({}, function (err, foundUsers) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(foundUsers);
+    }
+  });
+};
+
 exports.getUser = (req, res) => {
   // Validate request
   if (!mongoose.isValidObjectId(req.body.userID)) {
