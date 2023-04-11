@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -10,14 +12,12 @@ import { StyledTextField } from "components/StyledComponents";
 import { StyledFab } from "components/StyledComponents";
 
 export const LoginSheet = ({ loginInfo }) => {
-  const { setSignIn } = loginInfo;
+  const { signInHandler, attemptLogin } = loginInfo;
+  const [emailAddress, setEmailAddress] = useState("");
 
-  const signIn = (event) => {
-    event.preventDefault();
-    setSignIn(true);
-  };
   return (
     <Container component="main" maxWidth="xs">
+      {attemptLogin && <Navigate to="/characters" replace={true} />}
       <Box
         sx={{
           marginTop: 8,
@@ -33,21 +33,23 @@ export const LoginSheet = ({ loginInfo }) => {
         <Avatar sx={{ m: 1, bgcolor: "#5aa0ff" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <form onSubmit={signIn}>
+        <form onSubmit={signInHandler}>
           <StyledTextField
             margin="normal"
             required
             fullWidth
+            value={emailAddress}
+            onChange={(e) => setEmailAddress(e.target.value)}
             id="email"
-            label="Email Address"
+            label="Username"
             name="email"
             autoComplete="email"
             autoFocus
           />
           <StyledTextField
             margin="normal"
-            required
             fullWidth
+            disabled
             name="password"
             label="Password"
             type="password"
@@ -57,8 +59,7 @@ export const LoginSheet = ({ loginInfo }) => {
           <Grid justifyContent="center" container>
             <Grid item>
               <StyledFab
-                href="/characters"
-                onClick={signIn}
+                type="submit"
                 size="large"
                 color="primary"
                 variant="extended"

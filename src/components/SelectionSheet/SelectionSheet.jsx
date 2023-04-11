@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
 
@@ -22,8 +24,13 @@ export const SelectionSheet = ({ userInfo }) => {
   const [isFetched, setIsFetched] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [open, setOpen] = useState(false);
+  const [authenticated, setauthenticated] = useState(false);
 
   useEffect(() => {
+    const loggedInUser = JSON.parse(sessionStorage.getItem("authenticated"));
+    if (loggedInUser) {
+      setauthenticated(loggedInUser);
+    }
     const localUser = JSON.parse(sessionStorage.getItem(userID));
     sessionStorage.setItem("currentUser", JSON.stringify(userID));
     setCurrentUserID(userID);
@@ -40,7 +47,7 @@ export const SelectionSheet = ({ userInfo }) => {
       return request;
     }
     fetchCharacterData();
-  }, [userID]);
+  }, [userID, authenticated]);
 
   const openHandler = () => {
     setCancelClicked(false);
@@ -103,64 +110,66 @@ export const SelectionSheet = ({ userInfo }) => {
 
   return (
     <div>
-      <StyledSheetContainer maxWidth={false}>
-        {isFetched && (
-          <div>
-            {!noCharacters && (
-              <Grid container>
-                {characterIDs.map((characterID, index) => (
-                  <Grid
-                    item
-                    key={index}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    xs={12}
-                    md={6}
-                    xl={4}
-                    spacing={1}
-                  >
-                    <CharacterBox values={{ characterID: characterID }} />
-                  </Grid>
-                ))}
-              </Grid>
-            )}
-            <Grid item xs={12}>
-              <Grid
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                xs="auto"
-                sx={{
-                  height: "25%",
-                  width: "100%",
-                  margin: "25px",
-                  padding: "20px",
-                }}
-              >
-                <StyledFab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openHandler}
+      {authenticated && (
+        <StyledSheetContainer maxWidth={false}>
+          {isFetched && (
+            <div>
+              {!noCharacters && (
+                <Grid container>
+                  {characterIDs.map((characterID, index) => (
+                    <Grid
+                      item
+                      key={index}
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      xs={12}
+                      md={6}
+                      xl={4}
+                      spacing={1}
+                    >
+                      <CharacterBox values={{ characterID: characterID }} />
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
+              <Grid item xs={12}>
+                <Grid
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  xs="auto"
+                  sx={{
+                    height: "25%",
+                    width: "100%",
+                    margin: "25px",
+                    padding: "20px",
+                  }}
                 >
-                  New Character
-                </StyledFab>
-                {open && (
-                  <EditSheet
-                    info={{
-                      submitFormHandler: submitFormHandler,
-                      open: open,
-                      cancelHandler: cancelHandler,
-                      characterInfo: characterFormData,
-                    }}
-                  ></EditSheet>
-                )}
+                  <StyledFab
+                    size="large"
+                    color="primary"
+                    variant="extended"
+                    onClick={openHandler}
+                  >
+                    New Character
+                  </StyledFab>
+                  {open && (
+                    <EditSheet
+                      info={{
+                        submitFormHandler: submitFormHandler,
+                        open: open,
+                        cancelHandler: cancelHandler,
+                        characterInfo: characterFormData,
+                      }}
+                    ></EditSheet>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-        )}
-      </StyledSheetContainer>
+            </div>
+          )}
+        </StyledSheetContainer>
+      )}
     </div>
   );
 };
