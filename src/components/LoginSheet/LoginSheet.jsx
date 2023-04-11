@@ -15,10 +15,14 @@ export const LoginSheet = ({ loginInfo }) => {
   const { signInHandler, attemptLogin, allUsers } = loginInfo;
   const [emailAddress, setEmailAddress] = useState("");
   const [isNewUserFormOpen, setNewUserFormOpen] = useState(false);
-
+  const submitNewUserHandler = () => {};
+  
   const newUserHandleOpen = () => {
     setNewUserFormOpen(true);
   };
+  const cancelNewUserHandler = () => {
+    setNewUserFormOpen(false);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -84,17 +88,19 @@ export const LoginSheet = ({ loginInfo }) => {
               >
                 {"Don't have an account? Sign Up"}
               </StyledFab>
-              {isNewUserFormOpen && (
-                <NewUserForm
-                  userData={{
-                    allUsers: allUsers,
-                    openNewUserForm: isNewUserFormOpen,
-                  }}
-                />
-              )}
             </Grid>
           </Grid>
         </form>
+        {isNewUserFormOpen && (
+          <NewUserForm
+            userData={{
+              allUsers: allUsers,
+              openNewUserForm: isNewUserFormOpen,
+              submitNewUserHandler: submitNewUserHandler,
+              cancelNewUserHandler: cancelNewUserHandler,
+            }}
+          />
+        )}
       </Box>
     </Container>
   );

@@ -11,10 +11,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { StyledTextField } from "components/StyledComponents";
 
 export const ResourceForm = ({ info }) => {
-  const [resourceName, setResourceName] = useState("");
-  const [maxValue, setMaxValue] = useState("");
-  const [isFetched, setIsFetched] = useState(false);
-
   const {
     newResource,
     submitResourceFormHandler,
@@ -22,6 +18,9 @@ export const ResourceForm = ({ info }) => {
     cancelResourceFormHandler,
     deleteResourceHandler,
   } = info;
+  const [resourceName, setResourceName] = useState("");
+  const [maxValue, setMaxValue] = useState("");
+  const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     if (newResource === false) {
