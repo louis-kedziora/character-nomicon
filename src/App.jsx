@@ -14,7 +14,6 @@ import { LootSheet } from "components/LootSheet";
 import { CharacterLayout } from "components/CharacterLayout";
 import { SelectionLayout } from "components/SelectionSheet/SelectionLayout";
 import { LoginSheet } from "components/LoginSheet";
-// import { Protected } from "components/Protected";
 
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
@@ -25,6 +24,8 @@ function App() {
   const [isFetched, setIsFetched] = useState(false);
   const [attemptLogin, setAttemptLogin] = useState(false);
   const [allUsers, setAllUsers] = useState({});
+  const [userDNE, setUserDNE] = useState(false);
+
 
   const userID = "64120226601e330164d590af";
 
@@ -53,12 +54,21 @@ function App() {
       const element = formData[index];
       userInput[element.name] = element.value;
     }
-    console.log(userInput);
-    console.log(userInput.email === "louis.kedziora@gmail.com");
-    if (userInput.email === "louis.kedziora@gmail.com") {
+    let userFound = undefined;
+    console.log(allUsers);
+    allUsers.forEach((element) => {
+      if (element.email === userInput.email) {
+        userFound = element;
+      }
+    });
+    console.log(userFound);
+    if (userFound !== undefined) {
+      sessionStorage.setItem("currentUser", JSON.stringify(userFound));
       sessionStorage.setItem("authenticated", JSON.stringify(true));
+      setAttemptLogin(true);
+    } else {
+      setUserDNE(true);
     }
-    setAttemptLogin(true);
   };
 
   return (
@@ -74,7 +84,9 @@ function App() {
                   loginInfo={{
                     signInHandler: signInHandler,
                     attemptLogin: attemptLogin,
+                    setAttemptLogin: setAttemptLogin,
                     allUsers: allUsers,
+                    userDNE: userDNE,
                   }}
                 />
               }
@@ -82,7 +94,7 @@ function App() {
             <Route element={<SelectionLayout />}>
               <Route
                 path="/characters"
-                element={<SelectionSheet userInfo={{ userID: userID }} />}
+                element={<SelectionSheet />}
               />
             </Route>
 

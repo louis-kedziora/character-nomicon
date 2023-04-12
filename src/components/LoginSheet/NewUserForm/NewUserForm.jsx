@@ -4,19 +4,17 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Alert from "@mui/material/Alert";
 
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { StyledTextField } from "components/StyledComponents";
+import { createNewUser } from "components/DBHandler";
+
+const mongoose = require("mongoose");
 
 export const NewUserForm = ({ userData }) => {
-  const {
-    allUsers,
-    openNewUserForm,
-    submitNewUserHandler,
-    cancelNewUserHandler,
-  } = userData;
+  const { allUsers, setAllUsers, openNewUserForm, cancelNewUserHandler } =
+    userData;
   const [email, setEmail] = useState("");
   const [isCancelClicked, setCancelClicked] = useState(false);
   const [alertUserExists, setAlertUserExists] = useState(false);
@@ -33,9 +31,9 @@ export const NewUserForm = ({ userData }) => {
       }
       delete userInput[""];
       delete userInput.cancelButton;
-
       // For now no passwords
       delete userInput.password;
+
       let userAlreadyExists = false;
       allUsers.forEach((element) => {
         if (element.email === userInput.email) {
@@ -45,6 +43,22 @@ export const NewUserForm = ({ userData }) => {
       console.log(userAlreadyExists);
       if (userAlreadyExists) {
         setAlertUserExists(true);
+      } else {
+        userInput["fname"] = "Unamed User";
+        userInput["lname"] = "Unamed User";
+        userInput["userCharacters"] = [];
+        const newUserID = mongoose.Types.ObjectId();
+        userInput["userID"] = newUserID.toString();
+        console.log(userInput);
+
+        // Save new user to db
+        createNewUser(userInput);
+
+        //Update allUsers
+        setAllUsers([...allUsers, userInput]);
+
+        // Close new account window
+        cancelNewUserHandler();
       }
     }
   };
@@ -97,6 +111,20 @@ export const NewUserForm = ({ userData }) => {
                   type="text"
                   id="outlined-basic"
                 />
+
+                <Typography
+                  sx={{
+                    visibility: alertUserExists ? "visible" : "hidden",
+                    color: "red",
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "Montserrat",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  Username Already Exists
+                </Typography>
               </Grid>
               <Grid xs={12}>
                 <StyledTextField
@@ -108,6 +136,19 @@ export const NewUserForm = ({ userData }) => {
                   type="text"
                   id="outlined-basic"
                 />
+                <Typography
+                  sx={{
+                    visibility: "hidden",
+                    color: "red",
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "Montserrat",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  Bad Password
+                </Typography>
               </Grid>
 
               <Grid
@@ -139,9 +180,6 @@ export const NewUserForm = ({ userData }) => {
           </form>
         </DialogContent>
       </Dialog>
-      {alertUserExists && (
-        <Alert severity="error">This is an error alert — check it out!</Alert>
-      )}
     </div>
   );
 };

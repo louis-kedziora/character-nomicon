@@ -4,6 +4,7 @@ const userSchema = {
   fname: String,
   lname: String,
   email: String,
+  userID: String,
   userCharacters: [{ type : mongoose.ObjectId, ref: 'Character' }],
 };
 

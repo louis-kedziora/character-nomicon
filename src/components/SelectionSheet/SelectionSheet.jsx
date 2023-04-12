@@ -15,8 +15,7 @@ const instance = axios.create({
   baseURL: serverURL,
 });
 
-export const SelectionSheet = ({ userInfo }) => {
-  const { userID } = userInfo;
+export const SelectionSheet = () => {
   const [characterIDs, setCharacterIDs] = useState({});
   const [noCharacters, setNoCharacters] = useState(false);
   const [currentUserID, setCurrentUserID] = useState("");
@@ -30,10 +29,10 @@ export const SelectionSheet = ({ userInfo }) => {
     if (loggedInUser) {
       setauthenticated(loggedInUser);
     }
-    const localUser = JSON.parse(sessionStorage.getItem(userID));
-    sessionStorage.setItem("currentUser", JSON.stringify(userID));
-    setCurrentUserID(userID);
-    const characterIDs = [...localUser.userCharacters];
+
+    const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    setCurrentUserID(currentUser.userID);
+    const characterIDs = [...currentUser.userCharacters];
     setCharacterIDs(characterIDs);
     if (characterIDs.length < 1) setNoCharacters(true);
     async function fetchCharacterData() {
@@ -46,7 +45,7 @@ export const SelectionSheet = ({ userInfo }) => {
       return request;
     }
     fetchCharacterData();
-  }, [userID, authenticated]);
+  }, [authenticated]);
 
   const openHandler = () => {
     setCancelClicked(false);

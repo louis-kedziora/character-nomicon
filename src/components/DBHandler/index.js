@@ -1,1 +1,9 @@
-export { createNewResource, updateResource, updateInfo, updateHP, createNewCharacter, updateUser } from "components/DBHandler/DBHandler";
+export {
+  createNewUser,
+  updateUser,
+  createNewResource,
+  updateResource,
+  updateInfo,
+  updateHP,
+  createNewCharacter,
+} from "components/DBHandler/DBHandler";

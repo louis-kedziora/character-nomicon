@@ -6,23 +6,24 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 import { StyledTextField } from "components/StyledComponents";
 import { StyledFab } from "components/StyledComponents";
-import { NewUserForm } from "./NewUserForm";
+import { NewUserForm } from "components/LoginSheet/NewUserForm";
 
 export const LoginSheet = ({ loginInfo }) => {
-  const { signInHandler, attemptLogin, allUsers } = loginInfo;
+  const { signInHandler, attemptLogin, allUsers, setAllUsers, userDNE } =
+    loginInfo;
   const [emailAddress, setEmailAddress] = useState("");
   const [isNewUserFormOpen, setNewUserFormOpen] = useState(false);
-  const submitNewUserHandler = () => {};
-  
+
   const newUserHandleOpen = () => {
     setNewUserFormOpen(true);
   };
   const cancelNewUserHandler = () => {
     setNewUserFormOpen(false);
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -55,6 +56,19 @@ export const LoginSheet = ({ loginInfo }) => {
             autoComplete="email"
             autoFocus
           />
+          <Typography
+            sx={{
+              visibility: userDNE ? "visible" : "hidden",
+              color: "red",
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "Montserrat",
+              fontWeight: 600,
+              textDecoration: "none",
+            }}
+          >
+            User Does Not Exist
+          </Typography>
           <StyledTextField
             margin="normal"
             fullWidth
@@ -65,6 +79,19 @@ export const LoginSheet = ({ loginInfo }) => {
             id="password"
             autoComplete="current-password"
           />
+          <Typography
+            sx={{
+              visibility: "hidden",
+              color: "red",
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "Montserrat",
+              fontWeight: 600,
+              textDecoration: "none",
+            }}
+          >
+            Bad Password
+          </Typography>
           <Grid justifyContent="center" container>
             <Grid item>
               <StyledFab
@@ -95,8 +122,8 @@ export const LoginSheet = ({ loginInfo }) => {
           <NewUserForm
             userData={{
               allUsers: allUsers,
+              setAllUsers: setAllUsers,
               openNewUserForm: isNewUserFormOpen,
-              submitNewUserHandler: submitNewUserHandler,
               cancelNewUserHandler: cancelNewUserHandler,
             }}
           />

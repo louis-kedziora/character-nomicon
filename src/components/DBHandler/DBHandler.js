@@ -1,6 +1,41 @@
 import axios from "axios";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
+export const createNewUser = (newUser) => {
+  axios({
+    method: "post",
+    url: serverURL + "/api/users/create",
+    data: {
+      newUser: newUser
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return newUser;
+};
+
+export const updateUser = (infoName, newInfo, userID) => {
+  axios({
+    method: "patch",
+    url: serverURL + "/api/users/updateUser",
+    data: {
+      userID: userID,
+      [infoName]: newInfo,
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return newInfo;
+};
+
 export const updateResource = (resourceID, characterID, newValue) => {
   if (!characterID || !resourceID) {
     console.log("Missing parameters");
@@ -41,23 +76,7 @@ export const createNewResource = (newResource, characterID) => {
   return characterID;
 };
 
-export const updateUser = (infoName, newInfo, userID) => {
-  axios({
-    method: "patch",
-    url: serverURL + "/api/users/updateUser",
-    data: {
-      userID: userID,
-      [infoName]: newInfo,
-    },
-  })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  return newInfo;
-};
+
 
 export const createNewCharacter = (newCharacter, mongooseID) => {
   newCharacter["_id"] = mongooseID;
