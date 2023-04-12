@@ -23,9 +23,8 @@ const instance = axios.create({
 function App() {
   const [isFetched, setIsFetched] = useState(false);
   const [attemptLogin, setAttemptLogin] = useState(false);
-  const [allUsers, setAllUsers] = useState({});
+  const [allUsers, setAllUsers] = useState([]);
   const [userDNE, setUserDNE] = useState(false);
-
 
   const userID = "64120226601e330164d590af";
 
@@ -55,13 +54,11 @@ function App() {
       userInput[element.name] = element.value;
     }
     let userFound = undefined;
-    console.log(allUsers);
     allUsers.forEach((element) => {
       if (element.email === userInput.email) {
         userFound = element;
       }
     });
-    console.log(userFound);
     if (userFound !== undefined) {
       sessionStorage.setItem("currentUser", JSON.stringify(userFound));
       sessionStorage.setItem("authenticated", JSON.stringify(true));
@@ -86,16 +83,14 @@ function App() {
                     attemptLogin: attemptLogin,
                     setAttemptLogin: setAttemptLogin,
                     allUsers: allUsers,
+                    setAllUsers: setAllUsers,
                     userDNE: userDNE,
                   }}
                 />
               }
             />
             <Route element={<SelectionLayout />}>
-              <Route
-                path="/characters"
-                element={<SelectionSheet />}
-              />
+              <Route path="/characters" element={<SelectionSheet />} />
             </Route>
 
             <Route element={<CharacterLayout />}>

@@ -60,7 +60,6 @@ export const LoginSheet = ({ loginInfo }) => {
             sx={{
               visibility: userDNE ? "visible" : "hidden",
               color: "red",
-              mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "Montserrat",
               fontWeight: 600,
@@ -83,7 +82,6 @@ export const LoginSheet = ({ loginInfo }) => {
             sx={{
               visibility: "hidden",
               color: "red",
-              mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "Montserrat",
               fontWeight: 600,
@@ -105,7 +103,21 @@ export const LoginSheet = ({ loginInfo }) => {
               </StyledFab>
             </Grid>
           </Grid>
-
+          <Grid justifyContent="center" container>
+            <Grid item>
+              <Typography
+                sx={{
+                  padding: "1em 0",
+                  color: "#5aa0ff",
+                  display: { xs: "none", md: "flex" },
+                  fontFamily: "Montserrat",
+                  textDecoration: "none",
+                }}
+              >
+                Don't have an account?
+              </Typography>
+            </Grid>
+          </Grid>
           <Grid justifyContent="center" container>
             <Grid item>
               <StyledFab
@@ -113,7 +125,7 @@ export const LoginSheet = ({ loginInfo }) => {
                 variant="extended"
                 sx={{ color: "#5aa0ff", fontFamily: "Montserrat" }}
               >
-                {"Don't have an account? Sign Up"}
+                {"Sign Up"}
               </StyledFab>
             </Grid>
           </Grid>

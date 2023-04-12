@@ -20,7 +20,6 @@ export const NewUserForm = ({ userData }) => {
   const [alertUserExists, setAlertUserExists] = useState(false);
 
   const validateFormHandler = (event) => {
-    console.log(allUsers);
     event.preventDefault();
     if (!isCancelClicked) {
       let userInput = {};
@@ -40,7 +39,6 @@ export const NewUserForm = ({ userData }) => {
           userAlreadyExists = true;
         }
       });
-      console.log(userAlreadyExists);
       if (userAlreadyExists) {
         setAlertUserExists(true);
       } else {
@@ -49,7 +47,6 @@ export const NewUserForm = ({ userData }) => {
         userInput["userCharacters"] = [];
         const newUserID = mongoose.Types.ObjectId();
         userInput["userID"] = newUserID.toString();
-        console.log(userInput);
 
         // Save new user to db
         createNewUser(userInput);
