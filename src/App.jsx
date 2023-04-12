@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Footer } from "components/partials";
 import { SelectionSheet } from "components/SelectionSheet";
@@ -15,97 +14,27 @@ import { CharacterLayout } from "components/CharacterLayout";
 import { SelectionLayout } from "components/SelectionSheet/SelectionLayout";
 import { LoginSheet } from "components/LoginSheet";
 
-const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
-const instance = axios.create({
-  baseURL: serverURL,
-});
-
 function App() {
-  const [isFetched, setIsFetched] = useState(false);
-  const [attemptLogin, setAttemptLogin] = useState(false);
-  const [allUsers, setAllUsers] = useState([]);
-  const [userDNE, setUserDNE] = useState(false);
-
-  const userID = "64120226601e330164d590af";
-
-  useEffect(() => {
-    async function fetchUserData() {
-      // Get User and put in session storage
-      const request = await instance.post("/api/users/getAll");
-      const fetchedAllUsers = request.data;
-
-      setAllUsers(fetchedAllUsers);
-
-      sessionStorage.setItem("allUsers", JSON.stringify(fetchedAllUsers));
-      sessionStorage.setItem("authenticated", JSON.stringify(false));
-
-      setIsFetched(true);
-      return request;
-    }
-    fetchUserData();
-  }, [userID]);
-
-  const signInHandler = (event) => {
-    event.preventDefault();
-    let userInput = {};
-    const formData = event.target.elements;
-    for (let index = 0; index < formData.length; index++) {
-      const element = formData[index];
-      userInput[element.name] = element.value;
-    }
-    let userFound = undefined;
-    allUsers.forEach((element) => {
-      if (element.email === userInput.email) {
-        userFound = element;
-      }
-    });
-    if (userFound !== undefined) {
-      sessionStorage.setItem("currentUser", JSON.stringify(userFound));
-      sessionStorage.setItem("authenticated", JSON.stringify(true));
-      setAttemptLogin(true);
-    } else {
-      setUserDNE(true);
-    }
-  };
-
   return (
     <div>
-      {isFetched && (
-        <div>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" replace={true} />} />
-            <Route
-              path="/login"
-              element={
-                <LoginSheet
-                  loginInfo={{
-                    signInHandler: signInHandler,
-                    attemptLogin: attemptLogin,
-                    setAttemptLogin: setAttemptLogin,
-                    allUsers: allUsers,
-                    setAllUsers: setAllUsers,
-                    userDNE: userDNE,
-                  }}
-                />
-              }
-            />
-            <Route element={<SelectionLayout />}>
-              <Route path="/characters" element={<SelectionSheet />} />
-            </Route>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace={true} />} />
+        <Route path="/login" element={<LoginSheet />} />
+        <Route element={<SelectionLayout />}>
+          <Route path="/characters" element={<SelectionSheet />} />
+        </Route>
 
-            <Route element={<CharacterLayout />}>
-              <Route path="/attacks" element={<AttacksSheet />} />
-              <Route path="/attributes" element={<AttributeSheet />} />
-              <Route path="/features" element={<FeaturesSheet />} />
-              <Route path="/loot" element={<LootSheet />} />
-              <Route path="/notes" element={<NotesSheet />} />
-              <Route path="/skills" element={<SkillsSheet />} />
-              <Route path="/spells" element={<SpellsSheet />} />
-            </Route>
-          </Routes>
-          <Footer />
-        </div>
-      )}
+        <Route element={<CharacterLayout />}>
+          <Route path="/attacks" element={<AttacksSheet />} />
+          <Route path="/attributes" element={<AttributeSheet />} />
+          <Route path="/features" element={<FeaturesSheet />} />
+          <Route path="/loot" element={<LootSheet />} />
+          <Route path="/notes" element={<NotesSheet />} />
+          <Route path="/skills" element={<SkillsSheet />} />
+          <Route path="/spells" element={<SpellsSheet />} />
+        </Route>
+      </Routes>
+      <Footer />
     </div>
   );
 }

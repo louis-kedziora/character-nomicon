@@ -22,29 +22,28 @@ export const SelectionSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [open, setOpen] = useState(false);
-  const [authenticated, setauthenticated] = useState(false);
+  const [authenticated, setauthenticated] = useState(undefined);
 
   useEffect(() => {
     const loggedInUser = JSON.parse(sessionStorage.getItem("authenticated"));
     if (loggedInUser) {
       setauthenticated(loggedInUser);
-    }
+      const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+      setCurrentUserID(currentUser.userID);
+      const characterIDs = [...currentUser.userCharacters];
+      setCharacterIDs(characterIDs);
+      if (characterIDs.length < 1) setNoCharacters(true);
+      async function fetchCharacterData() {
+        const request = await instance.post("/api/characters/getmany", {
+          characterIDs: characterIDs,
+        });
+        sessionStorage.setItem("userCharacters", JSON.stringify(request.data));
 
-    const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    setCurrentUserID(currentUser.userID);
-    const characterIDs = [...currentUser.userCharacters];
-    setCharacterIDs(characterIDs);
-    if (characterIDs.length < 1) setNoCharacters(true);
-    async function fetchCharacterData() {
-      const request = await instance.post("/api/characters/getmany", {
-        characterIDs: characterIDs,
-      });
-      sessionStorage.setItem("userCharacters", JSON.stringify(request.data));
-
-      setIsFetched(true);
-      return request;
+        setIsFetched(true);
+        return request;
+      }
+      fetchCharacterData();
     }
-    fetchCharacterData();
   }, [authenticated]);
 
   const openHandler = () => {
@@ -105,8 +104,9 @@ export const SelectionSheet = () => {
     setNoCharacters(false);
     setOpen(false);
   };
-  if (!authenticated) {
-    <Navigate to="/login" replace={true} />;
+
+  if (authenticated === false) {
+    return <Navigate to="/login" replace={true} />;
   } else {
     return (
       <div>
