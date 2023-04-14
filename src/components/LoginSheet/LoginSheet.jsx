@@ -24,7 +24,7 @@ export const LoginSheet = ({ loginInfo }) => {
   const [attemptLogin, setAttemptLogin] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [userDNE, setUserDNE] = useState(false);
-  const [emailAddress, setEmailAddress] = useState("");
+  const [emailAddress, setEmailAddress] = useState("louie.test@test.com");
   const [isNewUserFormOpen, setNewUserFormOpen] = useState(false);
 
   useEffect(() => {
@@ -79,6 +79,53 @@ export const LoginSheet = ({ loginInfo }) => {
       {isFetched && (
         <Container component="main" maxWidth="xs">
           {attemptLogin && <Navigate to="/characters" replace={true} />}
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              backgroundColor: "#0f111a",
+              boxShadow: "0 2px 5px #464b4c",
+              borderRadius: "7px",
+              padding: "1em 2.5em",
+            }}
+          >
+            <Typography
+              sx={{
+                color: "red",
+                display: { xs: "none", md: "flex" },
+                fontFamily: "Montserrat",
+                fontWeight: 700,
+                fontSize: "2em",
+                textDecoration: "none",
+              }}
+            >
+              Warning!
+            </Typography>
+            <Typography
+              sx={{
+                color: "yellow",
+                display: { xs: "none", md: "flex" },
+                fontFamily: "Montserrat",
+                fontWeight: 300,
+                fontSize: "1.2em",
+                textDecoration: "none",
+              }}
+            >
+              Data is not in anyway protected on this app
+              <br />
+              <br />
+              Assume everything you input is compromised.
+              <br />
+              <br />
+              Please do not use the any real emails or info when creating users
+              <br />
+              <br />
+              The user 'louie.test@test.com' is provided with prefilled
+              characters if you do not wish to create your own
+            </Typography>
+          </Box>
           <Box
             sx={{
               marginTop: 8,
