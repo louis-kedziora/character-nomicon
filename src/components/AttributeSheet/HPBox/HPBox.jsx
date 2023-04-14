@@ -4,6 +4,7 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ChangeHPBox } from "components/AttributeSheet/HPBox/ChangeHPBox";
 import { updateHP, updateInfo } from "components/DBHandler";
+import { Typography } from "@mui/material";
 
 export const HPBox = ({ characterInfo }) => {
   const { title, characterID } = characterInfo;
@@ -63,14 +64,26 @@ export const HPBox = ({ characterInfo }) => {
           setTempHP(newTempHP);
           character["tempHP"] = newTempHP;
         } else {
-          if(changeType === "damage" && tempHP > 0 && tempHP - changeValue > 0) {
+          if (
+            changeType === "damage" &&
+            tempHP > 0 &&
+            tempHP - changeValue >= 0
+          ) {
+            // Case where damage is not greater than Temp HP
             const newTemps = tempHP - changeValue;
             updateInfo("tempHP", newTemps, characterID);
             setTempHP(newTemps);
-          } else if (changeType === "damage" && tempHP > 0 && tempHP - changeValue <= 0) {
+            character["tempHP"] = newTemps;
+          } else if (
+            changeType === "damage" &&
+            tempHP > 0 &&
+            tempHP - changeValue < 0
+          ) {
+            // Case where damage is greater than Temp HP
             changeValue = Math.abs(changeValue - tempHP);
             updateInfo("tempHP", 0, characterID);
             setTempHP(0);
+            character["tempHP"] = 0;
             newHP = updateHP(
               changeType,
               parseInt(changeValue),
@@ -110,7 +123,18 @@ export const HPBox = ({ characterInfo }) => {
         <div className="basicBox resourceBox">
           <h1>{title}</h1>
           <div className="resourceCount">
-            <h2>{tempHP > 0 ? parseInt(hp + tempHP) + " (+tmp)" : hp}</h2>
+            {tempHP > 0 ? (
+              <Typography
+                sx={{ fontSize: "1.4em", fontWeight: "900", color: "#5aa0ff" }}
+              >
+                {parseInt(hp) + " / " + hpMax}
+                {" (+" + tempHP + " Temps)"}
+              </Typography>
+            ) : (
+              <Typography component="h2" sx={{ fontSize: "1.9em", fontWeight: 900 }}>
+                {parseInt(hp) + " / " + hpMax }
+              </Typography>
+            )}
           </div>
           {!changeHP && (
             <Grid container spacing={2}>
