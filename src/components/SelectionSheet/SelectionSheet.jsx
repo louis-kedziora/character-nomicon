@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
 
-import { SelectionAppBar } from "components/partials";
 import { CharacterBox } from "components/SelectionSheet/CharacterBox";
 import { EditSheet } from "components/EditSheet";
 import { createNewCharacter, updateUser } from "components/DBHandler";
@@ -15,33 +15,36 @@ const instance = axios.create({
   baseURL: serverURL,
 });
 
-export const SelectionSheet = ({ userInfo }) => {
-  const { userID } = userInfo;
+export const SelectionSheet = () => {
   const [characterIDs, setCharacterIDs] = useState({});
   const [noCharacters, setNoCharacters] = useState(false);
   const [currentUserID, setCurrentUserID] = useState("");
   const [isFetched, setIsFetched] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [open, setOpen] = useState(false);
+  const [authenticated, setauthenticated] = useState(undefined);
 
   useEffect(() => {
-    const localUser = JSON.parse(sessionStorage.getItem(userID));
-    sessionStorage.setItem("currentUser", JSON.stringify(userID));
-    setCurrentUserID(userID);
-    const characterIDs = [...localUser.userCharacters];
-    setCharacterIDs(characterIDs);
-    if (characterIDs.length < 1) setNoCharacters(true);
-    async function fetchCharacterData() {
-      const request = await instance.post("/api/characters/getmany", {
-        characterIDs: characterIDs,
-      });
-      sessionStorage.setItem("userCharacters", JSON.stringify(request.data));
+    const loggedInUser = JSON.parse(sessionStorage.getItem("authenticated"));
+    if (loggedInUser) {
+      setauthenticated(loggedInUser);
+      const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+      setCurrentUserID(currentUser.userID);
+      const characterIDs = [...currentUser.userCharacters];
+      setCharacterIDs(characterIDs);
+      if (characterIDs.length < 1) setNoCharacters(true);
+      async function fetchCharacterData() {
+        const request = await instance.post("/api/characters/getmany", {
+          characterIDs: characterIDs,
+        });
+        sessionStorage.setItem("userCharacters", JSON.stringify(request.data));
 
-      setIsFetched(true);
-      return request;
+        setIsFetched(true);
+        return request;
+      }
+      fetchCharacterData();
     }
-    fetchCharacterData();
-  }, [userID]);
+  }, [authenticated]);
 
   const openHandler = () => {
     setCancelClicked(false);
@@ -102,67 +105,70 @@ export const SelectionSheet = ({ userInfo }) => {
     setOpen(false);
   };
 
-  return (
-    <div>
-      <SelectionAppBar />
-      <StyledSheetContainer maxWidth={false}>
-        {isFetched && (
-          <div>
-            {!noCharacters && (
-              <Grid container>
-                {characterIDs.map((characterID, index) => (
-                  <Grid
-                    item
-                    key={index}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    xs={12}
-                    md={6}
-                    xl={4}
-                    spacing={1}
-                  >
-                    <CharacterBox values={{ characterID: characterID }} />
-                  </Grid>
-                ))}
-              </Grid>
-            )}
-            <Grid item xs={12}>
-              <Grid
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                xs="auto"
-                sx={{
-                  height: "25%",
-                  width: "100%",
-                  margin: "25px",
-                  padding: "20px",
-                }}
-              >
-                <StyledFab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openHandler}
+  if (authenticated === false) {
+    return <Navigate to="/login" replace={true} />;
+  } else {
+    return (
+      <div>
+        <StyledSheetContainer maxWidth={false}>
+          {isFetched && (
+            <div>
+              {!noCharacters && (
+                <Grid container>
+                  {characterIDs.map((characterID, index) => (
+                    <Grid
+                      item
+                      key={index}
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      xs={12}
+                      md={6}
+                      xl={4}
+                      spacing={1}
+                    >
+                      <CharacterBox values={{ characterID: characterID }} />
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
+              <Grid item xs={12}>
+                <Grid
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  xs="auto"
+                  sx={{
+                    height: "25%",
+                    width: "100%",
+                    margin: "25px",
+                    padding: "20px",
+                  }}
                 >
-                  New Character
-                </StyledFab>
-                {open && (
-                  <EditSheet
-                    info={{
-                      submitFormHandler: submitFormHandler,
-                      open: open,
-                      cancelHandler: cancelHandler,
-                      characterInfo: characterFormData,
-                    }}
-                  ></EditSheet>
-                )}
+                  <StyledFab
+                    size="large"
+                    color="primary"
+                    variant="extended"
+                    onClick={openHandler}
+                  >
+                    New Character
+                  </StyledFab>
+                  {open && (
+                    <EditSheet
+                      info={{
+                        submitFormHandler: submitFormHandler,
+                        open: open,
+                        cancelHandler: cancelHandler,
+                        characterInfo: characterFormData,
+                      }}
+                    ></EditSheet>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-        )}
-      </StyledSheetContainer>
-    </div>
-  );
+            </div>
+          )}
+        </StyledSheetContainer>
+      </div>
+    );
+  }
 };

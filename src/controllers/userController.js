@@ -44,6 +44,16 @@ exports.updateUser = (req, res) => {
   });
 };
 
+exports.getAllUsers = (req, res) => {
+  User.find({}, function (err, foundUsers) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(foundUsers);
+    }
+  });
+};
+
 exports.getUser = (req, res) => {
   // Validate request
   if (!mongoose.isValidObjectId(req.body.userID)) {
@@ -62,17 +72,20 @@ exports.getUser = (req, res) => {
 };
 
 exports.createUser = (req, res) => {
+  const newUser = req.body.newUser;
   // Validate request
-  if (!req.body.email) {
+  if (!newUser.email) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
+  console.log(newUser);
 
   //  userCharacters will be sent as a stringified JSON object so this
   //    parses it and inserts it back into the new character object 'req.body'
-  req.body["userCharacters"] = JSON.parse(req.body.userCharacters);
+  // req.body["userCharacters"] = JSON.parse(req.body.userCharacters);
 
-  const user = new User(req.body);
+  const user = new User(newUser);
+  // console.log(user);
   // Save Character in the database
   user
     .save(user)
