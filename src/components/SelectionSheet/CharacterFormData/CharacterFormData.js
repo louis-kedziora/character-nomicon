@@ -59,7 +59,6 @@ export const characterFormData = [
       field: "char",
       headerName: "Saving Throw Proficiency (CHA)",
     },
-  
     { type: "number", field: "ac", headerName: "AC" },
     { type: "text", field: "speed", headerName: "Speed" },
     { type: "number", field: "level", headerName: "Total Level" },

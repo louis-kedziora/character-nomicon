@@ -9,13 +9,14 @@ import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
-import {
-  StyledDataGrid,
-  StyledGridFab,
-} from "components/StyledComponents";
+import { StyledDataGrid, StyledGridFab } from "components/StyledComponents";
+import { modifierAndProficency, spellSaveDC } from "components/AttributeSheet/Modifiers";
+
 
 export const SpellsSheet = () => {
   const [character, setCharacter] = useState({});
+  const [castingAttribute, setCastingAttribute] = useState("None");
+  
   const [currentSpells, setCurrentSpells] = useState();
   const [addNewSpell, setAddNewSpell] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
@@ -26,6 +27,7 @@ export const SpellsSheet = () => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setCharacter(getCharacter);
     setCurrentSpells(getCharacter["spells"]);
+    setCastingAttribute(getCharacter["spellCastingAttribute"]);
     setIsFetched(true);
   }, []);
 
@@ -49,9 +51,10 @@ export const SpellsSheet = () => {
   };
 
   const handleCellEditStop = (params, event) => {
-    
     if (String(oldValue) !== String(event.target.value)) {
-      let foundRow = currentSpells.find((element) => element.spellID === params.id);
+      let foundRow = currentSpells.find(
+        (element) => element.spellID === params.id
+      );
       foundRow[params.field] = event.target.value;
       setCurrentSpells(currentSpells);
       updateInfo("spells", currentSpells, character._id);
@@ -98,7 +101,9 @@ export const SpellsSheet = () => {
   };
 
   const onPreparedClick = (event, row) => {
-    let foundRow = currentSpells.find((element) => element.spellID === row.spellID);
+    let foundRow = currentSpells.find(
+      (element) => element.spellID === row.spellID
+    );
 
     foundRow["spellPrepared"] = !foundRow["spellPrepared"];
     setCurrentSpells(currentSpells);
@@ -218,6 +223,23 @@ export const SpellsSheet = () => {
         <div className="spellBox">
           <Grid container spacing={2}>
             <Grid xs={12}>
+              {castingAttribute === "None" ? (
+                <div></div>
+              ) : (
+                <div>
+                  <div className="basicBox statBox">
+                    <h1>Spell Attack Bonus</h1>
+                    <h2>{modifierAndProficency(character.level, character[character["spellCastingAttribute"]])}</h2>
+                  </div>
+                  <div className="basicBox statBox">
+                    <h1>Spell Save DC</h1>
+                    <h2>{spellSaveDC(character.level, character[character["spellCastingAttribute"]])}</h2>
+                  </div>
+                </div>
+              )}
+            </Grid>
+
+            <Grid xs={12}>
               <div
                 style={{
                   height: 400,
@@ -243,35 +265,35 @@ export const SpellsSheet = () => {
                 />
               </div>
               <Grid
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              xs={12}
-            >
-              {!addNewSpell && (
-                <StyledGridFab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openNewSpellForm}
-                >
-                  New Spell
-                </StyledGridFab>
-              )}
-              {addNewSpell && (
-                <InputForm
-                  methods={{
-                    submitFormHandler: submitFormHandler,
-                    cancelHandler: cancelHandler,
-                  }}
-                  fields={columns}
-                />
-              )}
-            </Grid>
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                xs={12}
+              >
+                {!addNewSpell && (
+                  <StyledGridFab
+                    size="large"
+                    color="primary"
+                    variant="extended"
+                    onClick={openNewSpellForm}
+                  >
+                    New Spell
+                  </StyledGridFab>
+                )}
+                {addNewSpell && (
+                  <InputForm
+                    methods={{
+                      submitFormHandler: submitFormHandler,
+                      cancelHandler: cancelHandler,
+                    }}
+                    fields={columns}
+                  />
+                )}
+              </Grid>
             </Grid>
           </Grid>
         </div>
       )}
-      </div>
+    </div>
   );
 };

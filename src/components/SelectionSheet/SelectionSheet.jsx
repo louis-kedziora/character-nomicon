@@ -81,6 +81,7 @@ export const SelectionSheet = () => {
       newCharacter["features"] = "";
       newCharacter["loot"] = "";
       newCharacter["partyLoot"] = "";
+      newCharacter["combatInfoBoxes"] = [];
       newCharacter["customResources"] = [];
       newCharacter["attacks"] = [];
       newCharacter["spells"] = [];

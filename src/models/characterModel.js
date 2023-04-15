@@ -25,6 +25,14 @@ const characterSchema = {
   ac: Number,
   speed: String,
   level: Number,
+  spellCastingAttribute: String,
+  combatInfoBoxes:  [
+    {
+      combatInfoID: String,
+      title: String,
+      info: String,
+    },
+  ],
   trainedSkills: {
     athletics: Boolean,
     acrobatics: Boolean,

@@ -1,1 +1,1 @@
-export {scoreMod, proficiencyBonus, modifierAndProficency} from "components/AttributeSheet/Modifiers/Modifiers";
+export {scoreMod, proficiencyBonus, modifierAndProficency, spellSaveDC} from "components/AttributeSheet/Modifiers/Modifiers";

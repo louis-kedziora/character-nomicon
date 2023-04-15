@@ -2,7 +2,11 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import { StyledTextField, StyledFormControlLabel } from "components/StyledComponents";
+import MenuItem from "@mui/material/MenuItem";
+import {
+  StyledTextField,
+  StyledFormControlLabel,
+} from "components/StyledComponents";
 
 export const CharacterForm = ({ methods, fields }) => {
   const { submitFormHandler, cancelHandler } = methods;
@@ -22,7 +26,11 @@ export const CharacterForm = ({ methods, fields }) => {
               {field.type === "checkbox" ? (
                 <StyledFormControlLabel
                   control={
-                    <Checkbox value={field.sheetType} name={field.field} sx={{ color: "#d97326" }} />
+                    <Checkbox
+                      value={field.sheetType}
+                      name={field.field}
+                      sx={{ color: "#d97326" }}
+                    />
                   }
                   label={field.headerName}
                 />
@@ -39,6 +47,29 @@ export const CharacterForm = ({ methods, fields }) => {
             </Grid>
           );
         })}
+        <Grid
+          key="spellCastingAttribute"
+          display="flex"
+          justifyContent="left"
+          alignItems="left"
+          xs={6}
+        >
+          <StyledTextField
+            sx={{width: "100%"}}
+            name="spellCastingAttribute"
+            select
+            label="Spell Casting Attribute"
+            defaultValue="None"
+          >
+            <MenuItem value={"None"}>None</MenuItem>
+            <MenuItem value={"str"}>Strength</MenuItem>
+            <MenuItem value={"int"}>Intelligence</MenuItem>
+            <MenuItem value={"dex"}>Dexterity</MenuItem>
+            <MenuItem value={"wis"}>Wisdom</MenuItem>
+            <MenuItem value={"con"}>Constitution</MenuItem>
+            <MenuItem value={"char"}>Charisma</MenuItem>
+          </StyledTextField>
+        </Grid>
 
         <Grid display="flex" justifyContent="left" alignItems="left" xs={12}>
           <Button

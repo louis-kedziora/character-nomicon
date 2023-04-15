@@ -16,3 +16,9 @@ export const modifierAndProficency = (level, score) => {
     if(result > 0) result = "+" + result;
     return result;
 }
+
+export const spellSaveDC =(level, score) => {
+    let modAndProf = modifierAndProficency(level, score);
+    modAndProf = modAndProf.replace("+", "");
+    return (parseInt(modAndProf) + 8);
+}
