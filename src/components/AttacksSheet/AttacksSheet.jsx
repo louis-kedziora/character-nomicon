@@ -11,8 +11,7 @@ import {
   StyledGridFab,
   StyledSheetContainer,
 } from "components/StyledComponents";
-
-
+import { SpellsSheet } from "components/SpellsSheet";
 
 export const AttacksSheet = () => {
   const [character, setCharacter] = useState({});
@@ -40,7 +39,9 @@ export const AttacksSheet = () => {
   const onDeleteClick = (event, row) => {
     event.stopPropagation();
     let newAttacks = structuredClone(currentAttacks);
-    newAttacks = newAttacks.filter((element) => element.attackID !== row.attackID);
+    newAttacks = newAttacks.filter(
+      (element) => element.attackID !== row.attackID
+    );
     setCurrentAttacks(newAttacks);
     updateInfo("attacks", newAttacks, character._id);
     updateLocalStorage(newAttacks);
@@ -204,6 +205,7 @@ export const AttacksSheet = () => {
           </Grid>
         </div>
       )}
+      <SpellsSheet />
     </StyledSheetContainer>
   );
 };

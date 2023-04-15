@@ -9,20 +9,16 @@ import Container from "@mui/material/Container";
 import ShieldSharpIcon from "@mui/icons-material/ShieldSharp";
 
 const sheetLabels = [
-  "Attacks",
   "Attributes",
+  "Combat",
   "Features",
-  "Skills",
-  "Spells",
   "Notes",
   "Loot",
 ];
 const sheetLinks = {
-  Attacks: "/attacks",
   Attributes: "/attributes",
+  Combat: "/combat",
   Features: "/features",
-  Skills: "/skills",
-  Spells: "/spells",
   Notes: "/notes",
   Loot: "/loot",
 };

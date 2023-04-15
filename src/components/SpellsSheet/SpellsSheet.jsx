@@ -12,7 +12,6 @@ import { InputForm } from "components/InputForm";
 import {
   StyledDataGrid,
   StyledGridFab,
-  StyledSheetContainer,
 } from "components/StyledComponents";
 
 export const SpellsSheet = () => {
@@ -214,7 +213,7 @@ export const SpellsSheet = () => {
   ];
 
   return (
-    <StyledSheetContainer maxWidth={false}>
+    <div>
       {isFetched && (
         <div className="spellBox">
           <Grid container spacing={2}>
@@ -273,6 +272,6 @@ export const SpellsSheet = () => {
           </Grid>
         </div>
       )}
-    </StyledSheetContainer>
+      </div>
   );
 };
