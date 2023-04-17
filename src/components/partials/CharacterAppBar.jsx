@@ -43,6 +43,7 @@ export const CharacterAppBar = () => {
 
   const logoutHandler = () => {
     sessionStorage.setItem("currentUser", JSON.stringify(""));
+    sessionStorage.setItem("currentCharacter", JSON.stringify(""));
     sessionStorage.setItem("authenticated", JSON.stringify(false));
     setauthenticated(false);
   };

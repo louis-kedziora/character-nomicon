@@ -3,6 +3,9 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Divider from "@mui/material/Divider";
 
 import { AttributeBox } from "components/AttributeSheet/AttributeBox";
+import { characterFormData } from "components/SelectionSheet/CharacterFormData";
+import { EditSheet } from "components/EditSheet";
+
 import { InfoBox } from "components/AttributeSheet/InfoBox";
 import { HPBox } from "components/AttributeSheet/HPBox";
 import { ResourceBox } from "components/AttributeSheet/ResourceBox";
@@ -28,6 +31,8 @@ export const AttributeSheet = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [cancelResourceForm, setCancelResourceForm] = useState(false);
   const [openResourceForm, setOpenResourceForm] = useState(false);
+  const [cancelCharacterForm, setCancelCharacterForm] = useState(false);
+  const [openCharacterForm, setOpenCharacterForm] = useState(false);
 
   useEffect(() => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -39,6 +44,51 @@ export const AttributeSheet = () => {
     );
     setIsFetched(true);
   }, []);
+
+  const openCharacterFormHandler = () => {
+    setCancelCharacterForm(false);
+    setOpenCharacterForm(true);
+  };
+  const cancelCharacterFormHandler = () => {
+    setCancelCharacterForm(true);
+    setOpenCharacterForm(false);
+  };
+
+  const submitCharacterFormHandler = (event) => {
+    event.preventDefault();
+    if (!cancelCharacterForm) {
+      let characterUpdateData = {
+        trainedSkills: {},
+        savingThrowProficiency: {},
+      };
+      const formData = event.target.elements;
+      for (let index = 0; index < formData.length; index++) {
+        const element = formData[index];
+        if (element.type === "checkbox") {
+          if (element.value === "skills") {
+            characterUpdateData["trainedSkills"][element.name] =
+              element.checked;
+          } else if (element.value === "savingThrow") {
+            characterUpdateData["savingThrowProficiency"][element.name] =
+              element.checked;
+          }
+        } else {
+          characterUpdateData[element.name] = element.value;
+        }
+      }
+      console.log("New Character Data:");
+      console.log(characterUpdateData);
+
+      // Take current character and update values with user input
+
+      // Update DB
+
+      // Update Local storage
+
+      // Update currently rendered react components
+    }
+    setOpenCharacterForm(false);
+  };
 
   const openResourceFormHandler = () => {
     setCancelResourceForm(false);
@@ -103,7 +153,39 @@ export const AttributeSheet = () => {
                 />
               );
             })}
+            <Grid item xs={12}>
+              <Grid
+                display="flex"
+                alignItems="center"
+                xs="auto"
+                sx={{
+                  height: "25%",
+                  width: "100%",
+                  padding: "0.5em",
+                }}
+              >
+                <StyledFab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openCharacterFormHandler}
+                >
+                  Edit {character.name}
+                </StyledFab>
+                {openCharacterForm && (
+                  <EditSheet
+                    info={{
+                      submitFormHandler: submitCharacterFormHandler,
+                      open: openCharacterForm,
+                      cancelHandler: cancelCharacterFormHandler,
+                      characterInfo: characterFormData,
+                    }}
+                  ></EditSheet>
+                )}
+              </Grid>
+            </Grid>
           </Grid>
+
           <h1 className="sectionHeader">Statistics</h1>
           <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
@@ -192,21 +274,21 @@ export const AttributeSheet = () => {
           <h1 className="sectionHeader">Skills</h1>
           <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
-          <div className="skillSheet attackBox">
-        <Grid container spacing={1}>
-          {skillsData.map((skill, index) => {
-            return (
-              <SkillBox
-                key={index}
-                info={{
-                  title: skill.title,
-                  skill: skill.skillName,
-                }}
-              />
-            );
-          })}
-        </Grid>
-      </div>
+            <div className="skillSheet attackBox">
+              <Grid container spacing={1}>
+                {skillsData.map((skill, index) => {
+                  return (
+                    <SkillBox
+                      key={index}
+                      info={{
+                        title: skill.title,
+                        skill: skill.skillName,
+                      }}
+                    />
+                  );
+                })}
+              </Grid>
+            </div>
           </Grid>
         </Grid>
       )}

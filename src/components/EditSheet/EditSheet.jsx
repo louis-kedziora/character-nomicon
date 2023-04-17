@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -15,54 +15,71 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export const EditSheet = ({ info }) => {
   const { submitFormHandler, open, cancelHandler, characterInfo } = info;
+  const [characterAlreadyExists, setCharacterAlreadyExists] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
+
+  useEffect(() => {
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
+    if (getCharacter.name !== undefined) {
+      setCharacterAlreadyExists(true);
+    } else {
+      setCharacterAlreadyExists(false);
+    }
+    setIsFetched(true);
+  }, []);
 
   return (
-    <Dialog
-      fullScreen
-      open={open}
-      onClose={cancelHandler}
-      TransitionComponent={Transition}
-    >
-      <AppBar
-        sx={{
-          position: "relative",
-          backgroundColor: "#010038",
-          boxShadow: "none",
-        }}
-      >
-        <Toolbar>
-          <Typography
+    <div>
+      {isFetched && (
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={cancelHandler}
+          TransitionComponent={Transition}
+        >
+          <AppBar
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "Montserrat",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-              textAlign: "center",
+              position: "relative",
+              backgroundColor: "#010038",
+              boxShadow: "none",
             }}
-            variant="h6"
-            component="div"
           >
-            New Character
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <DialogContent
-        sx={{
-          backgroundColor: "#0f111a",
-          backgroundImage: `url(${"https://www.transparenttextures.com/patterns/buried.png"})`,
-        }}
-      >
-        <CharacterForm
-          methods={{
-            submitFormHandler: submitFormHandler,
-            cancelHandler: cancelHandler,
-          }}
-          fields={characterInfo}
-        />
-      </DialogContent>
-    </Dialog>
+            <Toolbar>
+              <Typography
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontFamily: "Montserrat",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                  textAlign: "center",
+                }}
+                variant="h6"
+                component="div"
+              >
+                {characterAlreadyExists ? "Edit Character" : "New Character"}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <DialogContent
+            sx={{
+              backgroundColor: "#0f111a",
+              backgroundImage: `url(${"https://www.transparenttextures.com/patterns/buried.png"})`,
+            }}
+          >
+            <CharacterForm
+              methods={{
+                submitFormHandler: submitFormHandler,
+                cancelHandler: cancelHandler,
+                characterAlreadyExists: characterAlreadyExists,
+              }}
+              fields={characterInfo}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
+    </div>
   );
 };
