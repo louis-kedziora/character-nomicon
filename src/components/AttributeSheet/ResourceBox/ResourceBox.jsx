@@ -9,7 +9,7 @@ import { StyledFab } from "components/StyledComponents";
 import { ResourceForm } from "../ResourceForm";
 
 export const ResourceBox = ({ resourceInfo }) => {
-  const { resourceID, allResources, setAllResources } = resourceInfo;
+  const { resourceID, allResources, setAllResources, updateComponent } = resourceInfo;
   const [characterID, setCharacterID] = useState();
   const [resourceValue, setResourceValue] = useState();
   const [resourceName, setResourceName] = useState();
@@ -18,8 +18,9 @@ export const ResourceBox = ({ resourceInfo }) => {
   const [oldMaxValue, setOldMaxValue] = useState("");
   const [cancelEditResource, setCancelEditResource] = useState(false);
   const [openEditResource, setOpenEditResource] = useState(false);
-  // const [isDeleteResourceClicked, setDeleteResourceClicked] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
+  const [update, setUpdate] = useState(updateComponent);
+
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -32,7 +33,9 @@ export const ResourceBox = ({ resourceInfo }) => {
     setMaxValue(foundResource.maxResourceValue);
     setResourceName(foundResource.resourceName);
     setIsFetched(true);
-  }, [resourceID]);
+    setUpdate(updateComponent);
+  }, [resourceID, updateComponent]);
+  console.log(update);
 
   const openEditResourceHandler = () => {
     setOldResourceName(resourceName);

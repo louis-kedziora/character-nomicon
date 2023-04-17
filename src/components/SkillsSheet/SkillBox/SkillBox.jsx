@@ -7,11 +7,12 @@ import {
 import { StyledSkillFab } from "components/StyledComponents";
 
 export const SkillBox = ({ info }) => {
-  const { title, skill } = info;
+  const { title, skill, updateComponent } = info;
   const [isTrained, setIsTrained] = useState();
   const [score, setScore] = useState();
   const [level, setLevel] = useState();
   const [isFetched, setIsFetched] = useState(false);
+  const [update, setUpdate] = useState(updateComponent);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -39,8 +40,11 @@ export const SkillBox = ({ info }) => {
     setIsTrained(trainedSkills[skill]);
     setScore(character[skillDict[skill]]);
     setLevel(character["level"]);
+
     setIsFetched(true);
-  }, [skill]);
+    setUpdate(updateComponent);
+  }, [skill, updateComponent]);
+  console.log(update);
 
   return (
     <div>

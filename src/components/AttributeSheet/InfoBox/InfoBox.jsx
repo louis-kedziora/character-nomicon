@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { proficiencyBonus, scoreMod } from "components/AttributeSheet/Modifiers";
 
 export const InfoBox = ({ info }) => {
-  const { title, infoName, characterID } = info;
+  const { title, infoName, characterID, updateComponent } = info;
   const [content, setContent] = useState();
   const [isFetched, setIsFetched] = useState(false);
+  const [update, setUpdate] = useState(updateComponent);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -16,7 +17,9 @@ export const InfoBox = ({ info }) => {
       setContent(character[infoName]);
     }
     setIsFetched(true);
-  }, [characterID, infoName, title]);
+    setUpdate(updateComponent);
+  }, [characterID, infoName, title, updateComponent]);
+  console.log(update);
 
   return (
     <div>

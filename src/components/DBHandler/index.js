@@ -6,4 +6,5 @@ export {
   updateInfo,
   updateHP,
   createNewCharacter,
+  updateCharacter,
 } from "components/DBHandler/DBHandler";

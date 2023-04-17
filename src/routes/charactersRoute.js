@@ -21,6 +21,8 @@ module.exports = (app) => {
   router.patch("/updateinfo", characters.updateInfo);
   router.patch("/createresource", characters.createResource);
   router.patch("/updateresource", characters.updateResource);
+  router.patch("/updatecharacter", characters.updateCharacter);
+
 
 
   app.use("/api/characters", router);

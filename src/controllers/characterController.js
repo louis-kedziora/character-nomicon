@@ -2,6 +2,39 @@ const db = require("../models");
 const Character = db.characters.getModel();
 const mongoose = require("mongoose");
 
+exports.updateCharacter = (req, res) => {
+  if (!req.body.newCharacter || !req.body.newCharacter._id) {
+    res.status(400).send({ message: "Body can not be empty!" });
+    return;
+  }
+  const newCharacter = req.body.newCharacter;
+  const characterID = newCharacter._id;
+  Character.findOne({ _id: characterID }, function (err, foundCharacter) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (!foundCharacter) {
+        console.log("Character Not Found!");
+      } else {
+        Object.keys(newCharacter).forEach((key) => {
+          foundCharacter[key] = newCharacter[key];
+        });
+        foundCharacter
+          .save(foundCharacter)
+          .then((data) => {
+            res.send(data);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while updating resource",
+            });
+          });
+      }
+    }
+  });
+}
+
 exports.createResource = (req, res) => {
   if (!req.body || !req.body.characterID || !req.body.newResource.resourceID) {
     res.status(400).send({ message: "Body can not be empty!" });

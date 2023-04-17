@@ -7,7 +7,7 @@ import { updateHP, updateInfo } from "components/DBHandler";
 import { Typography } from "@mui/material";
 
 export const HPBox = ({ characterInfo }) => {
-  const { title, characterID } = characterInfo;
+  const { title, characterID, updateComponent } = characterInfo;
   const [hp, setHP] = useState();
   const [hpMax, setMaxHP] = useState();
   const [tempHP, setTempHP] = useState();
@@ -15,6 +15,7 @@ export const HPBox = ({ characterInfo }) => {
   const [changeType, setChangeType] = useState("damage");
   const [cancelClicked, setCancelClicked] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
+  const [update, setUpdate] = useState(updateComponent);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -22,7 +23,9 @@ export const HPBox = ({ characterInfo }) => {
     setMaxHP(character["hpMax"]);
     setTempHP(character["tempHP"]);
     setIsFetched(true);
-  }, [characterID]);
+    setUpdate(updateComponent);
+  }, [characterID, updateComponent]);
+  console.log(update);
 
   function openChangeState(event) {
     // Open the form

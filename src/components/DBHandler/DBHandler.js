@@ -1,6 +1,27 @@
 import axios from "axios";
 const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
+export const updateCharacter = (newCharacter) => {
+  if (!newCharacter || !newCharacter._id) {
+    console.log("Missing parameters");
+  }
+  axios({
+    method: "patch",
+    url: serverURL + "/api/characters/updateCharacter",
+    data: {
+      newCharacter: newCharacter 
+    },
+  })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return newCharacter;
+};
+
+
 export const createNewUser = (newUser) => {
   axios({
     method: "post",

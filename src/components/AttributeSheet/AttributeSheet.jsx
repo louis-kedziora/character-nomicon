@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Divider from "@mui/material/Divider";
 
@@ -13,7 +13,7 @@ import { ResourceForm } from "components/AttributeSheet/ResourceForm";
 import { SkillBox } from "components/SkillsSheet/SkillBox";
 import { skillsData } from "components/SkillsSheet/SkillsData";
 import { StyledFab, StyledSheetContainer } from "components/StyledComponents";
-import { createNewResource } from "components/DBHandler";
+import { createNewResource, updateCharacter } from "components/DBHandler";
 
 const mongoose = require("mongoose");
 
@@ -29,6 +29,7 @@ export const AttributeSheet = () => {
   const [character, setCharacter] = useState();
   const [resources, setResources] = useState();
   const [isFetched, setIsFetched] = useState(false);
+  const [updateComponent, forceUpdate] = useReducer((x) => x + 1, 0);
   const [cancelResourceForm, setCancelResourceForm] = useState(false);
   const [openResourceForm, setOpenResourceForm] = useState(false);
   const [cancelCharacterForm, setCancelCharacterForm] = useState(false);
@@ -55,7 +56,7 @@ export const AttributeSheet = () => {
   };
 
   const submitCharacterFormHandler = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (!cancelCharacterForm) {
       let characterUpdateData = {
         trainedSkills: {},
@@ -76,17 +77,30 @@ export const AttributeSheet = () => {
           characterUpdateData[element.name] = element.value;
         }
       }
+      delete characterUpdateData[""];
+      delete characterUpdateData.cancelButton;
+      let newCharacter = character;
+      Object.keys(characterUpdateData).forEach((key) => {
+        newCharacter[key] = characterUpdateData[key];
+      });
       console.log("New Character Data:");
-      console.log(characterUpdateData);
+      console.log(newCharacter);
 
-      // Take current character and update values with user input
+      if (newCharacter.hpMax < newCharacter.currentHP) {
+        newCharacter.currentHP = newCharacter.hpMax;
+      }
 
       // Update DB
+      updateCharacter(newCharacter);
 
       // Update Local storage
+      sessionStorage.setItem("currentCharacter", JSON.stringify(newCharacter));
 
       // Update currently rendered react components
+      setCharacter(newCharacter);
+      setResources(newCharacter.customResources);
     }
+    forceUpdate();
     setOpenCharacterForm(false);
   };
 
@@ -190,13 +204,19 @@ export const AttributeSheet = () => {
           <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
             <InfoBox
-              info={{ title: "AC", infoName: "ac", characterID: character._id }}
+              info={{
+                title: "AC",
+                infoName: "ac",
+                characterID: character._id,
+                updateComponent: updateComponent,
+              }}
             />
             <InfoBox
               info={{
                 title: "Proficiency",
                 infoName: "level",
                 characterID: character._id,
+                updateComponent: updateComponent,
               }}
             />
             <InfoBox
@@ -204,6 +224,7 @@ export const AttributeSheet = () => {
                 title: "Speed",
                 infoName: "speed",
                 characterID: character._id,
+                updateComponent: updateComponent,
               }}
             />
 
@@ -212,6 +233,7 @@ export const AttributeSheet = () => {
                 title: "Initiative",
                 infoName: "dex",
                 characterID: character._id,
+                updateComponent: updateComponent,
               }}
             />
           </Grid>
@@ -222,6 +244,7 @@ export const AttributeSheet = () => {
               characterInfo={{
                 title: "HP",
                 characterID: character._id,
+                updateComponent: updateComponent,
               }}
             />
             {resources.map((resource, index) => {
@@ -232,6 +255,7 @@ export const AttributeSheet = () => {
                     resourceID: resource.resourceID,
                     allResources: resources,
                     setAllResources: setResources,
+                    updateComponent: updateComponent,
                   }}
                 />
               );
@@ -283,6 +307,7 @@ export const AttributeSheet = () => {
                       info={{
                         title: skill.title,
                         skill: skill.skillName,
+                        updateComponent: updateComponent,
                       }}
                     />
                   );
