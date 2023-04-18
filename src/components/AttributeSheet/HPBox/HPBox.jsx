@@ -128,15 +128,13 @@ export const HPBox = ({ characterInfo }) => {
           <div className="resourceCount">
             {tempHP > 0 ? (
               <Typography
-                sx={{ fontSize: "1.4em", fontWeight: "900", color: "#5aa0ff" }}
+                sx={{ fontSize: "1.5em", color: "#5aa0ff", fontWeight: "900" }}
               >
                 {parseInt(hp) + " / " + hpMax}
                 {" (+" + tempHP + " Temps)"}
               </Typography>
             ) : (
-              <Typography component="h2" sx={{ fontSize: "1.9em", fontWeight: 900 }}>
-                {parseInt(hp) + " / " + hpMax }
-              </Typography>
+              <h2>{parseInt(hp) + " / " + hpMax}</h2>
             )}
           </div>
           {!changeHP && (
