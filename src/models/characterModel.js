@@ -79,11 +79,13 @@ const characterSchema = {
       attackModifier: String,
       attackDamage: String,
       attackType: String,
+      attackNotes: String,
     },
   ],
   spells: [
     {
       spellID: String,
+      spellLevel: String,
       spellPrepared: Boolean,
       spellName: String,
       spellTime: String,

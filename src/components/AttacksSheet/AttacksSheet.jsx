@@ -139,6 +139,14 @@ export const AttacksSheet = () => {
       minWidth: 200,
     },
     {
+      field: "attackNotes",
+      headerName: "Notes",
+      type: "text",
+      editable: true,
+      flex: 0.5,
+      minWidth: 200,
+    },
+    {
       field: "actions",
       headerName: "Actions",
       type: "text",

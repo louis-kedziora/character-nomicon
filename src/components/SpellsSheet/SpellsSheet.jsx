@@ -145,6 +145,15 @@ export const SpellsSheet = () => {
       },
     },
     {
+      field: "spellLevel",
+      headerName: "Level",
+      headerClassName: "dataGrid--header",
+      type: "text",
+      editable: true,
+      flex: 0.75,
+      minWidth: 100,
+    },
+    {
       field: "spellName",
       headerName: "Name",
       headerClassName: "dataGrid--header",
