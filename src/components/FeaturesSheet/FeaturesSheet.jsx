@@ -29,9 +29,12 @@ const featureNames = {
 export const FeaturesSheet = () => {
   const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
+  const [featuresContent, setFeaturesContent] = useState("");
 
   useEffect(() => {
-    setCharacter(JSON.parse(sessionStorage.getItem("currentCharacter")));
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    setCharacter(getCharacter);
+    setFeaturesContent(getCharacter["features"]);
     setIsFetched(true);
   }, []);
   return (
@@ -59,6 +62,7 @@ export const FeaturesSheet = () => {
                   title: "Features",
                   infoName: "features",
                   characterID: character._id,
+                  content: featuresContent
                 }}
               />
             </Grid>

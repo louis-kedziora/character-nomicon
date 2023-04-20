@@ -7,9 +7,12 @@ import { StyledSheetContainer } from "components/StyledComponents";
 export const NotesSheet = () => {
   const [character, setCharacter] = useState({});
   const [isFetched, setIsFetched] = useState(false);
+  const [content, setContent] = useState("");
 
   useEffect(() => {
-    setCharacter(JSON.parse(sessionStorage.getItem("currentCharacter")));
+    const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"))
+    setCharacter(getCharacter);
+    setContent(getCharacter["notes"]);
     setIsFetched(true);
   }, []);
   return (
@@ -24,6 +27,7 @@ export const NotesSheet = () => {
                 title: "Notes",
                 infoName: "notes",
                 characterID: character._id,
+                content: content,
               }}
             />
           </Grid>

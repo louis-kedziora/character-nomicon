@@ -1,3 +1,4 @@
+
 export const variableToTitle = (str) => {
   const words = str.split(/(?=[A-Z])/); // split the string into words based on capitalization
   const capitalizedWords = words.map(
@@ -5,3 +6,5 @@ export const variableToTitle = (str) => {
   ); // capitalize the first letter of each word
   return capitalizedWords.join(" "); // join the words back into a string with a space separator
 };
+
+

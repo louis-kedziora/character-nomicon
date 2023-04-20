@@ -1,2 +1,2 @@
-export { variableToTitle } from "components/UtilityFunctions/UtilityFunctions";
+export { variableToTitle} from "components/UtilityFunctions/UtilityFunctions";
 

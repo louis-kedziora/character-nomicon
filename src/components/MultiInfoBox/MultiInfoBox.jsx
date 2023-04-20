@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 import { updateInfo } from "components/DBHandler";
 
 export const MultiInfoBox = ({ info }) => {
-  const { title, infoName, characterID } = info;
-  const [content, setContent] = useState();
+  const { title, characterID, infoName, content } = info;
   const [isFetched, setIsFetched] = useState(false);
+  const [contentState, setContentState] = useState("");
 
   useEffect(() => {
-    const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    setContent(character[infoName]);
+    setContentState(content);
     setIsFetched(true);
-  }, [characterID, infoName]);
+  }, [content]);
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const { value } = event.target;
-    setContent(value);
-  }
+    setContentState(value);
+  };
 
   function handleFocusLoss(event) {
-    updateInfo(infoName, content, characterID);
+    updateInfo(infoName, contentState, characterID);
     let character = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    character[infoName] = content;
+    character[infoName] = contentState;
     sessionStorage.setItem("currentCharacter", JSON.stringify(character));
   }
 
@@ -36,14 +36,13 @@ export const MultiInfoBox = ({ info }) => {
           sx={{ ml: 0 }}
         >
           <h1>{title}</h1>
-          <textarea
+          <TextareaAutosize
             onBlur={handleFocusLoss}
             onChange={handleChange}
-            value={content}
+            value={contentState}
             id="notes"
             name="notes"
-            rows={100}
-          ></textarea>
+          />
         </Container>
       )}
     </div>

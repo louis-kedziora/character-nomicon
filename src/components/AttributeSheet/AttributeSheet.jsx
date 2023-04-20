@@ -83,8 +83,6 @@ export const AttributeSheet = () => {
       Object.keys(characterUpdateData).forEach((key) => {
         newCharacter[key] = characterUpdateData[key];
       });
-      console.log("New Character Data:");
-      console.log(newCharacter);
 
       if (newCharacter.hpMax < newCharacter.currentHP) {
         newCharacter.currentHP = newCharacter.hpMax;

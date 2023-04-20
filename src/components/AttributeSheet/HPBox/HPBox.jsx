@@ -25,7 +25,6 @@ export const HPBox = ({ characterInfo }) => {
     setIsFetched(true);
     setUpdate(updateComponent);
   }, [characterID, updateComponent]);
-  console.log(update);
 
   function openChangeState(event) {
     // Open the form

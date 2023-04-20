@@ -35,7 +35,6 @@ export const ResourceBox = ({ resourceInfo }) => {
     setIsFetched(true);
     setUpdate(updateComponent);
   }, [resourceID, updateComponent]);
-  console.log(update);
 
   const openEditResourceHandler = () => {
     setOldResourceName(resourceName);

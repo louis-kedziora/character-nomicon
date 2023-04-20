@@ -44,7 +44,6 @@ export const SkillBox = ({ info }) => {
     setIsFetched(true);
     setUpdate(updateComponent);
   }, [skill, updateComponent]);
-  console.log(update);
 
   return (
     <div>
