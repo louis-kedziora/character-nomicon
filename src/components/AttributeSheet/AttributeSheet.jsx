@@ -56,7 +56,7 @@ export const AttributeSheet = () => {
   };
 
   const submitCharacterFormHandler = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     if (!cancelCharacterForm) {
       let characterUpdateData = {
         trainedSkills: {},

@@ -5,6 +5,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { ChangeHPBox } from "components/AttributeSheet/HPBox/ChangeHPBox";
 import { updateHP, updateInfo } from "components/DBHandler";
 import { Typography } from "@mui/material";
+import { DeathSaves } from "components/AttributeSheet/HPBox/DeathSaves";
 
 export const HPBox = ({ characterInfo }) => {
   const { title, characterID, updateComponent } = characterInfo;
@@ -16,12 +17,14 @@ export const HPBox = ({ characterInfo }) => {
   const [cancelClicked, setCancelClicked] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [update, setUpdate] = useState(updateComponent);
+  const [inDeathSaves, setInDeathSaves] = useState(false);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setHP(character["currentHP"]);
     setMaxHP(character["hpMax"]);
     setTempHP(character["tempHP"]);
+    if (character["currentHP"] < 0) setInDeathSaves(true);
     setIsFetched(true);
     setUpdate(updateComponent);
   }, [characterID, updateComponent]);
@@ -104,6 +107,15 @@ export const HPBox = ({ characterInfo }) => {
               characterID
             );
           }
+          if (newHP >= 0) {
+            setInDeathSaves(false);
+            character["deathSaveSuccesses"] = 0;
+            character["deathSaveFailures"] = 0;
+            updateInfo("deathSaveSuccesses", 0, characterID);
+            updateInfo("deathSaveFailures", 0, characterID);
+          } else {
+            setInDeathSaves(true);
+          }
 
           setHP(newHP);
           character["currentHP"] = newHP;
@@ -123,20 +135,29 @@ export const HPBox = ({ characterInfo }) => {
     <div>
       {isFetched && (
         <div className="basicBox resourceBox">
-          <h1>{title}</h1>
-          <div className="resourceCount">
-            {tempHP > 0 ? (
-              <Typography
-                sx={{ fontSize: "1.5em", color: "#5aa0ff", fontWeight: "900" }}
-              >
-                {parseInt(hp) + " / " + hpMax}
-                {" (+" + tempHP + " Temps)"}
-              </Typography>
-            ) : (
-              <h2>{parseInt(hp) + " / " + hpMax}</h2>
-            )}
-          </div>
-          {!changeHP && (
+          <h1>{inDeathSaves ? "Death Saves" : title}</h1>
+          {inDeathSaves ? (
+            <DeathSaves methods={{ characterID: characterID }} />
+          ) : (
+            <div className="resourceCount">
+              {tempHP > 0 ? (
+                <Typography
+                  sx={{
+                    fontSize: "1.5em",
+                    color: "#5aa0ff",
+                    fontWeight: "900",
+                  }}
+                >
+                  {parseInt(hp) + " / " + hpMax}
+                  {" (+" + tempHP + " Temps)"}
+                </Typography>
+              ) : (
+                <h2>{parseInt(hp) + " / " + hpMax}</h2>
+              )}
+            </div>
+          )}
+
+          {(!changeHP || inDeathSaves) && (
             <Grid container spacing={2}>
               <Grid xs={12}>
                 <Fab size="small" color="error" onClick={openChangeState}>
