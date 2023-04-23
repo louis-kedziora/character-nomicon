@@ -10,13 +10,15 @@ import IconButton from "@mui/material/IconButton";
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
 import { StyledDataGrid, StyledGridFab } from "components/StyledComponents";
-import { modifierAndProficency, spellSaveDC } from "components/AttributeSheet/Modifiers";
-
+import {
+  modifierAndProficency,
+  spellSaveDC,
+} from "components/AttributeSheet/Modifiers";
 
 export const SpellsSheet = () => {
   const [character, setCharacter] = useState({});
   const [castingAttribute, setCastingAttribute] = useState("None");
-  
+
   const [currentSpells, setCurrentSpells] = useState();
   const [addNewSpell, setAddNewSpell] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
@@ -66,8 +68,10 @@ export const SpellsSheet = () => {
     setAddNewSpell(true);
   };
 
-  const submitFormHandler = (event) => {
+  const submitSpellFormHandler = (event) => {
     // Only save the new spell if cancel was not clicked
+    event.preventDefault();
+
     setAddNewSpell(false);
 
     if (!cancelClicked) {
@@ -96,8 +100,11 @@ export const SpellsSheet = () => {
       updateSession(newSpells);
     }
   };
-  const cancelHandler = () => {
+  const cancelHandler = (event) => {
+    event.preventDefault();
     setCancelClicked(true);
+    setAddNewSpell(false);
+    setCancelClicked(false);
   };
 
   const onPreparedClick = (event, row) => {
@@ -238,16 +245,25 @@ export const SpellsSheet = () => {
                 <div>
                   <div className="basicBox statBox">
                     <h1>Spell Attack Bonus</h1>
-                    <h2>{modifierAndProficency(character.level, character[character["spellCastingAttribute"]])}</h2>
+                    <h2>
+                      {modifierAndProficency(
+                        character.level,
+                        character[character["spellCastingAttribute"]]
+                      )}
+                    </h2>
                   </div>
                   <div className="basicBox statBox">
                     <h1>Spell Save DC</h1>
-                    <h2>{spellSaveDC(character.level, character[character["spellCastingAttribute"]])}</h2>
+                    <h2>
+                      {spellSaveDC(
+                        character.level,
+                        character[character["spellCastingAttribute"]]
+                      )}
+                    </h2>
                   </div>
                 </div>
               )}
             </Grid>
-
             <Grid xs={12}>
               <div
                 style={{
@@ -279,25 +295,23 @@ export const SpellsSheet = () => {
                 alignItems="center"
                 xs={12}
               >
-                {!addNewSpell && (
-                  <StyledGridFab
-                    size="large"
-                    color="primary"
-                    variant="extended"
-                    onClick={openNewSpellForm}
-                  >
-                    New Spell
-                  </StyledGridFab>
-                )}
-                {addNewSpell && (
-                  <InputForm
-                    methods={{
-                      submitFormHandler: submitFormHandler,
-                      cancelHandler: cancelHandler,
-                    }}
-                    fields={columns}
-                  />
-                )}
+                <StyledGridFab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={openNewSpellForm}
+                >
+                  New Spell
+                </StyledGridFab>
+                <InputForm
+                  methods={{
+                    submitFormHandler: submitSpellFormHandler,
+                    cancelHandler: cancelHandler,
+                    openForm: addNewSpell,
+                    newTitle: "New Spell",
+                  }}
+                  fields={columns}
+                />
               </Grid>
             </Grid>
           </Grid>

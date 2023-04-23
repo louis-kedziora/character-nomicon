@@ -67,9 +67,10 @@ export const AttacksSheet = () => {
     setAddNewAttack(true);
   };
 
-  const submitFormHandler = (event) => {
-    event.preventDefault();
+  const submitAttackFormHandler = (event) => {
     // Only save the new attack if cancel was not clicked
+    event.preventDefault();
+
     setAddNewAttack(false);
     if (!cancelClicked) {
       const attackName = event.target.elements.attackName.value;
@@ -93,8 +94,12 @@ export const AttacksSheet = () => {
       updateLocalStorage(newAttacks);
     }
   };
-  function cancelHandler() {
+  function cancelHandler(event) {
+    event.preventDefault();
     setCancelClicked(true);
+    setAddNewAttack(false);
+    setCancelClicked(false);
+
   }
 
   const columns = [
@@ -190,25 +195,23 @@ export const AttacksSheet = () => {
               alignItems="center"
               xs={12}
             >
-              {!addNewAttack && (
-                <StyledGridFab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openNewAttackForm}
-                >
-                  New Attack
-                </StyledGridFab>
-              )}
-              {addNewAttack && (
-                <InputForm
-                  methods={{
-                    submitFormHandler: submitFormHandler,
-                    cancelHandler: cancelHandler,
-                  }}
-                  fields={columns}
-                />
-              )}
+              <StyledGridFab
+                size="large"
+                color="primary"
+                variant="extended"
+                onClick={openNewAttackForm}
+              >
+                New Attack
+              </StyledGridFab>
+              <InputForm
+                methods={{
+                  submitFormHandler: submitAttackFormHandler,
+                  cancelHandler: cancelHandler,
+                  openForm: addNewAttack,
+                  newTitle: "New Attack",
+                }}
+                fields={columns}
+              />
             </Grid>
           </Grid>
         </div>
