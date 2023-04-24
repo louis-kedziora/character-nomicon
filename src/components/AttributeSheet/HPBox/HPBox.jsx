@@ -16,8 +16,9 @@ export const HPBox = ({ characterInfo }) => {
   const [changeType, setChangeType] = useState("damage");
   const [cancelClicked, setCancelClicked] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
-  const [update, setUpdate] = useState(updateComponent);
   const [inDeathSaves, setInDeathSaves] = useState(false);
+  const [update, setUpdate] = useState(updateComponent);
+
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -28,6 +29,8 @@ export const HPBox = ({ characterInfo }) => {
     setIsFetched(true);
     setUpdate(updateComponent);
   }, [characterID, updateComponent]);
+
+  console.debug(update);
 
   function openChangeState(event) {
     // Open the form

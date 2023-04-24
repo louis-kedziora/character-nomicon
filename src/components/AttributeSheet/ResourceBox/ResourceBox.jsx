@@ -36,6 +36,8 @@ export const ResourceBox = ({ resourceInfo }) => {
     setUpdate(updateComponent);
   }, [resourceID, updateComponent]);
 
+  console.debug(update);
+
   const openEditResourceHandler = () => {
     setOldResourceName(resourceName);
     setOldMaxValue(maxValue);

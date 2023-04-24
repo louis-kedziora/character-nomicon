@@ -20,6 +20,8 @@ export const InfoBox = ({ info }) => {
     setUpdate(updateComponent);
   }, [characterID, infoName, title, updateComponent]);
 
+  console.debug(update);
+
   return (
     <div>
       {isFetched && (
