@@ -296,7 +296,6 @@ export const AttributeSheet = () => {
           <h1 className="sectionHeader">Skills</h1>
           <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
-            <div className="skillSheet attackBox">
               <Grid container spacing={1}>
                 {skillsData.map((skill, index) => {
                   return (
@@ -311,7 +310,6 @@ export const AttributeSheet = () => {
                   );
                 })}
               </Grid>
-            </div>
           </Grid>
         </Grid>
       )}

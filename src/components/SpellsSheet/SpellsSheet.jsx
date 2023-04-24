@@ -243,7 +243,7 @@ export const SpellsSheet = () => {
                 <div></div>
               ) : (
                 <div>
-                  <div className="basicBox statBox">
+                  <div className="basicBox statBox customModBox">
                     <h1>Spell Attack Bonus</h1>
                     <h2>
                       {modifierAndProficency(
@@ -252,7 +252,7 @@ export const SpellsSheet = () => {
                       )}
                     </h2>
                   </div>
-                  <div className="basicBox statBox">
+                  <div className="basicBox statBox customModBox">
                     <h1>Spell Save DC</h1>
                     <h2>
                       {spellSaveDC(

@@ -6,7 +6,6 @@ import { skillsData } from "components/SkillsSheet/SkillsData";
 
 export const SkillsSheet = () => {
   return (
-    <StyledSheetContainer maxWidth={false}>
       <div className="skillSheet attackBox">
         <Grid container spacing={1}>
           {skillsData.map((skill, index) => {
@@ -22,6 +21,5 @@ export const SkillsSheet = () => {
           })}
         </Grid>
       </div>
-    </StyledSheetContainer>
   );
 };

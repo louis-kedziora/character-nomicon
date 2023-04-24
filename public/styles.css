@@ -5,6 +5,9 @@ Third Text - #d97326
 Comment Color - #464b4c 
 Nice Green - #03C988 */
 
+/* url("https://www.transparenttextures.com/patterns/absurdity.png")*/
+/* #0a0c1a */
+
 * {
   padding: 0;
   margin: 0;
@@ -18,8 +21,8 @@ html {
   box-sizing: border-box;
 }
 body {
-  background: #0f111a;
-  background-image: url("https://www.transparenttextures.com/patterns/buried.png");
+  background: #0a0c1a;
+  background-image: url("https://www.transparenttextures.com/patterns/absurdity.png");
 }
 
 input:-webkit-autofill {
@@ -55,6 +58,10 @@ footer p {
   position: relative;
   float: left;
   text-align: center;
+}
+
+.customModBox {
+  width: 21em;
 }
 
 .featureBox {
