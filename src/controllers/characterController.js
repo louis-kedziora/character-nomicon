@@ -2,6 +2,9 @@ const db = require("../models");
 const Character = db.characters.getModel();
 const mongoose = require("mongoose");
 
+// This is inefficent for validation in terms of if anything has been changed
+//    because everything about the character is being overwritten and
+//    additonally, we have to check if at least one of those things is changed
 exports.updateCharacter = (req, res) => {
   if (!req.body.newCharacter || !req.body.newCharacter._id) {
     res.status(400).send({ message: "Body can not be empty!" });
@@ -16,24 +19,32 @@ exports.updateCharacter = (req, res) => {
       if (!foundCharacter) {
         console.log("Character Not Found!");
       } else {
+        let hasAnythingChanged = false;
         Object.keys(newCharacter).forEach((key) => {
+          if (hasAnythingChanged === false) {
+            if (foundCharacter[key] !== newCharacter[key]) {
+              hasAnythingChanged = true;
+            }
+          }
           foundCharacter[key] = newCharacter[key];
         });
-        foundCharacter
-          .save(foundCharacter)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while updating resource",
+        if (hasAnythingChanged === true) {
+          foundCharacter
+            .save(foundCharacter)
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while updating resource",
+              });
             });
-          });
+        }
       }
     }
   });
-}
+};
 
 exports.createResource = (req, res) => {
   if (!req.body || !req.body.characterID || !req.body.newResource.resourceID) {
@@ -75,7 +86,7 @@ exports.updateResource = (req, res) => {
   }
   const characterID = req.body.characterID;
   const resourceID = req.body.resourceID;
-  const newValue = req.body.newValue
+  const newValue = req.body.newValue;
   Character.findOne({ _id: characterID }, function (err, foundCharacter) {
     if (err) {
       console.log(err);
@@ -87,18 +98,20 @@ exports.updateResource = (req, res) => {
         let foundResource = customResources.find(
           (item) => item.resourceID === resourceID
         );
-        foundResource.currentResourceValue = newValue;
-        foundCharacter
-          .save(foundCharacter)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while updating resource",
+        if (foundResource.currentResourceValue !== newValue) {
+          foundResource.currentResourceValue = newValue;
+          foundCharacter
+            .save(foundCharacter)
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while updating resource",
+              });
             });
-          });
+        }
       }
     }
   });
@@ -178,7 +191,6 @@ exports.createCharacter = (req, res) => {
 };
 
 exports.updateInfo = (req, res) => {
-  console.log(req.body);
   if (!req.body || !req.body.characterID) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
@@ -196,18 +208,20 @@ exports.updateInfo = (req, res) => {
       if (!foundCharacter) {
         console.log("Character Not Found!");
       } else {
-        foundCharacter[updateField] = updateValue;
-        foundCharacter
-          .save(foundCharacter)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while updating resource",
+        if (foundCharacter[updateField] !== updateValue) {
+          foundCharacter[updateField] = updateValue;
+          foundCharacter
+            .save(foundCharacter)
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while updating resource",
+              });
             });
-          });
+        }
       }
     }
   });
@@ -229,19 +243,21 @@ exports.updateHP = (req, res) => {
       if (!foundCharacter) {
         console.log("Character Not Found!");
       } else {
-        foundCharacter.currentHP = newHP;
-        foundCharacter
-          .save(foundCharacter)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message ||
-                "Some error occurred while updating character HP",
+        if (foundCharacter.currentHP !== newHP) {
+          foundCharacter.currentHP = newHP;
+          foundCharacter
+            .save(foundCharacter)
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                message:
+                  err.message ||
+                  "Some error occurred while updating character HP",
+              });
             });
-          });
+        }
       }
     }
   });

@@ -176,7 +176,7 @@ export const updateHP = (
     url: serverURL + "/api/characters/updatehp",
     data: {
       characterID: characterID,
-      newHP: newHP,
+      newHP: parseInt(newHP),
     },
   })
     .then(function (response) {

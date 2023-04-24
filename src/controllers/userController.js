@@ -27,18 +27,20 @@ exports.updateUser = (req, res) => {
       if (!foundUser) {
         console.log("Character Not Found!");
       } else {
-        foundUser[updateField] = updateValue;
-        foundUser
-          .save(foundUser)
-          .then((data) => {
-            res.send(data);
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while updating resource",
+        if (foundUser[updateField] !== updateValue) {
+          foundUser[updateField] = updateValue;
+          foundUser
+            .save(foundUser)
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while updating resource",
+              });
             });
-          });
+        }
       }
     }
   });
@@ -78,14 +80,8 @@ exports.createUser = (req, res) => {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
-  console.log(newUser);
-
-  //  userCharacters will be sent as a stringified JSON object so this
-  //    parses it and inserts it back into the new character object 'req.body'
-  // req.body["userCharacters"] = JSON.parse(req.body.userCharacters);
 
   const user = new User(newUser);
-  // console.log(user);
   // Save Character in the database
   user
     .save(user)
