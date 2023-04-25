@@ -50,7 +50,7 @@ footer p {
 
 .basicBox {
   background: #0f111a;
-  box-shadow: 0 2px 5px #464b4c;
+  box-shadow: 0 2px 5px black;
   border-radius: 7px;
   padding: 10px;
   width: 250px;
@@ -94,7 +94,7 @@ footer p {
 .noteBox {
   color: white;
   background: #0f111a;
-  box-shadow: 0 2px 5px #464b4c;
+  box-shadow: 0 2px 5px black;
   border-radius: 7px;
   padding: 10px;
   position: relative;
@@ -106,7 +106,7 @@ footer p {
 
 .spellBox {
   background: #0f111a;
-  box-shadow: 0 2px 5px #464b4c;
+  box-shadow: 0 2px 5px black;
   border-radius: 7px;
   padding: 15px;
   width: 100%;
@@ -117,7 +117,7 @@ footer p {
 
 .attackBox {
   background: #0f111a;
-  box-shadow: 0 2px 5px #464b4c;
+  box-shadow: 0 2px 5px black;
   border-radius: 7px;
   padding: 15px;
   width: 100%;

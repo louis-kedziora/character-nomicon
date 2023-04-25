@@ -23,6 +23,7 @@ export const StyledSheetContainer = styled(Container)(({ theme }) => ({
 
 export const StyledCharacterFab = styled(Fab)(({ theme }) => ({
   fontFamily: "Montserrat",
+  boxShadow: "0 2px 5px black",
   height: "25%",
   width: "35em",
   margin: "25px",
@@ -49,6 +50,8 @@ export const StyledCharacterFab = styled(Fab)(({ theme }) => ({
 
 export const StyledSkillFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",
+  boxShadow: "0 2px 5px black",
+  borderRadius: "7px",
   width: "350px",
   fontFamily: "Montserrat",
   padding: "10px",
@@ -76,6 +79,7 @@ export const StyledSkillFab = styled(Fab)(({ theme }) => ({
 
 export const StyledFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",
+  boxShadow: "0 2px 5px black",
   fontFamily: "Montserrat",
   fontSize: "16px",
   color: "white",

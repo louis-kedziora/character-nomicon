@@ -86,7 +86,7 @@ export const LoginSheet = ({ loginInfo }) => {
               flexDirection: "column",
               alignItems: "center",
               backgroundColor: "#0f111a",
-              boxShadow: "0 2px 5px #464b4c",
+              boxShadow: "0 2px 5px red",
               borderRadius: "7px",
               padding: "1em 2.5em",
             }}
@@ -133,7 +133,7 @@ export const LoginSheet = ({ loginInfo }) => {
               flexDirection: "column",
               alignItems: "center",
               backgroundColor: "#0f111a",
-              boxShadow: "0 2px 5px #464b4c",
+              boxShadow: "0 2px 5px black",
               borderRadius: "7px",
               padding: "1em 2.5em",
             }}
