@@ -7,6 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ShieldSharpIcon from "@mui/icons-material/ShieldSharp";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const sheetLabels = [
   "Attributes",
@@ -63,13 +64,19 @@ export const CharacterAppBar = () => {
           <Container width="100%" maxWidth={false} sx={{ ml: 0 }}>
             <Toolbar disableGutters>
               <Link color="white" to="/characters">
-                <ShieldSharpIcon
+                <ArrowBackIcon
                   sx={{
                     display: { color: "white", xs: "none", md: "flex" },
                     mr: 1,
                   }}
                 />
               </Link>
+                <ShieldSharpIcon
+                  sx={{
+                    display: { color: "white", xs: "none", md: "flex" },
+                    mr: 1,
+                  }}
+                />
 
               <Typography
                 variant="h6"
