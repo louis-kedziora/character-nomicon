@@ -112,6 +112,7 @@ export const CharacterAppBar = () => {
                   sx={{
                     fontFamily: "Montserrat",
                     backgroundColor: "#010038",
+                    boxShadow: "none",
                     marginLeft: "auto",
                   }}
                   name="logout"

@@ -74,6 +74,13 @@ export const LoginSheet = ({ loginInfo }) => {
     setNewUserFormOpen(false);
   };
 
+
+  /* Background - #0f111a
+Text/Foreground - #5aa0ff
+Secondary Text - #c789c3
+Third Text - #d97326
+Comment Color - #464b4c 
+Nice Green - #03C988 */
   return (
     <div>
       {isFetched && (
@@ -86,14 +93,14 @@ export const LoginSheet = ({ loginInfo }) => {
               flexDirection: "column",
               alignItems: "center",
               backgroundColor: "#0f111a",
-              boxShadow: "0 2px 5px red",
+              boxShadow: "0 2px 5px #03C988",
               borderRadius: "7px",
               padding: "1em 2.5em",
             }}
           >
             <Typography
               sx={{
-                color: "red",
+                color: "#5aa0ff",
                 display: { xs: "none", md: "flex" },
                 fontFamily: "Montserrat",
                 fontWeight: 700,
@@ -101,11 +108,11 @@ export const LoginSheet = ({ loginInfo }) => {
                 textDecoration: "none",
               }}
             >
-              Warning!
+              Hello!
             </Typography>
             <Typography
               sx={{
-                color: "yellow",
+                color: "#DBE2EF",
                 display: { xs: "none", md: "flex" },
                 fontFamily: "Montserrat",
                 fontWeight: 300,
@@ -113,13 +120,10 @@ export const LoginSheet = ({ loginInfo }) => {
                 textDecoration: "none",
               }}
             >
-              Data is not in anyway protected on this app
+              This site is currently under development.
               <br />
               <br />
-              Assume everything you input is compromised.
-              <br />
-              <br />
-              Please do not use the any real emails or info when creating users
+              Passwords are disabled for the time being so you only need your username to login
               <br />
               <br />
               The user 'louie.test@test.com' is provided with prefilled
