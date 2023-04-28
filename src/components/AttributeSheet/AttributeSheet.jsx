@@ -165,36 +165,38 @@ export const AttributeSheet = () => {
                 />
               );
             })}
-            <Grid item xs={12}>
-              <Grid
-                display="flex"
-                alignItems="center"
-                xs="auto"
-                sx={{
-                  height: "25%",
-                  width: "100%",
-                  padding: "0.5em",
-                }}
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid
+              display="flex"
+              justifyContent="left"
+              alignItems="left"
+              xs="auto"
+              sx={{
+                height: "25%",
+                width: "100%",
+                margin: "25px",
+              }}
+            >
+              <StyledFab
+                size="large"
+                color="primary"
+                variant="extended"
+                onClick={openCharacterFormHandler}
               >
-                <StyledFab
-                  size="large"
-                  color="primary"
-                  variant="extended"
-                  onClick={openCharacterFormHandler}
-                >
-                  Edit {character.name}
-                </StyledFab>
-                {openCharacterForm && (
-                  <EditSheet
-                    info={{
-                      submitFormHandler: submitCharacterFormHandler,
-                      open: openCharacterForm,
-                      cancelHandler: cancelCharacterFormHandler,
-                      characterInfo: characterFormData,
-                    }}
-                  ></EditSheet>
-                )}
-              </Grid>
+                Edit {character.name}
+              </StyledFab>
+              {openCharacterForm && (
+                <EditSheet
+                  info={{
+                    submitFormHandler: submitCharacterFormHandler,
+                    open: openCharacterForm,
+                    cancelHandler: cancelCharacterFormHandler,
+                    characterInfo: characterFormData,
+                  }}
+                ></EditSheet>
+              )}
             </Grid>
           </Grid>
 
@@ -262,14 +264,13 @@ export const AttributeSheet = () => {
           <Grid item xs={12}>
             <Grid
               display="flex"
-              justifyContent="center"
-              alignItems="center"
+              justifyContent="left"
+              alignItems="left"
               xs="auto"
               sx={{
                 height: "25%",
                 width: "100%",
                 margin: "25px",
-                padding: "20px",
               }}
             >
               <StyledFab
@@ -296,20 +297,20 @@ export const AttributeSheet = () => {
           <h1 className="sectionHeader">Skills</h1>
           <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
-              <Grid container spacing={1}>
-                {skillsData.map((skill, index) => {
-                  return (
-                    <SkillBox
-                      key={index}
-                      info={{
-                        title: skill.title,
-                        skill: skill.skillName,
-                        updateComponent: updateComponent,
-                      }}
-                    />
-                  );
-                })}
-              </Grid>
+            <Grid container spacing={1}>
+              {skillsData.map((skill, index) => {
+                return (
+                  <SkillBox
+                    key={index}
+                    info={{
+                      title: skill.title,
+                      skill: skill.skillName,
+                      updateComponent: updateComponent,
+                    }}
+                  />
+                );
+              })}
+            </Grid>
           </Grid>
         </Grid>
       )}

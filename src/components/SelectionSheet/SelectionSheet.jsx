@@ -136,8 +136,6 @@ export const SelectionSheet = () => {
               <Grid item xs={12}>
                 <Grid
                   display="flex"
-                  justifyContent="center"
-                  alignItems="center"
                   xs="auto"
                   sx={{
                     height: "25%",
