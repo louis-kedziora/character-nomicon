@@ -123,11 +123,11 @@ Nice Green - #03C988 */
               This site is currently under development.
               <br />
               <br />
-              Passwords are disabled for the time being so you only need your username to login
+              Passwords are disabled for the time being so you only need your username to login.
               <br />
               <br />
               The user 'louie.test@test.com' is provided with prefilled
-              characters if you do not wish to create your own
+              characters if you do not wish to create your own.
             </Typography>
           </Box>
           <Box

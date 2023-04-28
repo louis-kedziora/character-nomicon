@@ -160,7 +160,7 @@ export const NewUserForm = ({ userData }) => {
                   variant="contained"
                   color="error"
                   type="submit"
-                  sx={{ fontFamily: "Montserrat" }}
+                  sx={{ fontFamily: "Montserrat", mr: "1.5em" }}
                 >
                   Cancel
                 </Button>
