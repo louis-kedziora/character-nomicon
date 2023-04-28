@@ -150,35 +150,14 @@ export const AttributeSheet = () => {
     <StyledSheetContainer maxWidth={false}>
       {isFetched && (
         <Grid container spacing={1}>
-          <Grid xs={12}>
-            {attributes.map((attribute, index) => {
-              return (
-                <AttributeBox
-                  key={index}
-                  attribute={{
-                    attributeName: attribute.title,
-                    attributeScore: character[attribute.scoreName],
-                    level: character.level,
-                    savingThrowProficiency:
-                      character.savingThrowProficiency[attribute.scoreName],
-                  }}
-                />
-              );
-            })}
-          </Grid>
-
           <Grid item xs={12}>
             <Grid
               display="flex"
               justifyContent="left"
               alignItems="left"
               xs="auto"
-              sx={{
-                height: "25%",
-                width: "100%",
-                margin: "25px",
-              }}
             >
+              <h1 className="sectionHeader">Attributes</h1>
               <StyledFab
                 size="large"
                 color="primary"
@@ -198,6 +177,23 @@ export const AttributeSheet = () => {
                 ></EditSheet>
               )}
             </Grid>
+          </Grid>
+          <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
+          <Grid xs={12}>
+            {attributes.map((attribute, index) => {
+              return (
+                <AttributeBox
+                  key={index}
+                  attribute={{
+                    attributeName: attribute.title,
+                    attributeScore: character[attribute.scoreName],
+                    level: character.level,
+                    savingThrowProficiency:
+                      character.savingThrowProficiency[attribute.scoreName],
+                  }}
+                />
+              );
+            })}
           </Grid>
 
           <h1 className="sectionHeader">Statistics</h1>
@@ -237,7 +233,39 @@ export const AttributeSheet = () => {
               }}
             />
           </Grid>
-          <h1 className="sectionHeader">Resources</h1>
+          <Grid item xs={12}>
+            <Grid
+              display="flex"
+              justifyContent="left"
+              alignItems="left"
+              xs="auto"
+              sx={{
+                height: "25%",
+                width: "100%",
+              }}
+            >
+              <h1 className="sectionHeader">Resources</h1>
+              <StyledFab
+                size="large"
+                color="primary"
+                variant="extended"
+                onClick={openResourceFormHandler}
+              >
+                New Resource
+              </StyledFab>
+
+              {openResourceForm && (
+                <ResourceForm
+                  info={{
+                    newResource: true,
+                    submitResourceFormHandler: submitResourceFormHandler,
+                    openResourceForm: openResourceForm,
+                    cancelResourceFormHandler: cancelResourceFormHandler,
+                  }}
+                ></ResourceForm>
+              )}
+            </Grid>
+          </Grid>
           <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
             <HPBox
@@ -261,39 +289,7 @@ export const AttributeSheet = () => {
               );
             })}
           </Grid>
-          <Grid item xs={12}>
-            <Grid
-              display="flex"
-              justifyContent="left"
-              alignItems="left"
-              xs="auto"
-              sx={{
-                height: "25%",
-                width: "100%",
-                margin: "25px",
-              }}
-            >
-              <StyledFab
-                size="large"
-                color="primary"
-                variant="extended"
-                onClick={openResourceFormHandler}
-              >
-                New Resource
-              </StyledFab>
 
-              {openResourceForm && (
-                <ResourceForm
-                  info={{
-                    newResource: true,
-                    submitResourceFormHandler: submitResourceFormHandler,
-                    openResourceForm: openResourceForm,
-                    cancelResourceFormHandler: cancelResourceFormHandler,
-                  }}
-                ></ResourceForm>
-              )}
-            </Grid>
-          </Grid>
           <h1 className="sectionHeader">Skills</h1>
           <Divider sx={{ width: "100%", border: "1px solid #464b4c" }} />
           <Grid xs={12}>
