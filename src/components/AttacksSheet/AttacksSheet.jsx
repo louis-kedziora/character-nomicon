@@ -78,6 +78,7 @@ export const AttacksSheet = () => {
       const attackType = event.target.elements.attackType.value;
       const attackModifier = event.target.elements.attackModifier.value;
       const attackDamage = event.target.elements.attackDamage.value;
+      const attackNotes = event.target.elements.attackNotes.value;
       const newID = mongoose.Types.ObjectId();
       const newAttack = {
         attackName: attackName,
@@ -85,6 +86,7 @@ export const AttacksSheet = () => {
         attackType: attackType,
         attackModifier: attackModifier,
         attackDamage: attackDamage,
+        attackNotes: attackNotes,
         attackID: newID.toString(),
       };
       let newAttacks = structuredClone(currentAttacks);

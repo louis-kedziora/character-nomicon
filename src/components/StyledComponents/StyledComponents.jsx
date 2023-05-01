@@ -8,6 +8,7 @@ import Container from "@mui/material/Container";
 export const StyledGridFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",
   fontFamily: "Montserrat",
+  boxShadow: "0 2px 5px black",
   margin: "2em 0 2em 0",
   fontSize: "20px",
   "&:hover": {

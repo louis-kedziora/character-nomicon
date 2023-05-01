@@ -82,6 +82,8 @@ export const SpellsSheet = () => {
       const spellHitOrDC = event.target.elements.spellHitOrDC.value;
       const spellEffect = event.target.elements.spellEffect.value;
       const spellNotes = event.target.elements.spellNotes.value;
+      const spellLevel = event.target.elements.spellLevel.value;
+
       const newID = mongoose.Types.ObjectId();
       const newSpell = {
         spellPrepared: spellPrepared,
@@ -91,6 +93,7 @@ export const SpellsSheet = () => {
         spellHitOrDC: spellHitOrDC,
         spellEffect: spellEffect,
         spellNotes: spellNotes,
+        spellLevel: spellLevel,
         spellID: newID.toString(),
       };
       let newSpells = structuredClone(currentSpells);
@@ -155,7 +158,7 @@ export const SpellsSheet = () => {
       field: "spellLevel",
       headerName: "Level",
       headerClassName: "dataGrid--header",
-      type: "text",
+      type: "number",
       editable: true,
       flex: 0.75,
       minWidth: 100,
