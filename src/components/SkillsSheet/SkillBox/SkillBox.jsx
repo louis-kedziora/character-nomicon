@@ -5,14 +5,16 @@ import {
   scoreMod,
 } from "components/AttributeSheet/Modifiers";
 import { StyledSkillFab } from "components/StyledComponents";
+import { DiceSnack } from "components/DiceSnack";
 
 export const SkillBox = ({ info }) => {
   const { title, skill, updateComponent } = info;
   const [isTrained, setIsTrained] = useState();
-  const [score, setScore] = useState();
-  const [level, setLevel] = useState();
+  const [trainedMod, setTrainedMod] = useState();
+  const [mod, setMod] = useState();
   const [isFetched, setIsFetched] = useState(false);
   const [update, setUpdate] = useState(updateComponent);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const character = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -38,24 +40,37 @@ export const SkillBox = ({ info }) => {
     };
     const trainedSkills = character["trainedSkills"];
     setIsTrained(trainedSkills[skill]);
-    setScore(character[skillDict[skill]]);
-    setLevel(character["level"]);
-
+    if (trainedSkills[skill])
+      setTrainedMod(
+        modifierAndProficency(character["level"], character[skillDict[skill]])
+      );
+    setMod(scoreMod(character[skillDict[skill]]));
     setIsFetched(true);
     setUpdate(updateComponent);
   }, [skill, updateComponent]);
 
   console.debug(update);
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
   return (
     <div>
       {isFetched && (
-        <StyledSkillFab variant="extended">
-          <h1>{title}</h1>
-          <h2>
-            {isTrained ? modifierAndProficency(level, score) : scoreMod(score)}
-          </h2>
-        </StyledSkillFab>
+        <div>
+          <StyledSkillFab onClick={handleClick} variant="extended">
+            <h1>{title}</h1>
+            <h2>{isTrained ? trainedMod : mod}</h2>
+          </StyledSkillFab>
+          <DiceSnack
+            DiceSnackProps={{
+              modifier: isTrained ? trainedMod : mod,
+              open: open,
+              setOpen: setOpen,
+            }}
+          />
+        </div>
       )}
     </div>
   );
