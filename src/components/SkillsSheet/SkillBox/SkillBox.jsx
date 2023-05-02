@@ -63,13 +63,15 @@ export const SkillBox = ({ info }) => {
             <h1>{title}</h1>
             <h2>{isTrained ? trainedMod : mod}</h2>
           </StyledSkillFab>
-          <DiceSnack
-            DiceSnackProps={{
-              modifier: isTrained ? trainedMod : mod,
-              open: open,
-              setOpen: setOpen,
-            }}
-          />
+          {open && (
+            <DiceSnack
+              DiceSnackProps={{
+                modifier: isTrained ? trainedMod : mod,
+                open: open,
+                setOpen: setOpen,
+              }}
+            />
+          )}
         </div>
       )}
     </div>

@@ -14,7 +14,6 @@ export const DiceSnack = ({ DiceSnackProps }) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    
     setDiceRoll(rollDice(20));
     setIsFetched(true);
   }, []);
