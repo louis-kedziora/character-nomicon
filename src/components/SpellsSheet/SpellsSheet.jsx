@@ -270,13 +270,13 @@ export const SpellsSheet = () => {
             <Grid xs={12}>
               <div
                 style={{
-                  height: 400,
                   width: "100%",
                   backgroundColor: "#0f111a",
                 }}
               >
                 <StyledDataGrid
-                  className="customDataGrid"
+                  pageSize={20} //integer value representing max number of rows
+                  autoHeight={true}
                   hideFooter
                   experimentalFeatures={{ newEditingApi: true }}
                   columnVisibilityModel={{

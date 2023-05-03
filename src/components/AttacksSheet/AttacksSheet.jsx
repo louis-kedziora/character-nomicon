@@ -101,7 +101,6 @@ export const AttacksSheet = () => {
     setCancelClicked(true);
     setAddNewAttack(false);
     setCancelClicked(false);
-
   }
 
   const columns = [
@@ -177,8 +176,10 @@ export const AttacksSheet = () => {
       {isFetched && (
         <div className="attackBox">
           <Grid container spacing={2}>
-            <div style={{ height: 400, width: "100%" }}>
+            <div style={{ width: "100%" }}>
               <StyledDataGrid
+                pageSize={20} //integer value representing max number of rows
+                autoHeight={true}
                 hideFooter
                 experimentalFeatures={{ newEditingApi: true }}
                 columnVisibilityModel={{
