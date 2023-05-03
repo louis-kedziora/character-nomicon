@@ -69,6 +69,7 @@ export const SkillBox = ({ info }) => {
                 modifier: isTrained ? trainedMod : mod,
                 open: open,
                 setOpen: setOpen,
+                title: title,
               }}
             />
           )}

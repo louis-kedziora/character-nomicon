@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+import CasinoIcon from "@mui/icons-material/Casino";
 
+import { StyledAlert } from "components/StyledComponents";
 import { rollDice } from "components/UtilityFunctions";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  return <StyledAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export const DiceSnack = ({ DiceSnackProps }) => {
-  const { modifier, open, setOpen } = DiceSnackProps;
+  const { modifier, title, open, setOpen } = DiceSnackProps;
   const [diceRoll, setDiceRoll] = useState(null);
   const [isFetched, setIsFetched] = useState(false);
 
@@ -19,9 +20,6 @@ export const DiceSnack = ({ DiceSnackProps }) => {
   }, []);
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
     setOpen(false);
   };
 
@@ -31,10 +29,15 @@ export const DiceSnack = ({ DiceSnackProps }) => {
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert
             onClose={handleClose}
-            severity="success"
             sx={{ width: "100%" }}
+            severity="success"
+            iconMapping={{
+              success: <CasinoIcon fontSize="inherit" />,
+            }}
           >
-            {"Roll:  " + (diceRoll + parseInt(modifier.replace("+", "")))}
+            {title +
+              " Check = " +
+              (diceRoll + parseInt(modifier.replace("+", "")))}
             {" ( " + (diceRoll + " + " + modifier.replace("+", "")) + " )"}
           </Alert>
         </Snackbar>

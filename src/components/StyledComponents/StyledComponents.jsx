@@ -4,6 +4,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { DataGrid } from "@mui/x-data-grid";
 import Fab from "@mui/material/Fab";
 import Container from "@mui/material/Container";
+import MuiAlert from "@mui/material/Alert";
+
+export const StyledAlert = styled(MuiAlert)(({ theme }) => ({
+  backgroundColor: "#0f111a",
+  fontFamily: "Montserrat",
+  boxShadow: "0 2px 5px black",
+  fontSize: "20px",
+}));
 
 export const StyledGridFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",
@@ -45,7 +53,6 @@ export const StyledCharacterFab = styled(Fab)(({ theme }) => ({
     fontSize: "1.5em",
     fontWeight: "500",
     padding: "10px",
-
   },
 }));
 
@@ -72,11 +79,8 @@ export const StyledSkillFab = styled(Fab)(({ theme }) => ({
     fontSize: "30px",
     fontWeight: "bolder",
     padding: "10px",
-
   },
 }));
-
-
 
 export const StyledFab = styled(Fab)(({ theme }) => ({
   backgroundColor: "#0f111a",

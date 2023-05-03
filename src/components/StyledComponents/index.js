@@ -7,4 +7,5 @@ export {
   StyledSkillFab,
   StyledCharacterFab,
   StyledGridFab,
+  StyledAlert,
 } from "components/StyledComponents/StyledComponents";
