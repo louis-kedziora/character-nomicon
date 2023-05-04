@@ -8,4 +8,5 @@ export {
   StyledCharacterFab,
   StyledGridFab,
   StyledAlert,
+  CustomNoRowsOverlay,
 } from "components/StyledComponents/StyledComponents";

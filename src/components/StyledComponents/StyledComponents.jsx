@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { DataGrid } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import Container from "@mui/material/Container";
 import MuiAlert from "@mui/material/Alert";
@@ -93,6 +94,24 @@ export const StyledFab = styled(Fab)(({ theme }) => ({
   },
 }));
 
+const StyledGridOverlay = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+  color: "white",
+  backgroundColor: "white",
+}));
+
+export const CustomNoRowsOverlay = () => {
+  return (
+    <StyledGridOverlay>
+      <Box sx={{ mt: 1 }}>No Rows Message</Box>
+    </StyledGridOverlay>
+  );
+};
+
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   fontFamily: "Montserrat",
   border: 0,
@@ -126,6 +145,9 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .MuiDataGrid-sortIcon": {
     opacity: 1,
     color: "white",
+  },
+  "& .MuiDataGrid-virtualScrollerContent": {
+    backgroundColor: "#0f111a",
   },
 }));
 

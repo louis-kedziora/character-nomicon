@@ -9,7 +9,11 @@ import IconButton from "@mui/material/IconButton";
 
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
-import { StyledDataGrid, StyledGridFab } from "components/StyledComponents";
+import {
+  StyledDataGrid,
+  StyledGridFab,
+  CustomNoRowsOverlay,
+} from "components/StyledComponents";
 import {
   modifierAndProficency,
   spellSaveDC,
@@ -275,7 +279,10 @@ export const SpellsSheet = () => {
                 }}
               >
                 <StyledDataGrid
-                  pageSize={20} //integer value representing max number of rows
+                  slots={{
+                    noRowsOverlay: CustomNoRowsOverlay,
+                  }}
+                  pageSize={20}
                   autoHeight={true}
                   hideFooter
                   experimentalFeatures={{ newEditingApi: true }}
