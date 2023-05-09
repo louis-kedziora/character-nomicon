@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import { serverURL } from "config/server.config";
 import Grid from "@mui/material/Unstable_Grid2";
 
 import { CharacterBox } from "components/SelectionSheet/CharacterBox";
@@ -10,7 +11,7 @@ import { StyledFab, StyledSheetContainer } from "components/StyledComponents";
 import { characterFormData } from "components/SelectionSheet/CharacterFormData";
 
 const mongoose = require("mongoose");
-const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
+
 const instance = axios.create({
   baseURL: serverURL,
 });

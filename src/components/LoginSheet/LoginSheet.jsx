@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import { serverURL } from "config/server.config";
 
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
@@ -13,7 +14,6 @@ import { StyledTextField } from "components/StyledComponents";
 import { StyledFab } from "components/StyledComponents";
 import { NewUserForm } from "components/LoginSheet/NewUserForm";
 
-const serverURL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 const instance = axios.create({
   baseURL: serverURL,
 });
