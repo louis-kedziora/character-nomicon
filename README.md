@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Player Sheet</h1>
+  <h1>CharacterNomicon</h1>
 </div>
 
 <details open="open">
@@ -20,7 +20,7 @@
 
 ## About
 
-> Player Sheet was created to serve mainly as an online character sheet for roleplaying games.
+> Character Nomicon was created to serve mainly as an online character sheet for roleplaying games.
 >
 > The project as serves as an exercise in the use of: Mongoose, Express, React, and Node.js
 >
@@ -44,12 +44,12 @@
 >
 > Current deployed URL:
 >
-> [cool-narwhal-445b2b.netlify.app/](https://cool-narwhal-445b2b.netlify.app/ "https://cool-narwhal-445b2b.netlify.app/")
+> [characternomicon](characternomicon.com)
 
 ## Security
 
-Player Sheet follows good practices of security, but 100% security cannot be assured.
-Player Sheet is provided **"as is"** without any **warranty**. Use at your own risk.
+Character Nomicon follows good practices of security, but 100% security cannot be assured.
+Character Nomicon is provided **"as is"** without any **warranty**. Use at your own risk.
 
 ## License
 

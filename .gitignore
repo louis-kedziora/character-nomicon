@@ -3,3 +3,5 @@ npm-debug.log
 .DS_Store
 /*.env
 /build
+
+kill-localhost-3000.sh
