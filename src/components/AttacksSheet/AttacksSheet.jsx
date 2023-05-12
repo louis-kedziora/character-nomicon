@@ -10,7 +10,6 @@ import {
   StyledDataGrid,
   StyledGridFab,
   StyledSheetContainer,
-  CustomNoRowsOverlay,
 } from "components/StyledComponents";
 import { SpellsSheet } from "components/SpellsSheet";
 
@@ -179,9 +178,6 @@ export const AttacksSheet = () => {
           <Grid container spacing={2}>
             <div style={{ width: "100%" }}>
               <StyledDataGrid
-                slots={{
-                  noRowsOverlay: CustomNoRowsOverlay,
-                }}
                 pageSize={20}
                 autoHeight={true}
                 hideFooter

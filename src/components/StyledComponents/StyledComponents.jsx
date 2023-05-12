@@ -2,7 +2,6 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import Container from "@mui/material/Container";
 import MuiAlert from "@mui/material/Alert";
@@ -94,24 +93,6 @@ export const StyledFab = styled(Fab)(({ theme }) => ({
   },
 }));
 
-const StyledGridOverlay = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  height: "100%",
-  color: "white",
-  backgroundColor: "white",
-}));
-
-export const CustomNoRowsOverlay = () => {
-  return (
-    <StyledGridOverlay>
-      <Box sx={{ mt: 1 }}>No Rows Message</Box>
-    </StyledGridOverlay>
-  );
-};
-
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   fontFamily: "Montserrat",
   border: 0,
@@ -146,9 +127,25 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     opacity: 1,
     color: "white",
   },
-  "& .MuiDataGrid-virtualScrollerContent": {
-    backgroundColor: "#0f111a",
+  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
+    width: "0.1em",
   },
+  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track": {
+    background: "#0f111a",
+  },
+  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb": {
+    backgroundColor: "#464b4c",
+  },
+  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover": {
+    background: "#1d1d1d",
+  },
+  "& .MuiDataGrid-overlay": {
+    backgroundColor: "#0f111a",
+    color: "#5aa0ff",
+    fontSize: "2em",
+    fontWeight: "bolder",
+  },
+  
 }));
 
 export const StyledTextField = styled(TextField)({

@@ -12,7 +12,6 @@ import { InputForm } from "components/InputForm";
 import {
   StyledDataGrid,
   StyledGridFab,
-  CustomNoRowsOverlay,
 } from "components/StyledComponents";
 import {
   modifierAndProficency,
@@ -279,9 +278,6 @@ export const SpellsSheet = () => {
                 }}
               >
                 <StyledDataGrid
-                  slots={{
-                    noRowsOverlay: CustomNoRowsOverlay,
-                  }}
                   pageSize={20}
                   autoHeight={true}
                   hideFooter
