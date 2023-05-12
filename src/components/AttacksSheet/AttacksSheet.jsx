@@ -110,7 +110,7 @@ export const AttacksSheet = () => {
       type: "text",
       editable: true,
       flex: 1,
-      minWidth: 200,
+      minWidth: 150,
     },
     {
       field: "attackRange",
@@ -118,7 +118,7 @@ export const AttacksSheet = () => {
       type: "text",
       editable: true,
       flex: 0.5,
-      minWidth: 200,
+      minWidth: 100,
     },
     {
       field: "attackType",

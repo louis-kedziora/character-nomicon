@@ -161,10 +161,10 @@ export const SpellsSheet = () => {
       field: "spellLevel",
       headerName: "Level",
       headerClassName: "dataGrid--header",
-      type: "number",
+      type: "text",
       editable: true,
-      flex: 0.75,
-      minWidth: 100,
+      flex: 0.25,
+      minWidth: 50,
     },
     {
       field: "spellName",
