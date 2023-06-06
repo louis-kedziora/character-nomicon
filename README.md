@@ -44,7 +44,7 @@
 >
 > Current deployed URL:
 >
-> [characternomicon](characternomicon.com)
+> [characternomicon](https://characternomicon.com)
 
 ## Security
 

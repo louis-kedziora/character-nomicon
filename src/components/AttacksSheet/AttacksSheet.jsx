@@ -109,7 +109,7 @@ export const AttacksSheet = () => {
       headerName: "Name",
       type: "text",
       editable: true,
-      flex: 1,
+      flex: .75,
       minWidth: 150,
     },
     {
