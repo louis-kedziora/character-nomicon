@@ -20,10 +20,10 @@ export const EditSheet = ({ info }) => {
 
   useEffect(() => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    if (getCharacter.name !== undefined) {
-      setCharacterAlreadyExists(true);
-    } else {
+    if (getCharacter === undefined || getCharacter === null) {
       setCharacterAlreadyExists(false);
+    } else {
+      setCharacterAlreadyExists(true);
     }
     setIsFetched(true);
   }, []);

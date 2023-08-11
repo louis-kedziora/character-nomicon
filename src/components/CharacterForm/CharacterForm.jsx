@@ -16,11 +16,12 @@ export const CharacterForm = ({ methods, fields }) => {
 
   useEffect(() => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
-    if (getCharacter.name !== undefined) {
+
+    if (getCharacter === undefined || getCharacter === null) {
+      setCharacterAlreadyExists(false);
+    } else {
       setCharacterAlreadyExists(true);
       setCharacter(getCharacter);
-    } else {
-      setCharacterAlreadyExists(false);
     }
     setIsFetched(true);
   }, []);
