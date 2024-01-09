@@ -30,7 +30,7 @@ export const SelectionSheet = () => {
     if (loggedInUser) {
       setauthenticated(loggedInUser);
       const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-      setCurrentUserID(currentUser.userID);
+      setCurrentUserID(currentUser._id);
       const characterIDs = [...currentUser.userCharacters];
       setCharacterIDs(characterIDs);
       if (characterIDs.length < 1) setNoCharacters(true);
@@ -90,7 +90,7 @@ export const SelectionSheet = () => {
       newCharacter["deathSaveSuccesses"] = 0;
       newCharacter["deathSaveFailures"] = 0;
 
-      const mongooseID = mongoose.Types.ObjectId();
+      const mongooseID = new mongoose.Types.ObjectId();
       createNewCharacter(newCharacter, mongooseID);
       const newCharacterIDs = [...characterIDs, mongooseID.toString()];
       updateUser("userCharacters", newCharacterIDs, currentUserID);

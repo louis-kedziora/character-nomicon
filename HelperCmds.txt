@@ -9,5 +9,3 @@ nodemon server.js
 sudo npm install -g nodemon
 
 export REACT_APP_SERVER_URL="https://player-sheet-server.herokuapp.com"
-
-

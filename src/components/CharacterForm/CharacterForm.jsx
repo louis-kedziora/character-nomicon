@@ -47,13 +47,20 @@ export const CharacterForm = ({ methods, fields }) => {
                     <StyledFormControlLabel
                       control={
                         <Checkbox
-                          defaultChecked={
-                            characterAlreadyExists
-                              ? field.sheetType === "savingThrow"
+
+                        defaultChecked = {
+                          characterAlreadyExists ? field.sheetType === "savingThrow"
                                 ? character["savingThrowProficiency"][field.field]
                                 : character["trainedSkills"][field.field]
                               : false
-                          }
+                        }
+                          // defaultChecked={
+                          //   characterAlreadyExists ? (
+                          //     field.sheetType === "savingThrow" ?
+                          //       character["savingThrowProficiency"][field.field]
+                          //       : character["trainedSkills"][field.field]
+                          //   ): false
+                          // }
                           value={field.sheetType}
                           name={field.field}
                           sx={{ color: "#d97326" }}
