@@ -12,4 +12,21 @@ export const rollDice = (numberOfSides) => {
   return Math.floor((randomNumber / 4294967296) * numberOfSides) + 1;
 };
 
+export const sortSpells = (currentSpells) => {
+  currentSpells.sort((a, b) => {
+    // Compare by spellLevel first
+    let levelComparison = parseInt(a.spellLevel) - parseInt(b.spellLevel);
+    
+    if (levelComparison !== 0) {
+      // If spellLevel is not the same, sort by spellLevel
+      return levelComparison;
+    } else {
+      // If spellLevel is the same, sort by spellName
+      return a.spellName.localeCompare(b.spellName);
+    }
+  });
+  return currentSpells;
+}
+
+
 

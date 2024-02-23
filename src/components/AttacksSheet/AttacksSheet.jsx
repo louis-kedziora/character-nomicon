@@ -79,7 +79,7 @@ export const AttacksSheet = () => {
       const attackModifier = event.target.elements.attackModifier.value;
       const attackDamage = event.target.elements.attackDamage.value;
       const attackNotes = event.target.elements.attackNotes.value;
-      const newID = mongoose.Types.ObjectId();
+      const newID = new mongoose.Types.ObjectId();
       const newAttack = {
         attackName: attackName,
         attackRange: attackRange,
@@ -154,7 +154,7 @@ export const AttacksSheet = () => {
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: "",
       type: "text",
       width: 400,
       renderCell: (params) => {

@@ -9,3 +9,5 @@ nodemon server.js
 sudo npm install -g nodemon
 
 export REACT_APP_SERVER_URL="https://player-sheet-server.herokuapp.com"
+
+Try this... in ubuntu 20.04: ----vsCode Prettier - Code formatter shortcut- key is ctrl+shift+I

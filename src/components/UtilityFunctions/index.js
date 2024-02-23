@@ -1,2 +1,2 @@
-export { variableToTitle, rollDice} from "components/UtilityFunctions/UtilityFunctions";
+export { variableToTitle, rollDice, sortSpells} from "components/UtilityFunctions/UtilityFunctions";
 

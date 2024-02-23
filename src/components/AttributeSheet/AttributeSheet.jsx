@@ -124,7 +124,7 @@ export const AttributeSheet = () => {
       delete newResource[""];
       delete newResource.cancelButton;
       newResource["currentResourceValue"] = newResource.maxResourceValue;
-      const mongooseID = mongoose.Types.ObjectId();
+      const mongooseID = new mongoose.Types.ObjectId();
       newResource["resourceID"] = mongooseID;
 
       //Update Character in DB with new resource

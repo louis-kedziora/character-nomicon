@@ -45,7 +45,7 @@ export const NewUserForm = ({ userData }) => {
         userInput["fname"] = "Unamed User";
         userInput["lname"] = "Unamed User";
         userInput["userCharacters"] = [];
-        const newUserID = mongoose.Types.ObjectId();
+        const newUserID = new mongoose.Types.ObjectId();
         userInput["userID"] = newUserID.toString();
 
         // Save new user to db

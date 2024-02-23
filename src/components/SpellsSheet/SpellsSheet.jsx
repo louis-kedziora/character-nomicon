@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import mongoose from "mongoose";
+import { useEffect, useState } from "react";
 
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
-import { updateInfo } from "components/DBHandler";
-import { InputForm } from "components/InputForm";
-import {
-  StyledDataGrid,
-  StyledGridFab,
-} from "components/StyledComponents";
 import {
   modifierAndProficency,
   spellSaveDC,
 } from "components/AttributeSheet/Modifiers";
+import { updateInfo } from "components/DBHandler";
+import { InputForm } from "components/InputForm";
+import { StyledDataGrid, StyledGridFab } from "components/StyledComponents";
+import { sortSpells } from "components/UtilityFunctions";
 
 export const SpellsSheet = () => {
   const [character, setCharacter] = useState({});
@@ -31,7 +29,7 @@ export const SpellsSheet = () => {
   useEffect(() => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setCharacter(getCharacter);
-    setCurrentSpells(getCharacter["spells"]);
+    setCurrentSpells(sortSpells(getCharacter["spells"]));
     setCastingAttribute(getCharacter["spellCastingAttribute"]);
     setIsFetched(true);
   }, []);
@@ -87,7 +85,7 @@ export const SpellsSheet = () => {
       const spellNotes = event.target.elements.spellNotes.value;
       const spellLevel = event.target.elements.spellLevel.value;
 
-      const newID = mongoose.Types.ObjectId();
+      const newID = new mongoose.Types.ObjectId();
       const newSpell = {
         spellPrepared: spellPrepared,
         spellName: spellName,
@@ -101,7 +99,7 @@ export const SpellsSheet = () => {
       };
       let newSpells = structuredClone(currentSpells);
       newSpells.push(newSpell);
-      setCurrentSpells(newSpells);
+      setCurrentSpells(sortSpells(newSpells));
       updateInfo("spells", newSpells, character._id);
       updateSession(newSpells);
     }
@@ -124,15 +122,42 @@ export const SpellsSheet = () => {
     updateSession(currentSpells);
   };
 
+  const defaultColumnOptions = {
+    headerClassName: "dataGrid--header",
+    type: "text",
+    editable: true,
+    hideSortIcons: true,
+    disableColumnMenu: true,
+  };
+
+  const createColumn = (
+    field,
+    headerName,
+    flex,
+    minWidth,
+    align,
+    headerAlign,
+    renderCell
+  ) => ({
+    field,
+    headerName,
+    flex,
+    minWidth,
+    align,
+    headerAlign,
+    renderCell,
+    ...defaultColumnOptions,
+  });
+
   const columns = [
-    {
-      field: "spellPrepared",
-      headerName: "Prepared",
-      headerClassName: "dataGrid--header",
-      editable: true,
-      flex: 0.25,
-      minWidth: 100,
-      renderCell: (params) => {
+    createColumn(
+      "spellPrepared",
+      "Prepared",
+      0.25,
+      100,
+      "center",
+      "center",
+      (params) => {
         const isPrepared = params.value;
         return (
           <div>
@@ -155,88 +180,26 @@ export const SpellsSheet = () => {
             )}
           </div>
         );
-      },
-    },
-    {
-      field: "spellLevel",
-      headerName: "Level",
-      headerClassName: "dataGrid--header",
-      type: "text",
-      editable: true,
-      flex: 0.25,
-      minWidth: 50,
-    },
-    {
-      field: "spellName",
-      headerName: "Name",
-      headerClassName: "dataGrid--header",
-      type: "text",
-      editable: true,
-      flex: 0.75,
-      minWidth: 100,
-    },
-    {
-      field: "spellTime",
-      headerName: "Time",
-      headerClassName: "dataGrid--header",
-      type: "text",
-      editable: true,
-      flex: 0.25,
-      minWidth: 50,
-    },
-    {
-      field: "spellRange",
-      headerName: "Range",
-      headerClassName: "dataGrid--header",
-      type: "text",
-      editable: true,
-      flex: 0.5,
-      minWidth: 50,
-    },
-    {
-      field: "spellHitOrDC",
-      headerName: "Hit / DC",
-      headerClassName: "dataGrid--header",
-      type: "text",
-      editable: true,
-      flex: 0.5,
-      minWidth: 100,
-    },
-    {
-      field: "spellEffect",
-      headerName: "Effect",
-      headerClassName: "dataGrid--header",
-      type: "text",
-      editable: true,
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "spellNotes",
-      headerName: "Notes",
-      headerClassName: "dataGrid--header",
-      type: "text",
-      editable: true,
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      headerClassName: "dataGrid--header",
-      width: 400,
-      renderCell: (params) => {
-        return (
-          <IconButton
-            onClick={(event) => onDeleteClick(event, params.row)}
-            variant="outlined"
-            color="error"
-          >
-            <DeleteIcon />
-          </IconButton>
-        );
-      },
-    },
+      }
+    ),
+    createColumn("spellLevel", "Level", 0.25, 75, "center", "center", null),
+    createColumn("spellName", "Name", 0.75, 100, "left", "left", null),
+    createColumn("spellTime", "Time", 0.25, 75, "center", "center", null),
+    createColumn("spellRange", "Range", 0.25, 75, "center", "center", null),
+    createColumn("spellHitOrDC", "Hit|DC", 0.5, 100, "center", "center", null),
+    createColumn("spellEffect", "Effect", 1, 200, "left", "left", null),
+    createColumn("spellNotes", "Notes", 1, 200, "left", "left", null),
+    createColumn("actions", "", 0.25, 75, "center", "center", (params) => {
+      return (
+        <IconButton
+          onClick={(event) => onDeleteClick(event, params.row)}
+          variant="outlined"
+          color="error"
+        >
+          <DeleteIcon />
+        </IconButton>
+      );
+    }),
   ];
 
   return (
