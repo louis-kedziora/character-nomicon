@@ -103,72 +103,53 @@ export const AttacksSheet = () => {
     setCancelClicked(false);
   }
 
+  const defaultColumnOptions = {
+    headerClassName: "dataGrid--header",
+    type: "text",
+    editable: true,
+    hideSortIcons: true,
+    disableColumnMenu: true,
+  };
+
+  const createColumn = (
+    field,
+    headerName,
+    flex,
+    minWidth,
+    align,
+    headerAlign,
+    renderCell
+  ) => ({
+    field,
+    headerName,
+    flex,
+    minWidth,
+    align,
+    headerAlign,
+    renderCell,
+    ...defaultColumnOptions,
+  });
+
   const columns = [
-    {
-      field: "attackName",
-      headerName: "Name",
-      type: "text",
-      editable: true,
-      flex: .75,
-      minWidth: 150,
-    },
-    {
-      field: "attackRange",
-      headerName: "Range",
-      type: "text",
-      editable: true,
-      flex: 0.5,
-      minWidth: 100,
-    },
-    {
-      field: "attackType",
-      headerName: "Type",
-      type: "text",
-      editable: true,
-      flex: 1,
-      minWidth: 100,
-    },
-    {
-      field: "attackModifier",
-      headerName: "Modifier",
-      type: "text",
-      editable: true,
-      flex: 0.3,
-      minWidth: 200,
-    },
-    {
-      field: "attackDamage",
-      headerName: "Damage",
-      type: "text",
-      editable: true,
-      flex: 0.5,
-      minWidth: 200,
-    },
-    {
-      field: "attackNotes",
-      headerName: "Notes",
-      type: "text",
-      editable: true,
-      flex: 0.5,
-      minWidth: 200,
-    },
-    {
-      field: "actions",
-      headerName: "",
-      type: "text",
-      width: 400,
-      renderCell: (params) => {
-        return (
-          <IconButton
-            onClick={(event) => onDeleteClick(event, params.row)}
-            variant="outlined"
-            color="error"
-          >
-            <DeleteIcon />
-          </IconButton>
-        );
-      },
-    },
+
+    createColumn("attackName", "Name", 0.75, 150, "left", "left", null),
+    createColumn("attackRange", "Range", 0.5, 100, "center", "center", null),
+    createColumn("attackType", "Type", 1, 100, "left", "left", null),
+    createColumn("attackModifier", "Modifier", 0.3, 100, "center", "center", null),
+    createColumn("attackDamage", "Damage", 0.5, 100, "center", "center", null),
+    createColumn("attackNotes", "Notes", 0.5, 200, "left", "left", null),
+    createColumn("actions", "", 0.25, 75, "center", "center", (params) => {
+      return (
+        <IconButton
+          onClick={(event) => onDeleteClick(event, params.row)}
+          variant="outlined"
+          color="error"
+        >
+          <DeleteIcon />
+        </IconButton>
+      );
+    }),
+
   ];
 
   return (
