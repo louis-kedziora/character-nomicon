@@ -18,13 +18,14 @@ import { createNewResource, updateCharacter } from "components/DBHandler";
 const mongoose = require("mongoose");
 
 const attributes = [
-  { title: "Strength", scoreName: "str" },
-  { title: "Intelligence", scoreName: "int" },
-  { title: "Dexterity", scoreName: "dex" },
-  { title: "Wisdom", scoreName: "wis" },
-  { title: "Constitution", scoreName: "con" },
-  { title: "Charisma", scoreName: "char" },
+  { title: "STR", scoreName: "str" },
+  { title: "INT", scoreName: "int" },
+  { title: "DEX", scoreName: "dex" },
+  { title: "WIS", scoreName: "wis" },
+  { title: "CON", scoreName: "con" },
+  { title: "CHAR", scoreName: "char" },
 ];
+
 export const AttributeSheet = () => {
   const [character, setCharacter] = useState();
   const [resources, setResources] = useState();
@@ -201,7 +202,7 @@ export const AttributeSheet = () => {
           <Grid xs={12}>
             <InfoBox
               info={{
-                title: "AC",
+                title: "Armor Class",
                 infoName: "ac",
                 characterID: character._id,
                 updateComponent: updateComponent,

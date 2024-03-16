@@ -60,6 +60,33 @@ footer p {
   text-align: center;
 }
 
+.attributeBox {
+  background: #0f111a;
+  box-shadow: 0 2px 5px black;
+  border-radius: 7px;
+  padding: 10px;
+  width: 150px;
+  margin: 16px;
+  position: relative;
+  float: left;
+  text-align: center;
+}
+
+.attributeBox h1 {
+  color: #FF204E;
+  font-size: 1.7em;
+}
+
+.attributeBox h2 {
+  margin-top: 2px;
+  color: #03c988;
+}
+
+.attributeBox h3 {
+  color: #464b4c;
+  font-size: 1.6em;
+}
+
 .customModBox {
   width: 21em;
 }
@@ -171,6 +198,7 @@ footer p {
   color: #dbe2ef;
 }
 .statBox h2 {
+  margin-top: 2px;
   color: #03c988;
 }
 .statBox p {
