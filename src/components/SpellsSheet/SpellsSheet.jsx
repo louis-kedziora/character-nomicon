@@ -6,6 +6,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+
 
 import {
   modifierAndProficency,
@@ -21,6 +23,7 @@ export const SpellsSheet = () => {
   const [castingAttribute, setCastingAttribute] = useState("None");
 
   const [currentSpells, setCurrentSpells] = useState();
+  const [filteredSpells, setFilteredSpells] = useState(currentSpells);
   const [addNewSpell, setAddNewSpell] = useState(false);
   const [cancelClicked, setCancelClicked] = useState(false);
   const [oldValue, setOldValue] = useState("");
@@ -30,6 +33,7 @@ export const SpellsSheet = () => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
     setCharacter(getCharacter);
     setCurrentSpells(sortSpells(getCharacter["spells"]));
+    setFilteredSpells(sortSpells(getCharacter["spells"]))
     setCastingAttribute(getCharacter["spellCastingAttribute"]);
     setIsFetched(true);
   }, []);
@@ -201,6 +205,9 @@ export const SpellsSheet = () => {
       );
     }),
   ];
+  const filterSpells = (level) => {
+    setFilteredSpells(currentSpells.filter((row) => parseInt(row.spellLevel) === parseInt(level)));
+  };
 
   return (
     <div>
@@ -234,6 +241,13 @@ export const SpellsSheet = () => {
               )}
             </Grid>
             <Grid xs={12}>
+              {[...Array(10).keys()].map((num) => (
+                <Button key={num} onClick={() => filterSpells(num)}>
+                  {num}
+                </Button>
+              ))}
+            </Grid>
+            <Grid xs={12}>
               <div
                 style={{
                   width: "100%",
@@ -241,14 +255,14 @@ export const SpellsSheet = () => {
                 }}
               >
                 <StyledDataGrid
-                  pageSize={20}
+                  pageSize={30}
                   autoHeight={true}
                   hideFooter
                   experimentalFeatures={{ newEditingApi: true }}
                   columnVisibilityModel={{
                     id: false,
                   }}
-                  rows={currentSpells}
+                  rows={filteredSpells}
                   columns={columns}
                   getRowId={(row) => row.spellID}
                   onCellEditStop={handleCellEditStop}
