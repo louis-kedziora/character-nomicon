@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import {
   proficiencyBonus,
   scoreMod,
+  modifierAndProficency,
+  spellSaveDC,
 } from "components/AttributeSheet/Modifiers";
 import { Grid } from "@mui/material";
 
@@ -17,9 +19,24 @@ export const InfoBox = ({ info }) => {
       setContent(proficiencyBonus(character[infoName]));
     } else if (title === "Initiative") {
       setContent(scoreMod(character[infoName]));
+    } else if (title === "Spell Save") {
+      setContent(
+        spellSaveDC(
+          character.level,
+          character[character["spellCastingAttribute"]]
+        )
+      );
+    } else if (title === "Spell Attack") {
+      setContent(
+        modifierAndProficency(
+          character.level,
+          character[character["spellCastingAttribute"]]
+        )
+      );
     } else {
       setContent(character[infoName]);
     }
+
     setIsFetched(true);
     setUpdate(updateComponent);
   }, [characterID, infoName, title, updateComponent]);

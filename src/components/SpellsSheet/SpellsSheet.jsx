@@ -6,7 +6,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
 
 
 import {
@@ -215,36 +214,16 @@ export const SpellsSheet = () => {
         <div className="spellBox">
           <Grid container spacing={2}>
             <Grid xs={12}>
-              {castingAttribute === "None" ? (
-                <div></div>
-              ) : (
-                <div>
-                  <div className="basicBox statBox customModBox">
-                    <h1>Spell Attack Bonus</h1>
-                    <h2>
-                      {modifierAndProficency(
-                        character.level,
-                        character[character["spellCastingAttribute"]]
-                      )}
-                    </h2>
-                  </div>
-                  <div className="basicBox statBox customModBox">
-                    <h1>Spell Save DC</h1>
-                    <h2>
-                      {spellSaveDC(
-                        character.level,
-                        character[character["spellCastingAttribute"]]
-                      )}
-                    </h2>
-                  </div>
-                </div>
-              )}
-            </Grid>
-            <Grid xs={12}>
               {[...Array(10).keys()].map((num) => (
-                <Button key={num} onClick={() => filterSpells(num)}>
+                <StyledGridFab
+                  size="large"
+                  color="primary"
+                  variant="extended"
+                  onClick={() => filterSpells(num)}
+                  key={num}
+                >
                   {num}
-                </Button>
+                </StyledGridFab>
               ))}
             </Grid>
             <Grid xs={12}>

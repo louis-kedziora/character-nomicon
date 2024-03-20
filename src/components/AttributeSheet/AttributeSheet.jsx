@@ -15,6 +15,7 @@ import { skillsData } from "components/SkillsSheet/SkillsData";
 import { StyledFab, StyledSheetContainer } from "components/StyledComponents";
 import { createNewResource, updateCharacter } from "components/DBHandler";
 
+
 const mongoose = require("mongoose");
 
 const attributes = [
@@ -35,6 +36,7 @@ export const AttributeSheet = () => {
   const [openResourceForm, setOpenResourceForm] = useState(false);
   const [cancelCharacterForm, setCancelCharacterForm] = useState(false);
   const [openCharacterForm, setOpenCharacterForm] = useState(false);
+  const [castingAttribute, setCastingAttribute] = useState("None");
 
   useEffect(() => {
     const getCharacter = JSON.parse(sessionStorage.getItem("currentCharacter"));
@@ -44,6 +46,7 @@ export const AttributeSheet = () => {
       "customResources",
       JSON.stringify(getCharacter.customResources)
     );
+    setCastingAttribute(getCharacter["spellCastingAttribute"]);
     setIsFetched(true);
   }, []);
 
@@ -233,6 +236,28 @@ export const AttributeSheet = () => {
                 updateComponent: updateComponent,
               }}
             />
+            {castingAttribute === "None" ? (
+              <div></div>
+            ) : (
+              <div>
+                <InfoBox
+                  info={{
+                    title: "Spell Save",
+                    infoName: "spellSave",
+                    characterID: character._id,
+                    updateComponent: updateComponent,
+                  }}
+                />
+                <InfoBox
+                  info={{
+                    title: "Spell Attack",
+                    infoName: "spellAttack",
+                    characterID: character._id,
+                    updateComponent: updateComponent,
+                  }}
+                />
+              </div>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Grid
