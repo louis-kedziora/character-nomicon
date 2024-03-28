@@ -8,10 +8,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 
 
-import {
-  modifierAndProficency,
-  spellSaveDC,
-} from "components/AttributeSheet/Modifiers";
 import { updateInfo } from "components/DBHandler";
 import { InputForm } from "components/InputForm";
 import { StyledDataGrid, StyledGridFab } from "components/StyledComponents";
@@ -19,7 +15,6 @@ import { sortSpells } from "components/UtilityFunctions";
 
 export const SpellsSheet = () => {
   const [character, setCharacter] = useState({});
-  const [castingAttribute, setCastingAttribute] = useState("None");
 
   const [currentSpells, setCurrentSpells] = useState();
   const [filteredSpells, setFilteredSpells] = useState(currentSpells);
@@ -33,7 +28,6 @@ export const SpellsSheet = () => {
     setCharacter(getCharacter);
     setCurrentSpells(sortSpells(getCharacter["spells"]));
     setFilteredSpells(sortSpells(getCharacter["spells"]))
-    setCastingAttribute(getCharacter["spellCastingAttribute"]);
     setIsFetched(true);
   }, []);
 
