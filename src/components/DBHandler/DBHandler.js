@@ -6,7 +6,7 @@ export const updateCharacter = (newCharacter) => {
     console.log("Missing parameters");
   }
   axios({
-    method: "patch",
+    method: "post",
     url: serverURL + "/api/characters/updateCharacter",
     data: {
       newCharacter: newCharacter 
@@ -41,7 +41,7 @@ export const createNewUser = (newUser) => {
 
 export const updateUser = (infoName, newInfo, userID) => {
   axios({
-    method: "patch",
+    method: "post",
     url: serverURL + "/api/users/updateUser",
     data: {
       userID: userID,
@@ -62,7 +62,7 @@ export const updateResource = (resourceID, characterID, newValue) => {
     console.log("Missing parameters");
   }
   axios({
-    method: "patch",
+    method: "post",
     url: serverURL + "/api/characters/updateResource",
     data: {
       characterID: characterID,
@@ -81,7 +81,7 @@ export const updateResource = (resourceID, characterID, newValue) => {
 
 export const createNewResource = (newResource, characterID) => {
   axios({
-    method: "patch",
+    method: "post",
     url: serverURL + "/api/characters/createresource",
     data: {
       newResource: newResource,
@@ -119,7 +119,7 @@ export const createNewCharacter = (newCharacter, mongooseID) => {
 
 export const updateInfo = (infoName, newInfo, characterID) => {
   axios({
-    method: "patch",
+    method: "post",
     url: serverURL + "/api/characters/updateInfo",
     data: {
       characterID: characterID,
@@ -172,7 +172,7 @@ export const updateHP = (
   }
 
   axios({
-    method: "patch",
+    method: "post",
     url: serverURL + "/api/characters/updatehp",
     data: {
       characterID: characterID,
